@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/07 11:50:06 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/10 11:15:18 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 ** Toutes les tailles sont en octets.
 ** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
 */
+# ifndef OP_H
+# define OP_H
 
 # define IND_SIZE 2
 # define REG_SIZE 4
@@ -70,18 +72,6 @@ typedef char  t_arg_type;
 # define COMMENT_LENGTH (2048)
 # define COREWAR_EXEC_MAGIC 0xea83f3
 
-
-/*
-**
-*/
-
-
-
-/*
-**
-*/
-
-
 typedef struct  s_header
 {
   unsigned int  magic;
@@ -92,7 +82,7 @@ typedef struct  s_header
 
 typedef struct  s_op
 {
-	char          *instruction;
+	char          instruction[6];
 	int           number_registries;
 	int           type_argument[3];
 	int           opcode;
@@ -101,3 +91,7 @@ typedef struct  s_op
 	int           changes_carry;
 	int           argument_type_code;
 }               t_op;
+
+t_op    op_tab[16];
+
+#endif

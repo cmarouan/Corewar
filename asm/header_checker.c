@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:34:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/07 21:16:23 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/09 19:19:56 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int    check_name_comment_cmd(t_file *file, char *cmd, char *content)
+static int    check_name_comment_cmd(t_file *file, char *cmd, char *content)
 {
     if (!ft_strcmp(cmd, NAME_CMD_STRING) && ft_strlen(content) <= PROG_NAME_LENGTH)
     {
@@ -33,7 +33,7 @@ int    check_name_comment_cmd(t_file *file, char *cmd, char *content)
     return (0);
 }
 
-char    *get_command(char *str, int *index)
+static char    *get_command(char *str, int *index)
 {
     char    *cmd;
 
@@ -44,7 +44,7 @@ char    *get_command(char *str, int *index)
     return (cmd);
 }
 
-char    *get_content(char *str, int *index, char *cmd)
+static char    *get_content(char *str, int *index, char *cmd)
 {
     char    *content;
     int     index2;
@@ -61,7 +61,7 @@ char    *get_content(char *str, int *index, char *cmd)
     return (content);
 }
 
-int get_name_comment_cmd(t_file *file, char *str)
+static int get_name_comment_cmd(t_file *file, char *str)
 {
     char    *cmd;
     char    *content;
@@ -77,16 +77,32 @@ int get_name_comment_cmd(t_file *file, char *str)
         ft_strdel(&cmd);
         return (0);
     }
-    return (check_cmd_comment_cmd(file, cmd, content));
+    return (check_name_comment_cmd(file, cmd, content));
 }
 
-int header_checker(t_file *file, char *str, int *index)
+int header_checker(t_file *file, int *index)
 {
-    static int      flag;
-    int             ret;
+    char *str;
+    int flag;
+    int ret;
 
-    if (!(ret = get_name_comment_cmd(file, str)) || (flag & ret))
-        return ((flag != 3 || (flag & ret)) ? 0 : 1);
-    flag |= ret;
+    flag = 0;
+    while (file->code[++(*index)])
+    {
+        if (!(str = ft_strtrim(file->code[*index])))
+            return (0);
+        if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
+        {
+            ft_strdel(&str);
+            continue ;
+        }
+        if (!(ret = get_name_comment_cmd(file, str)) || (flag & ret))
+        {
+            ft_strdel(&str);
+            return ((flag != 3 || (flag & ret)) ? 0 : 1);
+        }
+        flag |= ret;
+        ft_strdel(&str);
+    }
     return (1);
 }

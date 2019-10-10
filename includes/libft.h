@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 18:26:33 by hmney             #+#    #+#             */
-/*   Updated: 2019/09/24 10:08:18 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/08 16:04:23 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int					ft_isblank(int c);
 int					get_next_line(const int fd, char **line);
 int					ft_length_number(intmax_t number);
 int					ft_tablen(char **tab);
-int					free_tab(char ***tab);
+void				free_tab(char ***tab);
 int					ft_search_characters(char *str, char search);
 intmax_t			ft_hash_string(char *str);
 int					empty_queue(t_queue *queue);

@@ -6,12 +6,12 @@
 /*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/07 21:09:57 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/05 15:11:33 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/08 09:51:27 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 static int	words(const char *str, char c)
 {
 	int i;
@@ -50,7 +50,6 @@ char		**ft_strsplit(char const *s, char c)
 	int		size;
 
 	j = 0;
-	printf("%d\n", words(s, c));
 	if ((tab = (char **)malloc(sizeof(char *) * (words(s, c) + 1))) == NULL)
 		return (NULL);
 	while (*s)

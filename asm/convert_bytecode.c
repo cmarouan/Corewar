@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_delete_content.c                                :+:      :+:    :+:   */
+/*   convert_bytecode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 10:02:33 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/08 15:08:44 by hmney            ###   ########.fr       */
+/*   Created: 2019/10/10 14:22:12 by hmney             #+#    #+#             */
+/*   Updated: 2019/10/10 14:26:34 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "asm.h"
 
-void	ft_delete_content(void *content, size_t content_size)
+int convert_bytecode(t_asm *store, t_file *file)
 {
-	ft_memdel((void **)&content);
-	(void)content_size;
+    
+    return (1);
 }

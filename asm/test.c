@@ -2,7 +2,6 @@
 #include "libft.h"
 int main()
 {
-    char **str = ft_strsplit("         hosusasa        hjkdhs           dlg klg            dkh dk       ", ' ');
-
+    printf("%d\n", strlen("r03"));
     return (0);
 }

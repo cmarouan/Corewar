@@ -1,29 +1,24 @@
 .name ""
-.comment            "nklhklhjlhjhj
-,hkkgk
-jhjhjkh
-"
-
+# hfs k
+.comment ""
 ## jkdjgfd
 #fkdsgk'ds
-entry: entry:
+entry:
 	sti			r1, %:zork, %1
 	sti			r1, %:ardef, %1
 	sti			r1, %:avdef, %1
 	sti			r1, %:entry_l1, %1
 	ld			%0, r16
 	fork		%:zork
-
 entry_l1:
 	live		%42
 	ld			%439025904, r2
 	ld			%0, r16
 	fork		%:entry 
-
 ################################################################################
 xxx:
 ardef:
-	live		%42
+	live		%:hhhh
 	st			r2, -400
 	st			r2, -400
 	st			r2, -400
@@ -101,3 +96,4 @@ avdef:
 	zjmp		%:avdef
 
 ################################################################################
+
