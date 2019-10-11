@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 15:58:41 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/08 16:11:33 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/11 18:22:20 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	free_tab(char ***tab)
+int		free_tab(char ***tab)
 {
 	int index;
 
@@ -23,4 +23,5 @@ void	free_tab(char ***tab)
 			ft_strdel(&(*tab)[index]);
 		ft_memdel((void **)tab);
 	}
+	return (1);
 }
