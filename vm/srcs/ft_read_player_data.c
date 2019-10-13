@@ -74,22 +74,22 @@ void	ft_parse_player_files(t_vm *vm)
 			ft_outerr("file not open");
 		ft_check_magic(fd, vm->players[i].file_name);
 		ft_read_player_name(fd, i, vm);
-		ft_printf("%s has name %s\n", vm->players[i].file_name, vm->players[i].prog_name);
+		//ft_printf("%s has name %s\n", vm->players[i].file_name, vm->players[i].prog_name);
 		ft_read_null(fd);
 		ft_check_code_size(fd, i, vm);
-		ft_printf("%s has code size %d\n", vm->players[i].file_name, vm->players[i].prog_size);
+	//	ft_printf("%s has code size %d\n", vm->players[i].file_name, vm->players[i].prog_size);
 		ft_read_player_cmt(fd, i, vm);
-		ft_printf("%s has cmt %s\n", vm->players[i].file_name, vm->players[i].comment);
+	//	ft_printf("%s has cmt %s\n", vm->players[i].file_name, vm->players[i].comment);
 		ft_read_null(fd);
 		ft_read_player_code(fd, i, vm);
-		int j = 0;
-		printf("code :\n");
-		while (j < (int)vm->players[i].prog_size)
-		{
-			printf("%#.2X ", vm->players[i].code[j]);
-			j++;
-		}
-		printf("\n");
+		//int j = 0;
+	//	printf("code :\n");
+		// while (j < (int)vm->players[i].prog_size)
+		// {
+		// 	printf("%#.2X ", vm->players[i].code[j]);
+		// 	j++;
+		// }
+		// printf("\n");
 
 		close(fd);
 		i++;

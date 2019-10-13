@@ -38,15 +38,23 @@ typedef struct s_op
 	int		dir_size_2;
 }			t_op;
 
+typedef struct s_memory
+{
+	uint8_t byte;
+	char	*color;
+}				t_memory;
+
 typedef struct s_vm
 {
 	int			f_dump;
 	int			f_show;
 	int			f_vus;
 	int			f_log;
+	int			last_live_player;
 	int			player_c;
 	int			ids[MAX_PLAYERS + 1];
 	t_player players[MAX_PLAYERS];
+	t_memory		*memory;
 
 
 } t_vm;

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/13 09:21:19 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/13 12:07:09 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,34 @@ void	ft_outerr(char *msg)
 	exit(0);
 }
 
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
+
+void print_mem(t_memory *memory)
+{
+	int i;
+
+	i = 0;
+	while (i < MEM_SIZE)
+	{
+		//if (memory[i%MEM_SIZE].isplayer)
+	 		//ft_printf(KRED "%.2X " KNRM, memory[i%MEM_SIZE].byte );
+		//else
+		if (memory[i%MEM_SIZE].color)
+			ft_printf("%s", memory[i%MEM_SIZE].color);
+		ft_printf("%.2X " KNRM,  memory[i%MEM_SIZE].byte );
+		if ((i + 1)%64 == 0)
+	 		printf("\n");
+		i++;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_vm *vm;
@@ -106,18 +134,51 @@ int main(int argc, char **argv)
     }
 	vm = ft_parse_args(argc, argv);
 
-	ft_printf("dump flag %d\n", vm->f_dump);
-	ft_printf("log flag %d\n", vm->f_log);
-	ft_printf("Show flag %d\n", vm->f_show);
-	ft_printf("visualizer flag %d\n", vm->f_vus);
-	int i = 0;
-	while (i < vm->player_c)
-	{
-		ft_printf("player file <%s> id %d\n", vm->players[i].file_name, vm->players[i].id);
-		i++;
-	}
+	// ft_printf("dump flag %d\n", vm->f_dump);
+	// ft_printf("log flag %d\n", vm->f_log);
+	// ft_printf("Show flag %d\n", vm->f_show);
+	// ft_printf("visualizer flag %d\n", vm->f_vus);
+	// int i = 0;
+	// while (i < vm->player_c)
+	// {
+	// 	ft_printf("player file <%s> id %d\n", vm->players[i].file_name, vm->players[i].id);
+	// 	i++;
+	// }
 
 	ft_parse_player_files(vm);
+
+	vm->memory = (t_memory *)malloc(sizeof(t_memory) * MEM_SIZE);
+	char *color[] = {KGRN, KRED, KBLU, KCYN};
+	int i = -1;
+	while (++i < MEM_SIZE)
+	{
+		vm->memory[i].byte = 0;
+		vm->memory[i].color = NULL;
+	}
+	int j;
+	i = 0;
+	while (i < vm->player_c)
+	{
+		j = (MEM_SIZE/vm->player_c)*i;
+		int h = 0;
+		while (h < (int)vm->players[i].prog_size)
+		{
+			vm->memory[j%MEM_SIZE].byte = vm->players[i].code[h];
+			vm->memory[j%MEM_SIZE].color = strdup(color[i]);
+			h++;
+			j++;
+		}
+		i++;
+	}
+	print_mem(vm->memory);
+	// ii = MEM_SIZE/2;
+	// 	 j = 0;
+	//  while (j < (int)player_head[0].prog_size)
+	//  {
+	//  	memory[i%MEM_SIZE] = player_head[0].code[j];
+	// 	i++;
+	// 	j++;
+	// }
 	
 /*
 		j = 0;
@@ -127,7 +188,7 @@ int main(int argc, char **argv)
 			//player_head[i].code[j] = data[0];
 			uint8_t opcode =  player_head[i].code[j];
 			if (opcode >= 1 && opcode <= 16)
-				ft_printf("%s ", op_tab[(int)opcode - 1].name);
+				ft_printf("%s ", op_tab[(int)opcode - 1].name);m
 			else
 				ft_printf("%#.2X ", opcode);
 			
