@@ -1,5 +1,6 @@
-NAME = coreware
-SRC = srcs/op.c srcs/main.c srcs/ft_parse_args.c
+NAME = corewar
+SRC = srcs/op.c srcs/main.c srcs/ft_parse_args.c srcs/ft_read_player_data.c
+		
 CFLAG = -Wall -Wextra -Werror
 INC = includes
 
@@ -18,12 +19,10 @@ $(OBJ) : %.o : %.c
 
 clean:
 		make -C libft/ clean
-		make -C ft_printf/ clean
 		rm -rf $(OBJ)
 
 fclean:clean
 		make -C libft/ fclean
-		make -C ft_printf/ fclean
 		rm -rf $(NAME) 
 
 re: fclean $(NAME)

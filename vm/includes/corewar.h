@@ -63,9 +63,15 @@ typedef struct s_process
 
 }	t_process;
 
-t_vm        *ft_parse_args(int argc, char **argv);
+t_vm    *ft_parse_args(int argc, char **argv);
 t_vm	*ft_init_vm();
-void ft_usage(void);
+void 	ft_usage(void);
+
+void	ft_outerr(char *msg);
+int 	big_endian_to_int(uint8_t *data, int size);
+void	ft_parse_player_files(t_vm *vm);
+void	ft_check_magic(int fd, char *filename);
+void	ft_read_null(int fd);
 
 
 

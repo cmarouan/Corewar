@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/11 19:10:32 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/13 09:21:19 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ t_vm	*ft_init_vm()
 	return (vm);
 }
 
+void	ft_outerr(char *msg)
+{
+	ft_printf("ERROR : %s\n", msg);
+	exit(0);
+}
 
 int main(int argc, char **argv)
 {
@@ -111,6 +116,78 @@ int main(int argc, char **argv)
 		ft_printf("player file <%s> id %d\n", vm->players[i].file_name, vm->players[i].id);
 		i++;
 	}
+
+	ft_parse_player_files(vm);
 	
+/*
+		j = 0;
+		while (j < (int)player_head[i].prog_size)
+		{
+			//read(fd[i], data, 1);
+			//player_head[i].code[j] = data[0];
+			uint8_t opcode =  player_head[i].code[j];
+			if (opcode >= 1 && opcode <= 16)
+				ft_printf("%s ", op_tab[(int)opcode - 1].name);
+			else
+				ft_printf("%#.2X ", opcode);
+			
+			//j++;
+			uint8_t argtype = 0;
+			if((opcode >= 1 && opcode <= 16 && op_tab[(int)opcode - 1].argc > 1) || opcode == 0x10)
+				argtype = player_head[i].code[++j];
+			else
+			{
+				//op_tab[(int)opcode - 1].args[0]
+				ft_printf("T_DIR\n");
+				j += (op_tab[(int)opcode - 1].dir_size_2) ? 2: 4;
+				//ft_printf("%d\n", j + 1);
+				//ft_printf("\n next byte to read %d ", j + 1);
+				//break;
+				j++;
+				continue;
+			}
+			j++;
+			
+			//ft_printf("%.8b\n", argtype);
+			//first arg type:
+			j += ft_check_argtype(&argtype, SHIFT_ARG1, opcode);			
+			//second arg type:
+			j += ft_check_argtype(&argtype, SHIFT_ARG2, opcode);
+			
+			//ft_printf("\n next byte to read %d ", j + 1);
+			//third arg type:
+			j += ft_check_argtype(&argtype, SHIFT_ARG3, opcode);
+			//ft_printf("\n next byte to read %d ", j + 1);
+			//break;
+
+			ft_printf("\n");
+			
+			//break;
+		
+			//j++;
+		}
+*/
+/*
+	 uint8_t *memory = (uint8_t *)malloc(MEM_SIZE);
+	 ft_memset(memory, 0, MEM_SIZE);
+	 	i = MEM_SIZE/2;
+		 j = 0;
+	 while (j < (int)player_head[0].prog_size)
+	 {
+	 	memory[i%MEM_SIZE] = player_head[0].code[j];
+		i++;
+		j++;
+	}
+	 	i = 0;
+	 while (i < MEM_SIZE)
+	 {
+	 	printf("%.2X ", memory[i%MEM_SIZE]);
+		if ((i + 1)%64 == 0)
+	 		printf("\n");
+
+		i++;
+	}*/
+	
+	return (0);
 }
 
