@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_instructions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:57:08 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/08 22:20:27 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 18:54:15 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int get_instruction(t_token *token, char *str, int *index)
 	index2 = *index;
     if (!str[*index])
         return (1);
-	while (str[*index] && !ft_isblank(str[*index]) && str[*index] != '%')
+	while (str[*index] && !ft_isblank(str[*index]) && str[*index] != DIRECT_CHAR)
 		(*index)++;
 	if (!(token->instruction = ft_strsub(str, index2, *index - index2)) || check_instruction(token->instruction) == -1)
     {

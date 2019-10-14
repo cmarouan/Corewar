@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:34:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/09 19:19:56 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 23:17:20 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ static int get_name_comment_cmd(t_file *file, char *str)
 
 int header_checker(t_file *file, int *index)
 {
-    char *str;
-    int flag;
-    int ret;
+    char    *str;
+    int     flag;
+    int     ret;
 
     flag = 0;
-    while (file->code[++(*index)])
+    while (file->code[++(*index)].line)
     {
-        if (!(str = ft_strtrim(file->code[*index])))
+        if (!(str = ft_strtrim(file->code[*index].line)))
             return (0);
         if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
         {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/10 11:15:18 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 20:27:47 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 
 # define NAME_CMD_STRING ".name"
 # define COMMENT_CMD_STRING ".comment"
+# define OTHER_CMD_STRING ".extend"
 # define NAME_CMD_FLAG 1
 # define COMMENT_CMD_FLAG 2
 
@@ -72,25 +73,27 @@ typedef char  t_arg_type;
 # define COMMENT_LENGTH (2048)
 # define COREWAR_EXEC_MAGIC 0xea83f3
 
-typedef struct  s_header
+typedef struct  	s_header
 {
-  unsigned int  magic;
-  char          prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int  prog_size;
-  char          comment[COMMENT_LENGTH + 1];
-}               t_header;
+	unsigned int  	magic;
+	char          	prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	prog_size;
+	char          	comment[COMMENT_LENGTH + 1];
+	char			champion_exec_code[CHAMP_MAX_SIZE + 1];
+	unsigned int	null;
+}               	t_header;
 
-typedef struct  s_op
+typedef struct  	s_op
 {
-	char          instruction[6];
-	int           number_registries;
-	int           type_argument[3];
-	int           opcode;
-	int           cycles_before_execution;
-	char          *description;
-	int           changes_carry;
-	int           argument_type_code;
-}               t_op;
+	char          	instruction[6];
+	int           	number_registries;
+	int           	type_argument[3];
+	unsigned int	opcode;
+	int           	cycles_before_execution;
+	char          	*description;
+	int				argument_type_code;
+	int           	changes_carry;
+}               	t_op;
 
 t_op    op_tab[16];
 

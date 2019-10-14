@@ -1,8 +1,6 @@
-.name ""
-# hfs k
-.comment ""
-## jkdjgfd
-#fkdsgk'ds
+.name 		"turtle"
+.comment	"TURTLE FFS U LAMA"
+
 entry:
 	sti			r1, %:zork, %1
 	sti			r1, %:ardef, %1
@@ -10,15 +8,17 @@ entry:
 	sti			r1, %:entry_l1, %1
 	ld			%0, r16
 	fork		%:zork
+
 entry_l1:
 	live		%42
 	ld			%439025904, r2
 	ld			%0, r16
-	fork		%:entry 
+	fork		%:avdef
+
 ################################################################################
-xxx:
+
 ardef:
-	live		%:hhhh
+	live		%42
 	st			r2, -400
 	st			r2, -400
 	st			r2, -400
@@ -96,4 +96,3 @@ avdef:
 	zjmp		%:avdef
 
 ################################################################################
-

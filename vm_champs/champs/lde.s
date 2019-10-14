@@ -1,4 +1,5 @@
 .name	"LDE LDE LDE"
+.comment "jkajkd"
 	ld %0,r6
 	sti r1,%:suitb,%1
 	sti r1,%:suitb,%6

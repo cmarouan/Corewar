@@ -3,32 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_label.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:57:28 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/09 18:31:45 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 23:55:54 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void labels_exist(t_asm *store, t_file *file)
+void labels_exist(t_list *files, t_file *file)
 {
-	t_list *head;
-	t_list *head2;
-
+	t_list	*head;
+	t_list	*head2;
+	t_label	*label;
+	t_args	*arg;
+	
 	head = file->labels_call;
 	while (head)
 	{
+		arg = (t_args *)head->content;
 		head2 = file->labels_definition;
 		while (head2)
 		{
-			if (!ft_strcmp(head->content, head2->content))
+			label = (t_label *)head2->content;
+			if ((arg->type_arg == T_DIR && !ft_strcmp(arg->arg + 2, label->name)) || (arg->type_arg == T_IND && !ft_strcmp(arg->arg + 1, label->name)))
+			{
+				arg->label_index = label->index;
 				break ;
+			}
 			head2 = head2->next;
 		}
 		if (!head2)
-			ft_errors_management(store, head->content, 3);
+			ft_errors_management(files, file, arg->arg + (arg->type_arg == T_DIR ? 2 : 1), 5);
 		head = head->next;
 	}
 }
@@ -56,14 +63,16 @@ int get_label(t_file *file, t_token *token, char *str, int *index)
 		(*index)++;
 	if (str[*index] == LABEL_CHAR)
 	{
-		if (!(token->label = ft_strsub(str, index2, (*index)++ - index2)) || !check_label(token->label))
+		if (!(token->label = (t_label *)ft_memalloc(sizeof(t_label))))
+			return (0);
+		if (!(token->label->name = ft_strsub(str, index2, (*index)++ - index2)) || !check_label(token->label->name))
 		{
-			ft_strdel(&token->label);
+			ft_strdel(&token->label->name);
 			return (0);
 		}
-		if (!(new = ft_lstnew((void *)token->label, ft_strlen(token->label) + 1)))
+		if (!(new = ft_lstnew((void *)token->label, sizeof(t_label))))
 		{
-			ft_strdel(&token->label);
+			ft_strdel(&token->label->name);
 			return (0);
 		}
 		ft_lstadd(&file->labels_definition, new);
@@ -73,6 +82,7 @@ int get_label(t_file *file, t_token *token, char *str, int *index)
 	{
 		if (!(token->instruction = ft_strsub(str, index2, *index - index2)) || check_instruction(token->instruction) == -1)
 		{
+			DBG(token->instruction)
 			ft_strdel(&token->instruction);
 			return (0);
 		}

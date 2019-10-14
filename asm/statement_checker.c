@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   statement_checker.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:35:14 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/09 20:28:24 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 23:53:58 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-char *check_comment(char *str)
+static char *check_comment(char *str)
 {
 	char *new_string;
 	char *search_hash;
@@ -42,71 +42,75 @@ char *check_comment(char *str)
 	return (new_string);
 }
 
-static t_token *get_token(t_file *file, char *str)
+static int get_token(t_file *file, t_token *token, char *str)
 {
-	t_token *token;
 	int		index;
 	int		ret;
 	
-	if (!(token = (t_token *)ft_memalloc(sizeof(t_token))))
-		return (0);
 	index = 0;
 	if (!(ret = get_label(file, token, str, &index)))
-	{
-		ft_memdel((void **)&token);
-		return (NULL);
-	}
+		return (0);
 	else if (ret == 1)
 	{
 		if (!(ret = get_instruction(token, str, &index)))
-		{
-			ft_strdel(&token->label);
-			ft_memdel((void **)&token);
-			return (NULL);
-		}
+			return (0);
 	}
 	if (ret == -1 && !get_args(file, token, str, &index))
+		return (0);
+	return (1);
+}
+
+static int calcul_number_byte(t_token *token)
+{
+	int result;
+	int index;
+	int index2;
+	
+	result = 1;
+	index = check_instruction(token->instruction);
+	result += (op_tab[index].argument_type_code) ? 1 : 0;
+	index2 = -1;
+	while (++index2 < token->nb_arg)
 	{
-		ft_strdel(&token->label);
-		ft_strdel(&token->instruction);
-		ft_memdel((void **)&token);
-		return (NULL);
+		if (token->args[index2].type_arg & T_REG)
+			result++;
+		if (token->args[index2].type_arg & T_DIR)
+			result += (op_tab[index].changes_carry) ? 2 : 4;
+		if (token->args[index2].type_arg & T_IND)
+			result += 2;
 	}
-	return (token);
+	token->number_byte = result;
+	return (result);
 }
 
 int statement_checker(t_file *file, int *index)
 {
-	t_list	*new;
-	t_token	*token;
 	char	*str;
 
-	if (!file->code[*index])
+	if (!file->code[*index].line)
 		return (0);
 	(*index)--;
-    while (file->code[++(*index)])
+
+    while (file->code[++(*index)].line)
     {
-		if (file->code[*index + 1] == NULL && file->content[ft_strlen(file->content) - 1] != '\n')
+		if (!(str = check_comment(file->code[*index].line)))
 			return (0);
-		if (!(str = check_comment(file->code[*index])))
-            return (0);
-        if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
-        {
-            ft_strdel(&str);
-            continue ;
-        }
-		if (!(token = get_token(file, str)))
+		if (file->code[*index + 1].line == NULL && file->content[ft_strlen(file->content) - 1] != '\n' && *str)
+			return (0);
+		if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
+		{
+			ft_strdel(&str);
+			continue ;
+		}
+		if (!get_token(file, &file->code[*index], str))
 		{
 			ft_strdel(&str);
 			return (0);
 		}
-		if(!(new = ft_lstnew((void *)token, sizeof(t_token))))
-		{
-			ft_strdel(&str);
-			ft_memdel((void **)&token);
-			return (0);
-		}
-		ft_lstadd(&file->tokens, new);
+		if (file->code[*index].label)
+			file->code[*index].label->index = *index;
+		if (file->code[*index].instruction)
+			file->header.prog_size += calcul_number_byte(&file->code[*index]);
 		ft_strdel(&str);
 	}
 	return (1);

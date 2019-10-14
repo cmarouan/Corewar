@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:56:32 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/09 20:48:48 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/14 20:11:01 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,68 +28,92 @@ static int	is_number(char *str)
 	return (1);
 }
 
-int type_argument(t_file *file, char *arg)
+int type_register(t_token *token, char *arg, int num_arg)
 {
-	t_list *new;
-	int index;
 	int number;
 	
-	index = 0;
-	if (arg[0] == 'r')
+	if (ft_strlen(arg) > 3 || !is_number(arg + 1) || (number = ft_atoi(arg + 1)) < 0 || number > REG_NUMBER)
+		return (0);
+	token->args[num_arg].type_arg = T_REG;
+	token->args[num_arg].code_arg = REG_CODE;
+	token->args[num_arg].label_index = -1;
+	return (T_REG);	
+}
+
+int type_direct(t_file *file, t_token *token, char *arg, int num_arg)
+{
+	t_list *new;
+	
+	if (ft_strlen(arg) < 2)
+		return (0);
+	if (arg[1] == LABEL_CHAR)
 	{
-		if (ft_strlen(arg) > 3 || !is_number(arg + 1) || (number = ft_atoi(arg + 1)) < 1 || number > REG_NUMBER)
+		if (!check_label(arg + 2))
 			return (0);
-		return (T_REG);
-	}
-	else if (arg[0] == DIRECT_CHAR)
-	{
-		if (ft_strlen(arg) < 2)
+		if (!(new = ft_lstnew((void *)&token->args[num_arg], sizeof(t_args))))
 			return (0);
-		if (arg[1] == LABEL_CHAR)
-		{
-			if (!check_label(arg + 2))
-				return (0);
-			if (!(new = ft_lstnew((void *)arg + 2, ft_strlen(arg + 2) + 1)))
-				return (0);
-			ft_lstadd(&file->labels_call, new);
-		}
-		else
-		{
-			if (arg[1] == '+' || !ft_isnumber(arg + 1))
-				return (0);
-		}
-		return (T_DIR);
+		ft_lstadd(&file->labels_call, new);
 	}
 	else
 	{
-		if (ft_strlen(arg) < 1)
+		if (arg[1] == '+' || !ft_isnumber(arg + 1))
 			return (0);
-		if (arg[0] == LABEL_CHAR)
-		{
-			if (!check_label(arg + 1))
-				return (0);
-			if (!(new = ft_lstnew((void *)arg + 1, ft_strlen(arg + 1) + 1)))
-				return (0);
-			ft_lstadd(&file->labels_call, new);
-		}
-		else
-		{
-			if (arg[0] == '+' || !ft_isnumber(arg + 1))
-				return (0);
-		}
-		return (T_IND);
+		token->args[num_arg].label_index = -1;
 	}
+	token->args[num_arg].type_arg = T_DIR;
+	token->args[num_arg].code_arg = DIR_CODE;
+	return (T_DIR);
+}
+
+int type_indirect(t_file *file, t_token *token, char *arg, int num_arg)
+{
+	t_list *new;
+	
+	if (ft_strlen(arg) < 1)
+		return (0);
+	if (arg[0] == LABEL_CHAR)
+	{
+		if (!check_label(arg + 1))
+			return (0);
+		if (!(new = ft_lstnew((void *)&token->args[num_arg], sizeof(t_args))))
+			return (0);
+		ft_lstadd(&file->labels_call, new);
+	}
+	else
+	{
+		if (arg[0] == '+' || !ft_isnumber(arg))
+			return (0);
+		token->args[num_arg].label_index = -1;
+	}
+	token->args[num_arg].type_arg = T_IND;
+	token->args[num_arg].code_arg = IND_CODE;
+	return (T_IND);
+}
+
+int type_argument(t_file *file, t_token *token, char *arg, int num_arg)
+{
+	t_list *new;
+	
+	if (arg[0] == 'r')
+		return (type_register(token, arg, num_arg));
+	else if (arg[0] == DIRECT_CHAR)
+		return (type_direct(file, token, arg, num_arg));
+	else
+		return (type_indirect(file, token, arg, num_arg));
 	return (0);
 }
 
-int check_args(t_file *file, char *arg, int num_arg, int op_index)
+int check_args(t_file *file, t_token *token, char *arg, int num_arg)
 {
 	int type_arg;
-	
-	type_arg = type_argument(file, arg);
+	int op_index;
+
+	if ((op_index = check_instruction(token->instruction)) == -1)
+		return (0);
+	type_arg = type_argument(file, token, arg, num_arg);
 	if (!(type_arg & op_tab[op_index].type_argument[num_arg]))
 		return (0);
-	return (1);
+	return (type_arg);
 }
 
 int get_args(t_file *file, t_token *token, char *str, int *index)
@@ -100,34 +124,26 @@ int get_args(t_file *file, t_token *token, char *str, int *index)
 	int		index2;
 	int		index3;
 
-	if (!(args = ft_strsplit(str + *index, ',')))
+	if (!(args = ft_strsplit(str + *index, SEPARATOR_CHAR)))
 		return (0);
 	length = ft_tablen(args);
-	if ((index2 = check_instruction(token->instruction)) == -1)
+	if ((index2 = check_instruction(token->instruction)) == -1 || length != op_tab[index2].number_registries)
 	{
         free_tab(&args);
 		return (0);
     }
-	if (length != op_tab[index2].number_registries)
-    {
-        free_tab(&args);
+	if (!(token->args = (t_args *)ft_memalloc(sizeof(t_args) * length)))
 		return (0);
-    }
 	index3 = -1;
+	token->nb_arg = length;
 	while (++index3 < length)
 	{
-		if (!(arg = ft_strtrim(args[index3])))
+		if (!(arg = ft_strtrim(args[index3])) || !check_args(file, token, arg, index3))
 		{
 			free_tab(&args);
 			return (0);
 		}
-		if (!check_args(file, arg, index3, index2))
-		{
-			ft_strdel(&arg);
-			free_tab(&args);
-			return (0);
-		}
-		token->args[index3] = arg;
+		token->args[index3].arg = arg;
 	}
     free_tab(&args);
 	return (1);

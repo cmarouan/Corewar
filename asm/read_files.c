@@ -2,9 +2,9 @@
 
 static t_file *get_content_file(char *name, char *buf, int fd)
 {
-    t_file *file;
-    int     ret;
+    t_file  *file;
     char    *temp;
+    int     ret;
 
     if (!(file = (t_file *)ft_memalloc(sizeof(t_file))))
         return (NULL);
@@ -25,8 +25,17 @@ static t_file *get_content_file(char *name, char *buf, int fd)
     return (file);
 }
 
+static int check_name_file(char *str)
+{
+    int index;
 
-int read_files(t_asm *store, int argc, char **argv)
+    index = ft_strlen(str);
+    if (str[index - 1] != 's' || str[index - 2] != '.' || str[index - 3] == '/')
+        return (0);
+    return (1);  
+}
+
+void read_files(t_list **files, int argc, char **argv)
 {
     t_list  *new;
     t_file  *elem;
@@ -34,21 +43,21 @@ int read_files(t_asm *store, int argc, char **argv)
     int     index;
     int     fd;
 
-    
     index = 0;
     if (!(buf = (char *)ft_memalloc(sizeof(char) * (BUFF_SIZE + 1))))
-        return (0);
+        return ;
     while (++index < argc)
     {
+        if (!check_name_file(argv[index]))
+            ft_errors_management(*files, NULL, argv[index], 2);
         if ((fd = open(argv[index], O_RDONLY)) < 0)
-            return (0);
+            ft_errors_management(*files, NULL, argv[index], 1);
         if (!(elem = get_content_file(argv[index], buf, fd)))
-            return (0);
+            ft_errors_management(*files, NULL, argv[index], 1);
         if (!(new = ft_lstnew((void *)elem, sizeof(t_file))))
-            return (0);
-        ft_lstadd(&store->files, new);
+            ft_errors_management(*files, NULL, argv[index], 1);
+        ft_lstadd(files, new);
         close(fd);
     }
     ft_strdel(&buf);
-    return (1);
 }

@@ -4,23 +4,22 @@
 begin:	ld %0,r6
 jump:	zjmp %:deb
 	
-pare:	st r16,:begin -52
-	st r16,:begin -44
-	st r16,:begin -52
-	st r16,:begin -44
-	st r16,:begin -52
-	st r16,:begin -44
-	st r16,:begin -52
+pare:	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
 	live %1
-	st r16,:begin -44
-	st r16,:begin -52
-	st r16,:begin -44
-	st r16,:begin -52
-	st r16,:begin -44
-	st r16,:begin -52
-	st r16,:begin -44
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin
+	st r16,:begin 
+	st r16,:begin 
+	st r16,:begin 
 	zjmp %:pare
-
 toto:	st r15,-480
 	st r4,-481
 	st r7,-482
@@ -28,20 +27,19 @@ toto:	st r15,-480
 	st r13,-484
 	st r14,-485
 	zjmp %-510
-
 deb:	
-st1:	st r1,:lastlive1 +1
-st2:	st r1,:lastlive2 +1
-st3:	st r1,:lastlive3 +1
-st4:	st r1,:lastlive4 +1
-st5:	st r1,:live1 +1
-st6:	st r1,:live2 +1
-st7:	st r1,:live3 +1
-st8:	st r1,:live4 +1
+st1:	st r1,:lastlive1
+st2:	st r1,:lastlive2 
+st3:	st r1,:lastlive3 
+st4:	st r1,:lastlive4 
+st5:	st r1,:live1 
+st6:	st r1,:live2 
+st7:	st r1,:live3 
+st8:	st r1,:live4 
 	st r16,:jump
-	st r16,:begin -4
-	st r16,:begin -8
-	st r16,:begin -12
+	st r16,:begin 
+	st r16,:begin 
+	st r16,:begin 
 
 hop:	live %1
 	fork %:decal2
@@ -72,13 +70,10 @@ decal2: live %1
 	
 	fork %:separ2
 	live %4
-	ld %0x08F40370,r3   #ld %0x07F40370,r3
 
 	ld %0,r2
 	zjmp %:toto
-
 separ2:	live %3
-	ld %0x037004F4,r3  #ld %0x70037004,r3
 
 	xor r2,r2,r2
 	zjmp %:toto
@@ -107,27 +102,27 @@ just4:	live %3
 	live %3
 just5:	fork %:middle
 suitb:	live %3
-	st r16,:st1+1
+
 	live %3
-	st r16,:st1+1
+
 	live %3
-	st r16,:st1+1
+	st r16,:st1
 live1:	live %3
-	st r16,:st1+1
+	st r16,:st1
 live2:	live %3
-	st r16,:st1+1
+	st r16,:st1
 lastlive1: live %1
 	ld %0,r6
 lastlive2: live %1
 	zjmp %:suitb
 middle:	live %3
-	st r16,:st2+1
+	st r16,:st2
 	live %3
-	st r16,:st2+1
+	st r16,:st2
 	live %3
-	st r16,:st2+1
+	st r16,:st2
 live3:	live %3
-	st r16,:st2+1
+	st r16,:st2
 live4:	live %4
 lastlive3: live %1
 	ld %0,r6
@@ -140,7 +135,7 @@ decal:	live %1
 	live %1
 	fork %:fuite
 	live %1
-	ld %0x03700300,r5
+	ld %:0x03700300,r5
 	ld %0x04037003,r6
 
 	ld %0x03700501,r9

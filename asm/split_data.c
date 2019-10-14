@@ -40,16 +40,14 @@ static int	ft_count_char(char *str, char c)
 	return (counter);
 }
 
-char		**split_data(char const *s, char c)
+t_token	*split_data(char const *s, char c)
 {
-	char	**tab;
-	int		flag_quote;
-	int		j;
+	t_token	*tab;
+	int		index;
 	int		size;
 
-	j = 0;
-	flag_quote = 0;
-	if ((tab = (char **)malloc(sizeof(char *) * (words(s, c) + 1))) == NULL)
+	index = 0;
+	if ((tab = (t_token *)ft_memalloc(sizeof(t_token) * (words(s, c) + 1))) == NULL)
 		return (NULL);
 	while (*s)
 	{
@@ -58,13 +56,13 @@ char		**split_data(char const *s, char c)
 			size = ft_count_char((char *)s, c);
 			while (*s == c)
 				s++;
-			if (!(tab[j++] = ft_strsub(s, 0, size)))
+			if (!(tab[index++].line = ft_strsub(s, 0, size)))
 				return (NULL);
 			s = s + size;
 		}
 		else
 			s++;
 	}
-	tab[j] = 0;
+	tab[index].line = NULL;
 	return (tab);
 }
