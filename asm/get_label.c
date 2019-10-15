@@ -6,19 +6,19 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:57:28 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/14 23:55:54 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/15 14:16:19 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-void labels_exist(t_list *files, t_file *file)
+void	labels_exist(t_list *files, t_file *file)
 {
 	t_list	*head;
 	t_list	*head2;
 	t_label	*label;
 	t_args	*arg;
-	
+
 	head = file->labels_call;
 	while (head)
 	{
@@ -40,23 +40,23 @@ void labels_exist(t_list *files, t_file *file)
 	}
 }
 
-int check_label(char *label)
+int		check_label(char *label)
 {
-    int index;
+	int index;
 
-    index = -1;
-    while (label[++index])
-    {
-        if (!ft_strchr(LABEL_CHARS, label[index]))
-            return (0);
-    }
-    return (1);
+	index = -1;
+	while (label[++index])
+	{
+		if (!ft_strchr(LABEL_CHARS, label[index]))
+			return (0);
+	}
+	return (1);
 }
 
-int get_label(t_file *file, t_token *token, char *str, int *index)
+int		get_label(t_file *file, t_token *token, char *str, int *index)
 {
-	t_list *new;
-	int index2;
+	t_list	*new;
+	int		index2;
 
 	index2 = *index;
 	while (str[*index] && str[*index] != LABEL_CHAR && !ft_isblank(str[*index]) && str[*index] != DIRECT_CHAR)
@@ -66,26 +66,16 @@ int get_label(t_file *file, t_token *token, char *str, int *index)
 		if (!(token->label = (t_label *)ft_memalloc(sizeof(t_label))))
 			return (0);
 		if (!(token->label->name = ft_strsub(str, index2, (*index)++ - index2)) || !check_label(token->label->name))
-		{
-			ft_strdel(&token->label->name);
 			return (0);
-		}
 		if (!(new = ft_lstnew((void *)token->label, sizeof(t_label))))
-		{
-			ft_strdel(&token->label->name);
 			return (0);
-		}
 		ft_lstadd(&file->labels_definition, new);
 		return (1);
 	}
 	else if (ft_isblank(str[*index]) || str[*index] == DIRECT_CHAR)
 	{
 		if (!(token->instruction = ft_strsub(str, index2, *index - index2)) || check_instruction(token->instruction) == -1)
-		{
-			DBG(token->instruction)
-			ft_strdel(&token->instruction);
 			return (0);
-		}
 		return (-1);
 	}
 	return (0);

@@ -1,5 +1,5 @@
-.comment        "Just a basic Winner Program"
-
+.comment        "Just a basic Winner Program" ;dsghkshgkldshgklhdsk
+.name "" #fh;jdfjh
 entree:	live	%42		# entree
 	ld	%0,r5
 	ld	%0,r5

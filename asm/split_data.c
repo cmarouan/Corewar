@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_data.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/15 14:20:31 by hmney             #+#    #+#             */
+/*   Updated: 2019/10/15 14:21:07 by hmney            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "asm.h"
 
 static int	words(const char *str, char c)
@@ -40,14 +52,14 @@ static int	ft_count_char(char *str, char c)
 	return (counter);
 }
 
-t_token	*split_data(char const *s, char c)
+t_token		*split_data(char const *s, char c)
 {
 	t_token	*tab;
 	int		index;
 	int		size;
 
 	index = 0;
-	if ((tab = (t_token *)ft_memalloc(sizeof(t_token) * (words(s, c) + 1))) == NULL)
+	if (!(tab = (t_token *)ft_memalloc(sizeof(t_token) * (words(s, c) + 1))))
 		return (NULL);
 	while (*s)
 	{

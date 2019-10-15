@@ -5,7 +5,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include "libft.h"
-# include <stdio.h>
+# include "ft_printf.h"
 # define DBG(x) (ft_putendl(x));
 
 typedef struct  s_args
@@ -44,8 +44,14 @@ typedef struct  s_file
 	t_header    header;
 }               t_file;
 
+typedef struct	s_byte
+{
+	int 		number;
+	int 		nb_byte;
+}				t_byte;
 
-void         read_files(t_list **files, int argc, char **argv);
+
+void		read_files(t_list **files, int argc, char **argv);
 void        ft_errors_management(t_list *files, t_file *file, char *str, int index);
 t_token     *split_data(char const *s, char c);
 int         header_checker(t_file *file, int *index);
@@ -58,6 +64,7 @@ int         get_args(t_file *file, t_token *token, char *str, int *index);
 int         statement_checker(t_file *file, int *index);
 int         lexer(t_list *files, t_file *file);
 void        free_data(t_list *files);
-int 		convert_bytecode(t_list *files, t_file *file);
+int 		convert_bytecode(t_file *file);
 int			champion_exec_code(t_file *file, int fd);
+char		*check_comment(char *str);
 #endif

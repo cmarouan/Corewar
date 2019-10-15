@@ -1,8 +1,8 @@
-.name "bigzork"
-.comment "I know i cant win"
-
-ld %0, r2
-st r1, 211
+.name "bigzork"  ; hdghdlghd
+.comment "I know i cant win"#
+ ## dfjg;jfd 
+ld %0, r2#ldg
+st r1, 211;dkgk
 st r1, 211
 st r1, 211
 st r1, 211

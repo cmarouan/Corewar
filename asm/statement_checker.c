@@ -6,47 +6,17 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:35:14 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/14 23:53:58 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/15 18:36:13 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static char *check_comment(char *str)
+static int	get_token(t_file *file, t_token *token, char *str)
 {
-	char *new_string;
-	char *search_hash;
-	char *search_semicolon;	
-	char *temp;
+	int	index;
+	int	ret;
 
-	if (!(new_string = ft_strtrim(str)))
-		return (NULL);
-	if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
-		return (new_string);
-	search_hash = ft_strchr(new_string, COMMENT_CHAR);
-	search_semicolon = ft_strchr(new_string, ALT_COMMENT_CHAR);
-	if (search_semicolon || search_hash)
-	{
-		search_hash = search_hash ? search_hash : search_semicolon;
-		search_semicolon = search_semicolon ? search_semicolon : search_hash;
-		search_hash = search_hash < search_semicolon ? search_hash : search_semicolon;
-		temp = new_string;
-		if (!(new_string = ft_strsub(new_string, 0, search_hash - new_string)))
-			return (NULL);
-		ft_strdel(&temp);
-		temp = new_string;
-		if (!(new_string = ft_strtrim(new_string)))
-			return (NULL);
-		ft_strdel(&temp);
-	}
-	return (new_string);
-}
-
-static int get_token(t_file *file, t_token *token, char *str)
-{
-	int		index;
-	int		ret;
-	
 	index = 0;
 	if (!(ret = get_label(file, token, str, &index)))
 		return (0);
@@ -60,12 +30,12 @@ static int get_token(t_file *file, t_token *token, char *str)
 	return (1);
 }
 
-static int calcul_number_byte(t_token *token)
+static int	calcul_number_byte(t_token *token)
 {
 	int result;
 	int index;
 	int index2;
-	
+
 	result = 1;
 	index = check_instruction(token->instruction);
 	result += (op_tab[index].argument_type_code) ? 1 : 0;
@@ -83,16 +53,15 @@ static int calcul_number_byte(t_token *token)
 	return (result);
 }
 
-int statement_checker(t_file *file, int *index)
+int			statement_checker(t_file *file, int *index)
 {
 	char	*str;
 
 	if (!file->code[*index].line)
 		return (0);
 	(*index)--;
-
-    while (file->code[++(*index)].line)
-    {
+	while (file->code[++(*index)].line)
+	{
 		if (!(str = check_comment(file->code[*index].line)))
 			return (0);
 		if (file->code[*index + 1].line == NULL && file->content[ft_strlen(file->content) - 1] != '\n' && *str)
