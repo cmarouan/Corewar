@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:44:26 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/11 19:09:44 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/15 20:25:59 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int		ft_check_ext(char *str)
 {
 	int index;
 
+	//ft_printf("arg to check : %s\n", str);
 	index = ft_strlen(str) - 4;
 	return (index && str && !ft_strcmp(".cor", str + index));
 }
@@ -80,7 +81,7 @@ t_vm			*ft_parse_args(int argc, char **argv)
 	int		i;
 	t_vm	*vm;
 
-	i = 1;
+	i = 0;
 	vm = ft_init_vm();
 	while (i < argc)
 		i = ft_check_flag(vm, i, argv) + 1;

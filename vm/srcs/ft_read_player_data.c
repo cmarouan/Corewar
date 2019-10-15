@@ -73,6 +73,7 @@ void	ft_parse_player_files(t_vm *vm)
 		if ((fd = open(vm->players[i].file_name, O_RDONLY)) <= 0)
 			ft_outerr("file not open");
 		ft_check_magic(fd, vm->players[i].file_name);
+		vm->players[i].live_in_current_cycle = 0;
 		ft_read_player_name(fd, i, vm);
 		//ft_printf("%s has name %s\n", vm->players[i].file_name, vm->players[i].prog_name);
 		ft_read_null(fd);
@@ -82,14 +83,15 @@ void	ft_parse_player_files(t_vm *vm)
 	//	ft_printf("%s has cmt %s\n", vm->players[i].file_name, vm->players[i].comment);
 		ft_read_null(fd);
 		ft_read_player_code(fd, i, vm);
-		//int j = 0;
-	//	printf("code :\n");
+		// int j = 0;
+		// printf("code :\n");
 		// while (j < (int)vm->players[i].prog_size)
 		// {
 		// 	printf("%#.2X ", vm->players[i].code[j]);
 		// 	j++;
 		// }
 		// printf("\n");
+		// exit(0);
 
 		close(fd);
 		i++;

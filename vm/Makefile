@@ -1,5 +1,8 @@
 NAME = corewar
-SRC = srcs/op.c srcs/main.c srcs/ft_parse_args.c srcs/ft_read_player_data.c
+SRC = srcs/op.c srcs/main.c srcs/ft_parse_args.c\
+		srcs/ft_process.c srcs/ft_read_player_data.c\
+		srcs/instruction/ft_live.c\
+		srcs/instruction/ft_sti.c
 		
 CFLAG = -Wall -Wextra -Werror
 INC = includes

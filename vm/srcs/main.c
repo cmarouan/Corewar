@@ -6,13 +6,13 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/13 12:07:09 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/15 22:10:35 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_op op_tab[17];
+
 
 void ft_usage(void)
 {
@@ -49,32 +49,6 @@ int big_endian_to_int(uint8_t *data, int size)
 }    
 
 
-int ft_check_argtype(uint8_t *argtype, int shift, int opcode)
-{
-	int j = 0;
-
-	if (*argtype >> shift == REG_CODE)
-	{
-		ft_printf("REG_CODE ");
-		*argtype ^= (1 << shift);
-		j += 1;
-	}
-	else if (*argtype >> shift == DIR_CODE)
-	{
-		ft_printf("DIR_CODE ");
-		*argtype ^= (2 << shift);
-		//j 
-		j += (op_tab[(int)opcode - 1].dir_size_2) ? 2: 4;
-	}
-	else if (*argtype >> shift == IND_CODE)
-	{
-		*argtype ^= (3 << shift);
-		ft_printf("IND_CODE ");
-		j += 2;
-	}
-	return j;
-}
-
 
 t_vm	*ft_init_vm()
 {
@@ -86,6 +60,10 @@ t_vm	*ft_init_vm()
 	vm->f_vus = 0;
 	vm->f_log = 0;
 	vm->player_c = 0;
+	vm->process = NULL;
+	vm->pc_count = 0;
+	vm->nbr_live = 0;
+	vm->current_cycle = 0;
 	return (vm);
 }
 
@@ -95,27 +73,23 @@ void	ft_outerr(char *msg)
 	exit(0);
 }
 
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
-
-void print_mem(t_memory *memory)
+void print_mem(t_memory *memory, t_memory *pc)
 {
 	int i;
 
+	system("clear");
+	char *color[] = {KGRN, KRED, KBLU, KCYN};
 	i = 0;
 	while (i < MEM_SIZE)
 	{
 		//if (memory[i%MEM_SIZE].isplayer)
 	 		//ft_printf(KRED "%.2X " KNRM, memory[i%MEM_SIZE].byte );
 		//else
-		if (memory[i%MEM_SIZE].color)
-			ft_printf("%s", memory[i%MEM_SIZE].color);
+		if (&memory[i%MEM_SIZE] == pc)
+			ft_printf("%s", KRED);
+		else if (memory[i%MEM_SIZE].p_id != -1)
+			ft_printf("%s", color[memory[i%MEM_SIZE].p_id - 1]);
+		
 		ft_printf("%.2X " KNRM,  memory[i%MEM_SIZE].byte );
 		if ((i + 1)%64 == 0)
 	 		printf("\n");
@@ -123,54 +97,131 @@ void print_mem(t_memory *memory)
 	}
 }
 
+void ft_exec(t_process *p, t_vm *vm)
+{
+
+	int opcode = p->pc->byte;
+	//ft_printf("%x\n", p->pc);
+	PC_INCR(vm, p, 1);
+	if (opcode <= 0 || opcode > 16)
+		return;
+	
+	//
+	if (opcode == 0x0b) opcode = 2;
+	if (opcode == 2 || opcode == 1)
+		vm->instruction[opcode - 1](vm, p);
+	//else
+	//	PC_INCR(vm, p, 1);
+	//print_mem(vm->memory, p->pc);
+	//
+//	exit(0);
+}
+
+
 int main(int argc, char **argv)
 {
 	t_vm *vm;
+
+	char **args;
 
 	if (argc == 1 && argv[0])
     {
         ft_usage();
         return (0);
     }
-	vm = ft_parse_args(argc, argv);
+	int i = 1;
+	args = (char **)malloc((argc - 1)*sizeof(char *));
+	while (i < argc)
+	{
+		args[i - 1] = ft_strdup(argv[i]);
+		i++;
+	}
+	
+	//exit(0);
+	vm = ft_parse_args(argc - 1, args);
+	ft_parse_player_files(vm);
+	vm->last_live_player = vm->player_c;
+	
+	//vm->instruction[0](vm, vm->process);
 
 	// ft_printf("dump flag %d\n", vm->f_dump);
 	// ft_printf("log flag %d\n", vm->f_log);
 	// ft_printf("Show flag %d\n", vm->f_show);
-	// ft_printf("visualizer flag %d\n", vm->f_vus);
-	// int i = 0;
+	// ft_printf("visualizer flag %d\n", vm->player_c);
+	
 	// while (i < vm->player_c)
 	// {
 	// 	ft_printf("player file <%s> id %d\n", vm->players[i].file_name, vm->players[i].id);
 	// 	i++;
 	// }
-
-	ft_parse_player_files(vm);
-
+	//exit(0);
 	vm->memory = (t_memory *)malloc(sizeof(t_memory) * MEM_SIZE);
-	char *color[] = {KGRN, KRED, KBLU, KCYN};
-	int i = -1;
+	//char *color[] = {KGRN, KRED, KBLU, KCYN};
+	i = -1;
 	while (++i < MEM_SIZE)
 	{
 		vm->memory[i].byte = 0;
-		vm->memory[i].color = NULL;
+		vm->memory[i].p_id = -1;
 	}
+	
 	int j;
 	i = 0;
 	while (i < vm->player_c)
 	{
 		j = (MEM_SIZE/vm->player_c)*i;
 		int h = 0;
-		while (h < (int)vm->players[i].prog_size)
+		vm->process = ft_add_pc(vm->process, &vm->memory[j%MEM_SIZE], &vm->players[i]);
+		vm->pc_count++;
+		
+		while (h < vm->players[i].prog_size)
 		{
+			//ft_printf("%d\n", h);
 			vm->memory[j%MEM_SIZE].byte = vm->players[i].code[h];
-			vm->memory[j%MEM_SIZE].color = strdup(color[i]);
+			vm->memory[j%MEM_SIZE].p_id = vm->players[i].id;
+			//exit(0);
 			h++;
 			j++;
 		}
 		i++;
 	}
-	print_mem(vm->memory);
+	
+	//
+	 //int i;
+	//ft_printf("last live %d\n", vm->last_live_player);
+	vm->instruction[0] = &ft_live;
+	vm->instruction[1] = &ft_sti;
+	// vm->process->pc++;
+	// vm->instruction[1](vm, vm->process);
+	
+	//print_mem(vm->memory, vm->process->pc);
+	//exit(0);	
+
+	//ft_printf("%x\n", (vm->process->pc + 2)->byte);
+	//vm->process->pc++;
+	//vm->instruction[0](vm, vm->process);
+	//exit(0);
+
+	//ft_printf("diff %d\n", vm->memory - vm->process->pc);
+	
+	  t_process *tmp = vm->process;
+	// // //ft_printf("%p\n",vm->memory - vm->process->pc);
+	// // int cycle_to_check = CYCLE_TO_DIE;
+	
+	ft_printf("mem start from %X\n", vm->memory);
+
+	i = MEM_SIZE*1;
+	while (tmp && i--)
+	{
+		//ft_printf("%d\n", i);
+		// if (tmp->pc == vm->memory)
+		// 	ft_printf("exec %x\n", tmp->pc);
+		ft_exec(tmp, vm);
+		//PC_INCR(vm, tmp, 1);
+		tmp = tmp->next;
+	}
+	if (vm->f_vus == 1)
+		print_mem(vm->memory, vm->process->pc);
+	
 	// ii = MEM_SIZE/2;
 	// 	 j = 0;
 	//  while (j < (int)player_head[0].prog_size)
