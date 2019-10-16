@@ -9,9 +9,17 @@
 # include "op.h"
 # include "ft_printf.h"
 
+#include <ncurses.h>
+
 # define SHIFT_ARG1 6
 # define SHIFT_ARG2 4
 # define SHIFT_ARG3 2
+
+# define LIVES_LOG 1
+# define CYCLES_LOG 2
+# define INSTRUCTION_LOG 4
+# define DEATHS_LOG 8
+# define PC_MOV  16
 
 # define PC_INCR(vm, p, value) ft_change_pc(vm, p, value) 
 
@@ -42,14 +50,13 @@ typedef struct		s_player
 {
 	int					id_set;
 	int					id;
-	char				*color;
 	char				*file_name;
 	int					live_in_current_cycle;
 	int 				last_live;
 	char				prog_name[PROG_NAME_LENGTH + 1];
 	int					prog_size;
 	char				comment[COMMENT_LENGTH + 1];
-	uint8_t				*code;
+	char				*code;
 }					t_player;
 
 typedef struct s_process
@@ -59,6 +66,7 @@ typedef struct s_process
 	t_memory	*pc;
 	int			carry;
 	t_player	*player;
+	int			cycle_to_wait;
 	struct s_process *next;
 }	t_process;
 
@@ -87,6 +95,9 @@ typedef struct s_vm
 	int			last_live_player;
 	int			nbr_live;
 	int			current_cycle;
+	int			cycle_from_start;
+	int			nbr_of_check;
+	int			cycle_to_die;
 	int			player_c;
 	int			ids[MAX_PLAYERS + 1];
 	t_player	players[MAX_PLAYERS];
@@ -121,6 +132,11 @@ void	ft_live(t_vm *vm, t_process *p);
 void	ft_sti(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
+
+void ft_print_pc_inc(int op, t_memory *tmp, int step);
+void ft_write_mem(t_vm *vm, const char *data, int size,
+                    t_memory *mem, t_player *p);
+
 
 
 
