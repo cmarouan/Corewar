@@ -6,13 +6,13 @@
 #    By: hmney <hmney@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 18:32:28 by hmney             #+#    #+#              #
-#    Updated: 2019/10/15 19:05:26 by hmney            ###   ########.fr        #
+#    Updated: 2019/10/16 16:23:40 by hmney            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = asm
 
-FLAG = -Wall -Wextra -Werror
+#FLAG = -Wall -Wextra -Werror
 
 SRCS = op.c champion_exec_code.c check_comment.c convert_bytecode.c free_data.c ft_errors_management.c get_args.c get_instructions.c get_label.c header_checker.c lexer.c main.c read_files.c split_data.c statement_checker.c 
 
@@ -41,7 +41,7 @@ $(NAME): $(LIBFT) $(OBJ_ASM)
 
 
 $(OBJ_ASM): $(OBJS_DIR)/%.o : %.c $(INCLUDES_FILES) | $(OBJS_DIR)
-	@gcc -o $@ -c $< $(FLAG) -I $(INCLUDES)
+	@gcc -o $@ -c $<  -I $(INCLUDES)
 
 clean:
 	@make -C ../libft clean

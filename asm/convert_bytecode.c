@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 14:22:12 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 18:35:14 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/16 13:41:38 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int	create_file(char *file_name)
+int	create_file(char *file_name, int set)
 {
 	char	*str;
 	char	*temp;
@@ -20,11 +20,22 @@ static int	create_file(char *file_name)
 	int		fd;
 
 	index = ft_strlen(file_name);
-	if (!(str = ft_strsub(file_name, 0, index - 2)))
-		return (0);
-	temp = str;
-	if (!(str = ft_strjoin(str, ".cor")))
-		return (0);
+	if (set)
+	{
+		if (!(str = ft_strsub(file_name, 0, index - 1)))
+			return (0);
+		temp = str;
+		if (!(str = ft_strjoin(str, "cor")))
+			return (0);
+	}
+	else
+	{
+		if (!(str = ft_strsub(file_name, 0, index - 3)))
+			return (0);
+		temp = str;
+		if (!(str = ft_strjoin(str, "s")))
+			return (0);
+	}
 	ft_strdel(&temp);
 	if ((fd = open(str, O_CREAT | O_WRONLY | O_TRUNC, 0644)) < 0)
 		return (0);
@@ -37,7 +48,7 @@ int			convert_bytecode(t_file *file)
 {
 	int	fd;
 
-	if (!(fd = create_file(file->name)))
+	if (!(fd = create_file(file->name, 1)))
 		return (0);
 	file->header.magic = COREWAR_EXEC_MAGIC;
 	ft_putbits_fd((char *)&file->header.magic, 4, fd);

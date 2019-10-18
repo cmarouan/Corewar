@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include "libft.h"
 # include "ft_printf.h"
+# include <stdio.h>
 # define DBG(x) (ft_putendl(x));
 
 typedef struct  s_args
@@ -67,4 +68,6 @@ void        free_data(t_list *files);
 int 		convert_bytecode(t_file *file);
 int			champion_exec_code(t_file *file, int fd);
 char		*check_comment(char *str);
+int			check_name_file(char *str, int set);
+int			create_file(char *file_name, int set);
 #endif

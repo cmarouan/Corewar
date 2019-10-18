@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:18:35 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 14:20:14 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/16 11:58:30 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,21 @@ static t_file	*get_content_file(char *name, char *buf, int fd)
 	return (file);
 }
 
-static int		check_name_file(char *str)
+int		check_name_file(char *str, int set)
 {
 	int	index;
 
 	index = ft_strlen(str);
-	if (str[index - 1] != 's' || str[index - 2] != '.' || str[index - 3] == '/')
-		return (0);
+	if (set)
+	{
+		if (index < 3 || str[index - 1] != 's' || str[index - 2] != '.' || str[index - 3] == '/')
+			return (0);
+	}
+	else
+	{
+		if (index < 5 || ft_strcmp(str + (index - 4), ".cor") || str[index - 5] == '/')
+			return (0);
+	}
 	return (1);
 }
 
@@ -60,7 +68,7 @@ void			read_files(t_list **files, int argc, char **argv)
 		return ;
 	while (++index < argc)
 	{
-		if (!check_name_file(argv[index]))
+		if (!check_name_file(argv[index], 1))
 			ft_errors_management(*files, NULL, argv[index], 2);
 		if ((fd = open(argv[index], O_RDONLY)) < 0)
 			ft_errors_management(*files, NULL, argv[index], 1);

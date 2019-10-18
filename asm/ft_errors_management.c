@@ -6,14 +6,14 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 12:04:42 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 20:42:37 by hmney            ###   ########.fr       */
+/*   Updated: 2019/10/15 23:25:27 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
 const char	*g_messages[7] = {
-	"     Usage: ./asm <sourcefile1.s> <sourcefile2.s> ...",
+	"     Usage: ./asm [-d] <sourcefile1.s> <sourcefile2.s> ...",
 	"We can't read the file",
 	"the format of the file is wrong",
 	"Error at the header",
