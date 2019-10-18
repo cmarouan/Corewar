@@ -1,10 +1,19 @@
 NAME = corewar
-SRC = srcs/op.c srcs/main.c srcs/ft_parse_args.c\
-		srcs/ft_process.c srcs/ft_read_player_data.c\
+SRC =	srcs/op.c srcs/main.c\
+		srcs/ft_parse_args.c\
+		srcs/ft_process.c\
+		srcs/ft_read_player_data.c\
+		srcs/ft_tools.c\
 		srcs/instruction/ft_live.c\
-		srcs/instruction/ft_sti.c
+		srcs/instruction/ft_sti.c\
+		srcs/ft_visualisation.c\
+		srcs/ft_check.c\
+		srcs/ft_exec.c \
+		srcs/ft_free_vm.c\
+		srcs/ft_init.c\
+		srcs/ft_start.c\
 		
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -g
 INC = includes
 
 
@@ -15,7 +24,7 @@ all:$(NAME)
 $(NAME): $(OBJ)
 		make -C libft/
 		make -C ft_printf/
-		gcc -o $(NAME) $(OBJ) -L libft -lft -L ft_printf/ -lftprintf
+		gcc -o $(NAME) $(OBJ) -L libft -lft -L ft_printf/ -lftprintf -lncurses
 
 $(OBJ) : %.o : %.c
 		gcc $(CFLAG) -o $@ -c $< -I $(INC) 
