@@ -50,9 +50,9 @@ void	ft_sti(t_vm *vm, t_process *p)
     t_memory *tmp;
     t_memory *tmp2;
 
+    PC_INCR(vm, p, 1);
     tmp = p->pc;
     tmp2 = tmp;
-   
     argtype = p->pc->byte ^ (1 << SHIFT_ARG1);
     PC_INCR(vm, p, 1);
     reg_indx = p->pc->byte;
@@ -62,13 +62,13 @@ void	ft_sti(t_vm *vm, t_process *p)
     val[0] = ft_arg_tow(vm, &argtype, p);
     val[1] = ft_arg_three(vm, &argtype, p);
     tmp = tmp + val[0] + val[1] - 1;
-    if (vm->f_log == INSTRUCTION_LOG)
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
         ft_printf("p %4d | sti r%d %d %d\n %7s -> store %d to %d\n",
         p->player->id, reg_indx, val[0], val[1], "|", p->reg[reg_indx - 1] * -1,
         val[0] + val[1]);
     val[0] = p->reg[reg_indx - 1] * -1;
     ft_write_mem(vm, (char *)&val[0], 4, tmp, p->player);
-    if (vm->f_log == PC_MOV)
+    if (vm->f_log == PC_MOV && !vm->f_vus)
         ft_print_pc_inc(0x0b, tmp2, p->pc - tmp2);
     p->cycle_to_wait = -1;
    // ft_printf("Oldindex  %d : \n",p->oldindex);

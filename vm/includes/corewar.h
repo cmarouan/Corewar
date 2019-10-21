@@ -162,9 +162,9 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info);
 void ft_change_memory(int index, t_memory *mem, WINDOW *w_memory);
 void left_window(WINDOW *w_memory, t_memory *mem);
 void window_right(WINDOW *w_info, t_vm *vm);
-void ft_put_players(t_player *players, int nb_p, WINDOW *info);
+//void ft_put_players(t_player *players, int nb_p, WINDOW *info);
 void ft_move_pc(t_process *p, t_vm *vm);
-int		ft_event_handler(t_vm *vm, int cmd);
+int	ft_event_handler(t_vm *vm, int cmd);
 
 
 

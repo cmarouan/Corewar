@@ -4,12 +4,17 @@
 void ft_start(t_vm *vm)
 {
     	
-	int i =CYCLE_TO_DIE * 5;
+	//int i = 0;
 	vm->cycle_from_start = 1;
-	
-	while (i--	)
+	vm->current_cycle = 1;
+	while (vm->current_cycle <= vm->cycle_to_die)
 	{
-		
+		if ( vm->current_cycle == vm->cycle_to_die)
+		{
+			ft_check(vm);
+			vm->current_cycle = 1;
+		}
+
 		t_process *tmp = vm->process;
 		//ft_printf("Cycle  %d : pc at %d\n",vm->cycle_from_start, tmp->pc - vm->memory + 1);
 		while (tmp)
@@ -27,6 +32,7 @@ void ft_start(t_vm *vm)
 			tmp = tmp->next;
 		}
 		
+		
 		// char c;
 		// c = getchar();
 		if (vm->f_vus)
@@ -36,6 +42,7 @@ void ft_start(t_vm *vm)
 			//if (wgetch(vm->w_info) == 27) break;
 			window_right(vm->w_info, vm);
 			wrefresh(vm->w_memory);
+			usleep(SECOND / vm->speed);
 		}
 		//cbreak();
 		//left_window(vm->w_memory, vm->memory);
@@ -43,7 +50,9 @@ void ft_start(t_vm *vm)
 		
 		//nodelay(stdscr, false);
 		vm->cycle_from_start++;
-		usleep(SECOND / vm->speed);
-
+		//vm->current_cycle++;
+		vm->current_cycle++;
 	}
+
+	//luunch winner
 }

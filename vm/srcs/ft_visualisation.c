@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/18 14:16:35 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/19 12:02:45 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void initialize_colors()
 	init_pair(5, COLOR_WHITE, COLOR_BLACK);
 	init_pair(6, COLOR_WHITE, COLOR_CYAN);
 	init_pair(7, COLOR_BLACK, COLOR_WHITE);
-	//init_pair(8, COLOR_BLACK, -1);
+	init_pair(8, COLOR_BLACK, COLOR_BLACK);
 }
 
-void ft_put_players(t_player *players, int nb_p, WINDOW *info)
+void ft_put_players(int start, t_player *players, int nb_p, WINDOW *info)
 {
 	int i;
 	char res[100];
@@ -46,11 +46,11 @@ void ft_put_players(t_player *players, int nb_p, WINDOW *info)
 	int y;
 
 	i = 0;
-	x = 12;
+	x = start + 2;
 	y = 8;
 	sprintf(res, "Players : %d", nb_p);
 	wattron(info, COLOR_PAIR(3));
-	mvwaddstr(info, 10, 5, res);
+	mvwaddstr(info, start, 5, res);
 	while (i < nb_p)
 	{
 		sprintf(res, "Player -%d : %s", players[i].id, players[i].prog_name);
@@ -66,25 +66,33 @@ void ft_put_players(t_player *players, int nb_p, WINDOW *info)
 		x = x + 4;
 		i++;
 	}
+	wmove(info, 0, 0);
+	//wattron(info, COLOR_PAIR(8));
+	//mvwprintw(info , 0, 0, "h");
+	//wmove(info, LINES - 2, y + 5);
 	wrefresh(info);
 }
 
 void window_right(WINDOW *w_info, t_vm *vm)
 {
 	char res[50];
+	int start = 0;
 
 	wattron(w_info, A_BOLD);
 	wbkgd(w_info, COLOR_PAIR(2));
 	wattron(w_info, COLOR_PAIR(4));
-	mvwprintw(w_info, 1, 5, !vm->pause ? "Running" : "Paused ");
-	mvwprintw(w_info, 2, 5, "Speed : %.4d cycle/second", vm->speed);
+	mvwprintw(w_info, ++start, 5, !vm->pause ? "Running" : "Paused ");
+	mvwprintw(w_info, ++start , 5, "Speed : %.4d cycle/second", vm->speed);
+	mvwprintw(w_info, ++start , 5, "Cycle to die %.4d", vm->cycle_to_die);
 	wattron(w_info, COLOR_PAIR(2));
+	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d", vm->nbr_of_check);
 	sprintf(res, "Cycle : %d", vm->cycle_from_start);
-	mvwaddstr(w_info, 5, 5, res);
+	mvwaddstr(w_info, ++start + 1, 5, res);
 	sprintf(res, "Process : %d", vm->pc_count);
-	mvwaddstr(w_info, 7, 5, res);
-	ft_put_players(vm->players, vm->player_c, w_info);
-	
+	mvwaddstr(w_info, ++start + 1, 5, res);
+	mvwprintw(w_info, ++start + 1, 5, "Nbr of lives : %.10d/%d", vm->nbr_live, NBR_LIVE);
+	ft_put_players(++start + 1, vm->players, vm->player_c, w_info);
+
 	wrefresh(w_info);
 }
 
@@ -141,6 +149,7 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 
 	initscr();
 	cbreak();
+	noecho();
 	keypad(stdscr, TRUE);
 	//delay(stdscr, true);
 	//timeout();
@@ -164,6 +173,9 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 
 int		ft_event_handler(t_vm *vm, int cmd)
 {
+	//wattron(vm->w_info, COLOR_PAIR(4));
+	//mvwprintw(vm->w_info, 0, 0, "M");
+	//wrefresh(vm->w_info);
 	if (cmd == 27)
 		return (1);
 	if (cmd == 's' || cmd == 'S')
