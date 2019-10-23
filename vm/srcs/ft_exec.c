@@ -19,16 +19,16 @@ void ft_exec(t_process *p, t_vm *vm)
 	{
 		
 		//ft_printf("exec on Cycle  %d : \n",vm->cycle_from_start);	
-		if (p->opcode <= 0 || p->opcode > 16)
-		{
-			//
-			return;
-		}
+		// Temp instruvtion : ????/
 		if (p->opcode == 0x0b) p->opcode = 2;
+		// Temp instruction : ????/
 		
 		if (p->opcode == 2 || p->opcode == 1)
 			vm->instruction[p->opcode - 1](vm, p);
-		//PC_INCR(vm, p, 1);
+		// Temp instruction : ????/
+		else
+			PC_INCR(vm, p, 1);
+		// Temp instruction : ????/
 		//exit(0);
 	}
 }

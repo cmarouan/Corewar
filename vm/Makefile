@@ -12,6 +12,7 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/ft_free_vm.c\
 		srcs/ft_init.c\
 		srcs/ft_start.c\
+		srcs/ft_valide.c\
 		
 CFLAG = -Wall -Wextra -Werror -g
 INC = includes

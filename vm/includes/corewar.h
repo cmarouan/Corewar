@@ -81,12 +81,10 @@ typedef struct s_op
 	char	opcode;
 	int		cycle;
 	char	*comment;
-	int		octet_param;
-	int		dir_size_2;
+	int		argtype;
+	int		dir_size;
 	int		carry;
-}			t_op;
-
-
+}			t_op; 
 
 typedef struct s_vm
 {
