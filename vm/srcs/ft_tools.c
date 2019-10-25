@@ -12,7 +12,8 @@ void ft_write_mem(t_vm *vm, const char *data, int size,
 			mem = mem - MEM_SIZE;
         mem->byte = data[i];
         mem->p_id = p->id;
-        ft_change_memory(mem - vm->memory, mem, vm->w_memory);
+		if (vm->f_vus)
+        	ft_change_memory(mem - vm->memory, mem, vm->w_memory);
         mem++;
         i--;
     }
