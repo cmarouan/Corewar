@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/22 15:54:09 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:15:42 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,50 @@ t_op	op_tab[17] =
 		.dir_size = 4,
 		.carry = 1
 	},
-	{"or", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
-		"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0, 0},
-	{"xor", 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
-		"ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0, 0},
-	{"zjmp", 1, {T_DIR}, 9, 20, "jump if zero", 0, 1, 0},
-	{"ldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
-		"load index", 1, 1, 0},
+	{
+		.name = "or",
+		.argc = 3,
+		.args = {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
+		.opcode = 7,
+		.cycle = 6,
+		.comment = "ou  (or   r1, r2, r3   r1 | r2 -> r3",
+		.argtype = 1,
+		.dir_size = 4,
+		.carry = 0
+	},
+	{
+		.name = "xor",
+		.argc = 3,
+		.args = {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG},
+		.opcode = 8,
+		.cycle = 6,
+		.comment = "ou (xor  r1, r2, r3   r1^r2 -> r3",
+		.argtype = 1,
+		.dir_size = 4,
+		.carry = 0
+	},
+	{
+		.name = "zjmp",
+		.argc = 1,
+		.args = {T_DIR},
+		.opcode = 9,
+		.cycle =  20,
+		.comment = "jump if zero",
+		.argtype = 0,
+		.dir_size = 2,
+		.carry = 0
+	},
+	{
+		.name = "ldi",
+		.argc = 3,
+		.args = {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG},
+		.opcode = 10,
+		.cycle = 25,
+		.comment = "load index",
+		.argtype = 1,
+		.dir_size = 2,
+		.carry = 0
+	},
 	{
 		.name = "sti",
 		.argc = 3,
@@ -97,10 +134,59 @@ t_op	op_tab[17] =
 		.dir_size = 2,
 		.carry = 0
 	},
-	{"fork", 1, {T_DIR}, 12, 800, "fork", 0, 1, 0},
-	{"lld", 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0, 1},
-	{"lldi", 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
-		"long load index", 1, 1, 1},
-	{"lfork", 1, {T_DIR}, 15, 1000, "long fork", 0, 1, 0},
-	{"aff", 1, {T_REG}, 16, 2, "aff", 1, 0, 0}
+	{
+		.name = "fork",
+		.argc = 1,
+		.args = {T_DIR},
+		.opcode = 12,
+		.cycle = 800,
+		.comment = "fork",
+		.argtype = 0,
+		.dir_size = 2,
+		.carry = 0
+	},
+	{
+		.name = "lld",
+		.argc = 2,
+		.args = {T_DIR | T_IND, T_REG},
+		.opcode = 13,
+		.cycle = 10,
+		.comment = "long load",
+		.argtype = 1,
+		.dir_size = 4,
+		.carry = 1
+	},
+	{
+		.name = "lldi",
+		.argc = 3,
+		.args = {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG},
+		.opcode = 14,
+		.cycle = 50,
+		.comment = "long load index",
+		.argtype = 1,
+		.dir_size = 2,
+		.carry = 1
+	},
+	{
+		.name = "lfork",
+		.argc = 1,
+		.args = {T_DIR},
+		.opcode = 15,
+		.cycle = 1000,
+		.comment = "long fork",
+		.argtype = 0,
+		.dir_size = 2,
+		.carry = 0
+	},
+	{
+		.name = "aff",
+		.argc = 1,
+		.args = {T_REG},
+		.opcode = 16,
+		.cycle = 2,
+		.comment = "aff",
+		.argtype = 1,
+		.dir_size = 4,
+		.carry = 0
+	}
 };
