@@ -104,7 +104,7 @@ typedef struct s_vm
 	int			ids[MAX_PLAYERS + 1];
 	t_player	players[MAX_PLAYERS];
 	t_memory	*memory;
-	void		(*instruction[2])(struct s_vm *, t_process *);
+	void		(*instruction[16])(struct s_vm *, t_process *);
 	int			pc_count;
 
 
@@ -142,6 +142,8 @@ void ft_start(t_vm *vm);
 
 void	ft_live(t_vm *vm, t_process *p);
 void	ft_sti(t_vm *vm, t_process *p);
+void	ft_add(t_vm *vm, t_process *p);
+void	ft_sub(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 
@@ -150,6 +152,7 @@ void ft_write_mem(t_vm *vm, const char *data, int size,
                     t_memory *mem, t_player *p);
 
 void ft_init_memory(t_vm *vm);
+int     ft_valide(uint8_t opcode,/* t_process *p, t_vm *vm*/ uint8_t argtype, t_memory *mem);
 
 
 

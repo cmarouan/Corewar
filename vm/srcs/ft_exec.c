@@ -20,10 +20,10 @@ void ft_exec(t_process *p, t_vm *vm)
 		
 		//ft_printf("exec on Cycle  %d : \n",vm->cycle_from_start);	
 		// Temp instruvtion : ????/
-		if (p->opcode == 0x0b) p->opcode = 2;
+		//if (p->opcode == 0x0b) p->opcode = 2;
 		// Temp instruction : ????/
 		
-		if (p->opcode == 2 || p->opcode == 1)
+		if (p->opcode >= 1 && p->opcode <= 15)
 			vm->instruction[p->opcode - 1](vm, p);
 		// Temp instruction : ????/
 		else

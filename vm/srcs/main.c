@@ -50,7 +50,21 @@ int main(int argc, char **argv)
 	vm->last_live_player = vm->player_c;
 	ft_init_memory(vm);
 	vm->instruction[0] = &ft_live;
-	vm->instruction[1] = &ft_sti;
+		vm->instruction[1] = &ft_sti;
+		vm->instruction[2] = &ft_live;
+		vm->instruction[3] = &ft_add;
+		vm->instruction[4] = &ft_sub;
+		vm->instruction[5] = &ft_sti;
+		vm->instruction[6] = &ft_sti;
+		vm->instruction[7] = &ft_sti;
+		vm->instruction[8] = &ft_sti;
+		vm->instruction[9] = &ft_sti;
+		vm->instruction[10] = &ft_sti;
+	vm->instruction[11] = &ft_sti;
+		vm->instruction[12] = &ft_sti;
+		vm->instruction[13] = &ft_sti;
+		vm->instruction[14] = &ft_sti;
+		vm->instruction[15] = &ft_sti;
 	if (vm->f_vus)
 	{
 		vs_main(vm);

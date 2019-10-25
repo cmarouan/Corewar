@@ -6,6 +6,8 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/ft_tools.c\
 		srcs/instruction/ft_live.c\
 		srcs/instruction/ft_sti.c\
+		srcs/instruction/ft_add.c\
+		srcs/instruction/ft_sub.c\
 		srcs/ft_visualisation.c\
 		srcs/ft_check.c\
 		srcs/ft_exec.c \
