@@ -135,8 +135,10 @@ void 	ft_ld(t_vm *vm, t_process *p);
 void	ft_sti(t_vm *vm, t_process *p);
 void	ft_add(t_vm *vm, t_process *p);
 void	ft_sub(t_vm *vm, t_process *p);
-void ft_st(t_vm *vm, t_process *p);
+void	ft_st(t_vm *vm, t_process *p);
 void	ft_zjmp(t_vm *vm, t_process *p);
+void	ft_and(t_vm *vm, t_process *p);
+
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 

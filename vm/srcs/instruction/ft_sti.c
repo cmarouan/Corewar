@@ -16,12 +16,14 @@ static int    ft_arg_tow(t_vm *vm, uint8_t *argtype, t_process *p)
         jump_val = (big_endian_to_int(data, 2) - 3) % IDX_MOD;
         ft_getbytes(vm->memory, p->pc + jump_val, 4, data);
         PC_INCR(vm, p, 2);
+        *argtype ^= (T_IND << SHIFT_ARG2);
         return (big_endian_to_int(data, 4));
     }else
     {
+        jump_val = p->pc->byte - 1;
         PC_INCR(vm, p, 1);
-        *argtype ^= (1 << SHIFT_ARG2);
-        return (p->reg[p->pc->byte - 1]);
+        *argtype ^= (T_REG << SHIFT_ARG2);
+        return (p->reg[jump_val]);
     }
     *argtype ^= ((*argtype >> SHIFT_ARG2) << SHIFT_ARG2);
     return (big_endian_to_int(data, 2));
