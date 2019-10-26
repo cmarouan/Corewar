@@ -25,16 +25,6 @@
 # define PC_INCR(vm, p, value) ft_change_pc(vm, p, value) 
 
 
-
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
-
 typedef unsigned char	uint8_t;
 
 
@@ -141,9 +131,11 @@ void ft_check(t_vm *vm);
 void ft_start(t_vm *vm);
 
 void	ft_live(t_vm *vm, t_process *p);
+void 	ft_ld(t_vm *vm, t_process *p);
 void	ft_sti(t_vm *vm, t_process *p);
 void	ft_add(t_vm *vm, t_process *p);
 void	ft_sub(t_vm *vm, t_process *p);
+void ft_st(t_vm *vm, t_process *p);
 void	ft_zjmp(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/18 14:20:18 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/26 16:09:15 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 	vm->last_live_player = vm->player_c;
 	ft_init_memory(vm);
 	vm->instruction[0] = &ft_live;
-		vm->instruction[1] = &ft_sti;
+		vm->instruction[1] = &ft_ld;
 		vm->instruction[2] = &ft_live;
 		vm->instruction[3] = &ft_add;
 		vm->instruction[4] = &ft_sub;

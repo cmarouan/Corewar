@@ -22,7 +22,7 @@ void ft_add(t_vm *vm, t_process *p)
     PC_INCR(vm, p, 1);
     r[2] = p->pc->byte;
     p->reg[r[2] - 1] = p->reg[r[1] - 1] + p->reg[r[0] - 1];
-    if ( p->reg[r[2] - 1] == 0)
+    if (p->reg[r[2] - 1] == 0)
         p->carry = 1;
     else
         p->carry = 0;

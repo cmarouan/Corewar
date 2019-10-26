@@ -13,7 +13,6 @@ static int    ft_arg_tow(t_vm *vm, uint8_t *argtype, t_process *p)
     }else if (*argtype >> SHIFT_ARG2 == IND_CODE)
     {
         ft_getbytes(vm->memory, p->pc, 2, data);
-        
         jump_val = (big_endian_to_int(data, 2) - 3) % IDX_MOD;
         ft_getbytes(vm->memory, p->pc + jump_val, 4, data);
         PC_INCR(vm, p, 2);

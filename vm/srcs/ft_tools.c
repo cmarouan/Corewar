@@ -91,7 +91,7 @@ void print_mem(t_memory *memory, t_memory *pc)
 
 	//system("clear");
 	
-	char *color[] = {KGRN, KRED, KBLU, KCYN};
+//	char *color[] = {KGRN, KRED, KBLU, KCYN};
 	i = 0;
 	while (i < MEM_SIZE)
 	{
@@ -99,14 +99,15 @@ void print_mem(t_memory *memory, t_memory *pc)
 	 		//ft_printf(KRED "%.2X " KNRM, memory[i%MEM_SIZE].byte );
 		//else
 		
-		if (memory + i%MEM_SIZE == pc)
-			ft_printf("%s", KRED);
-		else if (memory[i%MEM_SIZE].p_id != -1)
-			ft_printf("%s", color[memory[i%MEM_SIZE].p_id - 1]);
+		 if (memory + i%MEM_SIZE == pc)
+			i++;
+		// 	ft_printf("%s",);
+		// else if (memory[i%MEM_SIZE].p_id != -1)
+		// 	ft_printf("%s", color[memory[i%MEM_SIZE].p_id - 1]);
 		
-		ft_printf("%.2X " KNRM,  memory[i%MEM_SIZE].byte );
-		if ((i + 1)%64 == 0)
-	 		printf("\n");
+		// ft_printf("%.2X ",  memory[i%MEM_SIZE].byte );
+		// if ((i + 1)%64 == 0)
+	 	// 	printf("\n");
 		i++;
 	}
 }
