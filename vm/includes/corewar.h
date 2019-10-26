@@ -144,6 +144,7 @@ void	ft_live(t_vm *vm, t_process *p);
 void	ft_sti(t_vm *vm, t_process *p);
 void	ft_add(t_vm *vm, t_process *p);
 void	ft_sub(t_vm *vm, t_process *p);
+void	ft_zjmp(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 

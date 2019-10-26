@@ -8,6 +8,7 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/instruction/ft_sti.c\
 		srcs/instruction/ft_add.c\
 		srcs/instruction/ft_sub.c\
+		srcs/instruction/ft_zjmp.c\
 		srcs/ft_visualisation.c\
 		srcs/ft_check.c\
 		srcs/ft_exec.c \

@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 		vm->instruction[5] = &ft_sti;
 		vm->instruction[6] = &ft_sti;
 		vm->instruction[7] = &ft_sti;
-		vm->instruction[8] = &ft_sti;
+		vm->instruction[8] = &ft_zjmp;
 		vm->instruction[9] = &ft_sti;
 		vm->instruction[10] = &ft_sti;
 	vm->instruction[11] = &ft_sti;
