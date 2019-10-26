@@ -152,7 +152,7 @@ void ft_write_mem(t_vm *vm, const char *data, int size,
                     t_memory *mem, t_player *p);
 
 void ft_init_memory(t_vm *vm);
-int     ft_valide(uint8_t opcode,/* t_process *p, t_vm *vm*/ uint8_t argtype, t_memory *mem);
+int     ft_valide(t_memory *mem, int index);
 
 
 

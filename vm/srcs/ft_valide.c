@@ -12,17 +12,21 @@ int     ft_argsize(uint8_t opcode, uint8_t arg)
 }
 /*
 pc need to be in opcode position before calling a valid function.
-mem : adress memory of the first arg;
-argtype : argtype of operation
-opcode : operation code 
+mem : adress memory in the vm;
+index of opcode in memory (0 .. MEM_SIZE - 1)
 */
-int     ft_valide(uint8_t opcode,/* t_process *p, t_vm *vm*/ uint8_t argtype, t_memory *mem)
+int     ft_valide(/* t_process *p, t_vm *vm*/t_memory *mem, int index)
 {
     int size;
     int i;
     int wrong;
     int arg;
+    uint8_t argtype;
+    uint8_t opcode;
 
+    opcode = mem[index].byte;
+    argtype = mem[(index + 1)%MEM_SIZE].byte;
+    index += 2;
     i = 0;
     size = 0;
     wrong = 0;
@@ -32,7 +36,7 @@ int     ft_valide(uint8_t opcode,/* t_process *p, t_vm *vm*/ uint8_t argtype, t_
         arg = argtype >> (6 - i*2);
         arg = (arg == 0b11 ? 4 : arg); 
         if (arg == 0b01)
-            if (mem[size%MEM_SIZE].byte <= 0 || mem[size%MEM_SIZE].byte > 16)
+            if (mem[(index + size)%MEM_SIZE].byte <= 0 || mem[(index + size)%MEM_SIZE].byte > 16)
                 wrong++;
         
         size += ft_argsize(opcode, (arg == 4 ? 0b11 : arg));

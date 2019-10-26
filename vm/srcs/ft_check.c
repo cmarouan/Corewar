@@ -19,8 +19,6 @@ void ft_check(t_vm *vm)
 		vm->players[i].live_in_current_period = 0;
 		i++;
 	}
-	if (!vm->f_vus)
-		ft_printf("cycle to die %d\n", vm->current_cycle);
 
 
 
