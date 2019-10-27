@@ -138,7 +138,8 @@ void	ft_sub(t_vm *vm, t_process *p);
 void	ft_st(t_vm *vm, t_process *p);
 void	ft_zjmp(t_vm *vm, t_process *p);
 void	ft_and(t_vm *vm, t_process *p);
-
+void	ft_or(t_vm *vm, t_process *p);
+void	ft_xor(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 
