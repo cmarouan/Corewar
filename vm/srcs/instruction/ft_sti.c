@@ -3,7 +3,7 @@
 
 
 
-static int    ft_arg_tow(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
+static int    ft_arg_two(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
 {
     uint8_t data[4];
     int     jump_val;
@@ -86,11 +86,11 @@ void	ft_sti(t_vm *vm, t_process *p)
     val[2] = vm->memory[MOD(index)].byte;
     //PC_INCR(vm, p, 1);
     index++;
-    val[0] = ft_arg_tow(vm, &argtype, p, &index);
+    val[0] = ft_arg_two(vm, &argtype, p, &index);
     val[1] = ft_arg_three(vm, &argtype, p, &index);
     val[1] = (val[0] + val[1]) % IDX_MOD;
     //ft_checklog(vm, p, val, tmp2);
-    val[0] = p->reg[val[2] - 1] * -1;
+    val[0] = p->reg[val[2] - 1];
     ft_write_mem(vm, (char *)&val[0], 4, p->pc + val[1], p->player);
     p->cycle_to_wait = -1;
     index = (p->pc - vm->memory) - index;

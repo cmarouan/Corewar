@@ -23,6 +23,7 @@ void	ft_live(t_vm *vm, t_process *p)
 		return;
 	vm->nbr_live++;
 	p->cycle_to_wait = -1;
+	p->live_declare++;
 	//ft_printf("Cycle  %d : \n",vm->cycle_from_start);	
 	vm->players[i].last_live = vm->cycle_from_start;
     vm->players[i].live_in_current_period++;

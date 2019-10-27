@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/27 13:26:22 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/27 19:33:13 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ void ft_put_players(int start, t_player *players, int nb_p, WINDOW *info)
 		i++;
 	}
 	wmove(info, 0, 0);
-	//wattron(info, COLOR_PAIR(8));
-	//mvwprintw(info , 0, 0, "h");
-	//wmove(info, LINES - 2, y + 5);
 	wrefresh(info);
 }
 
@@ -85,7 +82,8 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	mvwprintw(w_info, ++start , 5, "Speed : %.4d cycle/second", vm->speed);
 	mvwprintw(w_info, ++start , 5, "Cycle to die %.4d", vm->cycle_to_die);
 	wattron(w_info, COLOR_PAIR(2));
-	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d", vm->nbr_of_check);
+	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d/%d", vm->nbr_of_check, MAX_CHECKS);
+	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %.6d", vm->current_cycle);
 	sprintf(res, "Cycle : %d", vm->cycle_from_start);
 	mvwaddstr(w_info, ++start + 1, 5, res);
 	sprintf(res, "Process : %d", vm->pc_count);
@@ -128,7 +126,7 @@ void left_window(WINDOW *w_memory, t_memory *mem)
 	wrefresh(w_memory);
 }
 
-void ft_change_memory(int index, t_memory *mem, WINDOW *windowA)
+void ft_change_memory(int index, t_memory *mem, WINDOW *window)
 {
 	int x;
 	int y;
@@ -137,9 +135,9 @@ void ft_change_memory(int index, t_memory *mem, WINDOW *windowA)
 	x = (index / 64) + 1;
 	y = ((index % 64) * 3) + 3;
 	sprintf(byte, "%.2X", mem->byte);
-	wattron(windowA, COLOR_PAIR(mem->p_id));
-	mvwaddstr(windowA, x, y, byte);
-	wrefresh(windowA);
+	wattron(window, COLOR_PAIR(mem->p_id));
+	mvwaddstr(window, x, y, byte);
+	wrefresh(window);
 }
 
 int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)

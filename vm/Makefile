@@ -9,11 +9,14 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/instruction/ft_add.c\
 		srcs/instruction/ft_sub.c\
 		srcs/instruction/ft_zjmp.c\
+		srcs/instruction/ft_ldi.c\
 		srcs/instruction/ft_ld.c\
 		srcs/instruction/ft_st.c\
 		srcs/instruction/ft_and.c\
 		srcs/instruction/ft_or.c\
 		srcs/instruction/ft_xor.c\
+		srcs/instruction/ft_fork.c\
+		srcs/instruction/ft_lfork.c\
 		srcs/ft_visualisation.c\
 		srcs/ft_check.c\
 		srcs/ft_exec.c \

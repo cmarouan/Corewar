@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/26 20:25:39 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/27 17:28:46 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ int main(int argc, char **argv)
 	vm->instruction[2] = &ft_st;
 	vm->instruction[3] = &ft_add;
 	vm->instruction[4] = &ft_sub;
-		vm->instruction[5] = &ft_and;
-		vm->instruction[6] = &ft_or;
-		vm->instruction[7] = &ft_xor;
+	vm->instruction[5] = &ft_and;
+	vm->instruction[6] = &ft_or;
+	vm->instruction[7] = &ft_xor;
 	vm->instruction[8] = &ft_zjmp;
-		vm->instruction[9] = &ft_sti;
-		vm->instruction[10] = &ft_sti;
-	vm->instruction[11] = &ft_sti;
+	vm->instruction[9] = &ft_ldi;
+	vm->instruction[10] = &ft_sti;
+	vm->instruction[11] = &ft_fork;
 		vm->instruction[12] = &ft_sti;
 		vm->instruction[13] = &ft_sti;
-		vm->instruction[14] = &ft_sti;
+	vm->instruction[14] = &ft_lfork;
 		vm->instruction[15] = &ft_sti;
 	if (vm->f_vus)
 	{

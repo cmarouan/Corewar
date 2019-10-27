@@ -61,8 +61,7 @@ void ft_init_memory(t_vm *vm)
 	{
 		j = (MEM_SIZE/vm->player_c)*i;
 		int h = 0;
-		vm->process = ft_add_pc(vm, &vm->memory[j%MEM_SIZE], &vm->players[i]);
-		vm->pc_count++;
+		vm->process = ft_add_pc(vm, MOD(j), &vm->players[i]);
 		//ft_printf("player code : %#p %d\n", &vm->players[i].code[h], h);
 		//
 		while (h < vm->players[i].prog_size)

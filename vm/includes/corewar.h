@@ -54,6 +54,7 @@ typedef struct		s_player
 typedef struct s_process
 {
 	// r1 start with champion number;
+	int			pc_id;
 	char		opcode;
 	int			*reg;
 	int			oldindex;
@@ -61,6 +62,7 @@ typedef struct s_process
 	int			carry;
 	t_player	*player;
 	int			cycle_to_wait;
+	int			live_declare;
 	struct s_process *next;
 }	t_process;
 
@@ -121,7 +123,12 @@ int 	big_endian_to_int(uint8_t *data, int size);
 void	ft_parse_player_files(t_vm *vm);
 void	ft_check_magic(int fd, char *filename);
 void	ft_read_null(int fd);
-t_process *ft_add_pc(t_vm *vm, t_memory *mem, t_player *player);
+
+
+t_process *ft_add_pc(t_vm *vm, int index, t_player *player);
+void ft_dup_process(t_vm *vm, t_process *p, int index);
+void    ft_kill_process(t_vm *vm, int pc_id);
+
 void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data);
 void ft_free_vm(t_vm *vm);
 
@@ -139,9 +146,12 @@ void	ft_add(t_vm *vm, t_process *p);
 void	ft_sub(t_vm *vm, t_process *p);
 void	ft_st(t_vm *vm, t_process *p);
 void	ft_zjmp(t_vm *vm, t_process *p);
+void	ft_ldi(t_vm *vm, t_process *p);
 void	ft_and(t_vm *vm, t_process *p);
 void	ft_or(t_vm *vm, t_process *p);
 void	ft_xor(t_vm *vm, t_process *p);
+void ft_fork(t_vm *vm, t_process *p);
+void ft_lfork(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 
