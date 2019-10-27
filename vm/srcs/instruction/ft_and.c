@@ -8,12 +8,12 @@ static int    ft_arg_one(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
     
     if (*argtype >> SHIFT_ARG1 == DIR_CODE)
     {
-        ft_getbytes(vm->memory, vm->memory + (*index % MEM_SIZE), 4, data);
+        ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 4, data);
         *index += 4;
         
     }else if (*argtype >> SHIFT_ARG1 == IND_CODE)
     {
-        ft_getbytes(vm->memory, vm->memory + (*index % MEM_SIZE), 2, data);
+        ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 2, data);
         jump_val = big_endian_to_int(data, 2) % IDX_MOD;
         ft_getbytes(vm->memory, p->pc + jump_val, 4, data);
         *index += 2;
@@ -21,7 +21,7 @@ static int    ft_arg_one(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
         return (big_endian_to_int(data, 4));
     }else
     {
-        jump_val = vm->memory[*index % MEM_SIZE].byte - 1;
+        jump_val = vm->memory[*MOD(index)].byte - 1;
         *index = *index + 1;
         *argtype ^= (REG_CODE << SHIFT_ARG1);
         return (p->reg[jump_val]);
@@ -37,11 +37,11 @@ static int    ft_arg_two(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
   
     if (*argtype >> SHIFT_ARG2 == DIR_CODE)
     {
-        ft_getbytes(vm->memory, vm->memory + (*index % MEM_SIZE), 4, data);
+        ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 4, data);
         *index += 4;
     }else if (*argtype >> SHIFT_ARG2 == IND_CODE)
     {
-        ft_getbytes(vm->memory, vm->memory + (*index % MEM_SIZE), 2, data);
+        ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 2, data);
         jump_val = big_endian_to_int(data, 2) % IDX_MOD;
         ft_getbytes(vm->memory, p->pc + jump_val, 4, data);
         *index += 2;
@@ -49,7 +49,7 @@ static int    ft_arg_two(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
         return (big_endian_to_int(data, 4));
     }else
     {
-        jump_val = vm->memory[*index % MEM_SIZE].byte - 1;
+        jump_val = vm->memory[*MOD(index)].byte - 1;
         *index = *index + 1;
         *argtype ^= (REG_CODE << SHIFT_ARG2);
         return (p->reg[jump_val]);
@@ -75,19 +75,19 @@ void	ft_and(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((val[2] = ft_valide(vm->memory, index++)) > 0)
+    if ((val[2] = ft_valide(vm->memory, index)) > 0)
     {
         PC_INCR(vm, p, val[2]);
         p->cycle_to_wait = -1;
         return;
     }
     index++;
-    argtype = vm->memory[index % MEM_SIZE].byte;
+    argtype = vm->memory[MOD(index)].byte;
     index++;
     val[0] = ft_arg_one(vm, &argtype, p, &index);
     val[1] = ft_arg_two(vm, &argtype, p, &index);
-    p->reg[vm->memory[index % MEM_SIZE].byte - 1] = val[0] & val[1];
-    if (p->reg[vm->memory[index % MEM_SIZE].byte - 1] == 0)
+    p->reg[vm->memory[MOD(index)].byte - 1] = val[0] & val[1];
+    if (p->reg[vm->memory[MOD(index)].byte - 1] == 0)
         p->carry = 1;
     else
         p->carry = 0;

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/19 12:02:45 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/27 13:26:22 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void ft_change_memory(int index, t_memory *mem, WINDOW *windowA)
 	sprintf(byte, "%.2X", mem->byte);
 	wattron(windowA, COLOR_PAIR(mem->p_id));
 	mvwaddstr(windowA, x, y, byte);
+	wrefresh(windowA);
 }
 
 int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
@@ -216,7 +217,7 @@ void ft_move_pc(t_process *p, t_vm *vm)
 	x = (index / 64) + 1;
 	y = ((index % 64) * 3) + 3;
 	sprintf(byte, "%.2X", vm->memory[index].byte);
-	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == -1 ? 5 : vm->memory[index].p_id ));
+	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == -1 ? 5 : vm->memory[index].p_id));
 	mvwaddstr(vm->w_memory, x, y, byte);
 	wrefresh(vm->w_memory);
 }

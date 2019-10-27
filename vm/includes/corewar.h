@@ -22,6 +22,8 @@
 # define PC_MOV  16
 # define SECOND 1000000
 
+#define MOD(index) index % MEM_SIZE
+
 # define PC_INCR(vm, p, value) ft_change_pc(vm, p, value) 
 
 
