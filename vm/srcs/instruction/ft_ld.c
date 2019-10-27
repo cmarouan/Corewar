@@ -32,7 +32,7 @@ void ft_ld(t_vm *vm, t_process *p)
     p->reg[p->pc->byte - 1] = big_endian_to_int(data, 4);
     if (p->reg[p->pc->byte - 1] == 0)
         p->carry = 1;
-    ft_write_mem(vm, (char *)&p->reg[5], 4, p->pc + 59, p->player);
+   // ft_write_mem(vm, (char *)&p->reg[5], 4, p->pc + 59, p->player);
     p->cycle_to_wait = -1;
     PC_INCR(vm, p, 1);
 }

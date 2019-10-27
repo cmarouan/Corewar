@@ -7,8 +7,12 @@ void ft_exec(t_process *p, t_vm *vm)
 	{
 	//	ft_printf("code %p \n", p->pc);
 		p->opcode = p->pc->byte;
+		
 		if (p->opcode > 0 && p->opcode <= 16)
-		    p->cycle_to_wait = op_tab[p->opcode - 1].cycle - 1;
+		{
+			p->cycle_to_wait = op_tab[p->opcode - 1].cycle - 1;
+			//ft_printf("%s\n", op_tab[p->opcode - 1].name);
+		}
 		else
 			PC_INCR(vm, p, 1);
 		if (p->oldindex == -1)

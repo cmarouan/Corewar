@@ -11,7 +11,7 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/instruction/ft_zjmp.c\
 		srcs/instruction/ft_ld.c\
 		srcs/instruction/ft_st.c\
-		srcs/instruction/ft_and\
+		srcs/instruction/ft_and.c\
 		srcs/ft_visualisation.c\
 		srcs/ft_check.c\
 		srcs/ft_exec.c \
