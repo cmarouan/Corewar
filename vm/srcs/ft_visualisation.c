@@ -48,6 +48,7 @@ void ft_put_players(int start, t_player *players, int nb_p, WINDOW *info)
 	i = 0;
 	x = start + 2;
 	y = 8;
+	wattron(info, A_BOLD);
 	sprintf(res, "Players : %d", nb_p);
 	wattron(info, COLOR_PAIR(3));
 	mvwaddstr(info, start, 5, res);
@@ -75,9 +76,9 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	char res[50];
 	int start = 0;
 
-	wattron(w_info, A_BOLD);
 	wbkgd(w_info, COLOR_PAIR(2));
 	wattron(w_info, COLOR_PAIR(4));
+	wattron(w_info, A_BOLD);
 	mvwprintw(w_info, ++start, 5, !vm->pause ? "Running" : "Paused ");
 	mvwprintw(w_info, ++start , 5, "Speed : %.4d cycle/second", vm->speed);
 	mvwprintw(w_info, ++start , 5, "Cycle to die %.4d", vm->cycle_to_die);
@@ -102,9 +103,11 @@ void left_window(WINDOW *w_memory, t_memory *mem)
 	int j = 0;
 	uint8_t  data[3];
 	
-	box(w_memory, A_UNDERLINE, A_UNDERLINE ); 
+	wattron(w_memory, COLOR_PAIR(4));
+	box(w_memory, 0, 0); 
 	wbkgd(w_memory, COLOR_PAIR(1));
 	wmove(w_memory, 1, 3);
+	wattron(w_memory, A_BOLD);
 	wrefresh(w_memory);
 	while (j < 64)
 	{
@@ -156,16 +159,16 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 	initialize_colors();
 	getmaxyx(stdscr, maxy, maxx);
 	halfx = maxx >> 1;
-	if ((*w_memory = newwin(maxy - 5 , halfx + (halfx >> 1), 0, 0)) == NULL)
+	if ((*w_memory = newwin(66 , 197 , 0, 0)) == NULL)
 		allocation_error();
-	if ((*w_info = newwin(maxy - 5, (halfx >> 1), 0, halfx + (halfx >> 1))) == NULL)
+	if ((*w_info = newwin(maxy - 5, halfx, 0, 202)) == NULL)
 		allocation_error();
-	if ( maxy < 72 || maxx <  264)
+	/*if ( maxy < 72 || maxx <  264)
 	{
 		wattron(*w_memory, COLOR_PAIR(1));
 		wprintw(*w_memory, "Small window");
 		exit(0);
-	}
+	}*/
 	return (1);
 }
 
@@ -223,7 +226,6 @@ void ft_move_pc(t_process *p, t_vm *vm)
 
 void vs_main(t_vm *vm)
 {
-
 	if (ft_int_vis(&vm->w_memory, &vm->w_info))
 	{
 		curs_set(0);
