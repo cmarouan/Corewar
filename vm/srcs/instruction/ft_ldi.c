@@ -14,8 +14,10 @@ static int    ft_arg_one(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
     }else if (*argtype >> SHIFT_ARG1 == IND_CODE)
     {
         ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 2, data);
-        jump_val = big_endian_to_int(data, 2) % IDX_MOD;
-        ft_getbytes(vm->memory, p->pc + jump_val, 4, data);
+        jump_val = p->pc - vm->memory + (big_endian_to_int(data, 2) % IDX_MOD);
+        if (jump_val < 0)
+            jump_val = MEM_SIZE + jump_val;
+        ft_getbytes(vm->memory, vm->memory + MOD(jump_val), 4, data);
         *index += 2;
         *argtype ^= (IND_CODE << SHIFT_ARG1);
         return (big_endian_to_int(data, 4));
@@ -70,14 +72,11 @@ void	ft_ldi(t_vm *vm, t_process *p)
     index++;
     val[0] = ft_arg_one(vm, &argtype, p, &index);
     val[1] = ft_arg_two(vm, &argtype, p, &index);
-    val[2] = (val[0] + val[1]) % IDX_MOD;
-
-    ft_getbytes(vm->memory, p->pc + val[2], 4, data);
+    val[2] = p->pc - vm->memory +  ((val[0] + val[1]) % IDX_MOD);
+    if (val[2] < 0)
+        val[2] = MEM_SIZE + val[2];
+    ft_getbytes(vm->memory, vm->memory + MOD(val[2]), 4, data);
     p->reg[vm->memory[MOD(index)].byte - 1] = big_endian_to_int(data, 4);
-    if (p->reg[vm->memory[MOD(index)].byte - 1] == 0)
-        p->carry = 1;
-    else
-        p->carry = 0;
     index++;
     p->cycle_to_wait = -1;
     index = (p->pc - vm->memory) - index;

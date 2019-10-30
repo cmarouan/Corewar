@@ -28,9 +28,12 @@ void ft_st(t_vm *vm, t_process *p)
     }
     else
     {
-        ft_getbytes(vm->memory, vm->memory + (MOD(index)), 2, data);
-        jump_val = big_endian_to_int(data, 2) % IDX_MOD;
-        ft_write_mem(vm, (char *)&result, 4, p->pc + jump_val, p->player);
+        ft_getbytes(vm->memory, vm->memory + MOD(index), 2, data);
+        jump_val = index - 3 + big_endian_to_int(data, 2) % IDX_MOD;
+        if (jump_val < 0)
+            jump_val = MEM_SIZE + jump_val;
+      //  ft_printf("cycle %d write to %d\n",vm->cycle_from_start, MOD(jump_val));
+        ft_write_mem(vm, (char *)&result, 4, vm->memory + MOD(jump_val), p->player);
         index += 2;
     }
     index = (p->pc - vm->memory) - index;

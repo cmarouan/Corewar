@@ -1,6 +1,6 @@
 #include "corewar.h"
 
-void ft_ld(t_vm *vm, t_process *p)
+void ft_lld(t_vm *vm, t_process *p)
 {
     int jump_val;
     uint8_t argtype;
@@ -30,14 +30,13 @@ void ft_ld(t_vm *vm, t_process *p)
     else
     {
         ft_getbytes(vm->memory, vm->memory + (MOD(index)), 2, data);
-        jump_val = index - 2 + big_endian_to_int(data, 2) % IDX_MOD;
+        jump_val = p->pc - vm->memory + big_endian_to_int(data, 2);
         if (jump_val < 0)
             jump_val = MEM_SIZE + jump_val;
         ft_getbytes(vm->memory, vm->memory + MOD(jump_val), 4, data);
         index += 2;
         //PC_INCR(vm, p, 2);
     }
-
     p->reg[vm->memory[MOD(index)].byte - 1] = big_endian_to_int(data, 4);
     if (p->reg[vm->memory[MOD(index)].byte - 1] == 0)
         p->carry = 1;
@@ -45,6 +44,8 @@ void ft_ld(t_vm *vm, t_process *p)
         p->carry = 0;
    // ft_write_mem(vm, (char *)&p->reg[5], 4, p->pc + 59, p->player);
     p->cycle_to_wait = -1;
-    index = index - (p->pc - vm->memory);
+    index = (p->pc - vm->memory) - index;
+    if (index < 0)
+        index *= -1;
     PC_INCR(vm, p, (index + 1));
 }

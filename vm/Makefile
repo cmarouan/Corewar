@@ -10,7 +10,9 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/instruction/ft_sub.c\
 		srcs/instruction/ft_zjmp.c\
 		srcs/instruction/ft_ldi.c\
+		srcs/instruction/ft_lldi.c\
 		srcs/instruction/ft_ld.c\
+		srcs/instruction/ft_lld.c\
 		srcs/instruction/ft_st.c\
 		srcs/instruction/ft_and.c\
 		srcs/instruction/ft_or.c\

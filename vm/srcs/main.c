@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/27 17:28:46 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:51:23 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int main(int argc, char **argv)
 	vm->instruction[9] = &ft_ldi;
 	vm->instruction[10] = &ft_sti;
 	vm->instruction[11] = &ft_fork;
-		vm->instruction[12] = &ft_sti;
-		vm->instruction[13] = &ft_sti;
+	vm->instruction[12] = &ft_lld;
+	vm->instruction[13] = &ft_lldi;
 	vm->instruction[14] = &ft_lfork;
 		vm->instruction[15] = &ft_sti;
 	if (vm->f_vus)
