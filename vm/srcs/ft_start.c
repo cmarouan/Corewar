@@ -8,56 +8,37 @@ void ft_start(t_vm *vm)
 	vm->current_cycle = 1;
 	while (vm->current_cycle <= vm->cycle_to_die)
 	{
+		
+		t_process *tmp = vm->process;
+		while (tmp)
+		{
+			if (tmp->cycle_to_wait <= 0)
+				ft_exec(tmp, vm);
+			if (tmp->cycle_to_wait > -1)
+				tmp->cycle_to_wait--;
+			if (vm->f_vus)
+				window_right(vm->w_info, vm);
+			tmp = tmp->next;
+		}
 		if ( vm->current_cycle == vm->cycle_to_die)
 		{
 			ft_check(vm);
-			vm->current_cycle = 1;
-			// if (!vm->process)
-			// 	return ;
+			vm->current_cycle = 0;
 		}
-
-		t_process *tmp = vm->process;
-		
-		while (tmp)
+		if (vm->f_dump > 0 && vm->f_dump == vm->cycle_from_start)
 		{
-		
-		
-			if (tmp->cycle_to_wait <= 0)
-			{
-				ft_exec(tmp, vm);
-			}
-			if (tmp->cycle_to_wait > -1)
-				tmp->cycle_to_wait--;
-			//ft_change_memory(tmp->pc - vm->memory, tmp->pc, vm->w_memory);
-			//if (vm->current_cycle >= vm->cycle_to_die)
-			//	ft_check(vm);
-			//ft_printf("%10s %d\n","cycle to exec pc of", tmp->player->id);
-			tmp = tmp->next;
-			
+			print_mem(vm->memory);
+			break;
 		}
-	
-		
-		
-		// char c;
-		// c = getchar();
+		vm->cycle_from_start++;
+		vm->current_cycle++;
 		if (vm->f_vus)
 		{
 			if (ft_event_handler(vm, wgetch(vm->w_info)))
 				break;
-			//if (wgetch(vm->w_info) == 27) break;
 			window_right(vm->w_info, vm);
 			wrefresh(vm->w_memory);
 			usleep(SECOND / vm->speed);
 		}
-		//cbreak();
-		//left_window(vm->w_memory, vm->memory);
-		
-		
-		//nodelay(stdscr, false);
-		vm->cycle_from_start++;
-		//vm->current_cycle++;
-		vm->current_cycle++;
 	}
-
-	//luunch winner
 }

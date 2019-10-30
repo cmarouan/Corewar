@@ -85,7 +85,7 @@ int big_endian_to_int(uint8_t *data, int size)
 }
 
 
-void print_mem(t_memory *memory, t_memory *pc)
+void print_mem(t_memory *memory)
 {
 	int i;
 
@@ -93,21 +93,22 @@ void print_mem(t_memory *memory, t_memory *pc)
 	
 //	char *color[] = {KGRN, KRED, KBLU, KCYN};
 	i = 0;
-	while (i < MEM_SIZE)
+	int j = 0;
+	while (i < 64)
 	{
-		//if (memory[i%MEM_SIZE].isplayer)
-	 		//ft_printf(KRED "%.2X " KNRM, memory[i%MEM_SIZE].byte );
-		//else
-		
-		 if (memory + i%MEM_SIZE == pc)
-			i++;
-		// 	ft_printf("%s",);
-		// else if (memory[i%MEM_SIZE].p_id != -1)
-		// 	ft_printf("%s", color[memory[i%MEM_SIZE].p_id - 1]);
-		
-		// ft_printf("%.2X ",  memory[i%MEM_SIZE].byte );
-		// if ((i + 1)%64 == 0)
-	 	// 	printf("\n");
+		j = 0;
+		if (i == 0)
+			ft_printf("0x0000 : ");
+		else
+			ft_printf("%#.4x : ", i * 64);
+		while (j < 64)
+		{
+			if ((i * 64 + j) == 1926)
+				ft_printf("%.2x ", memory[i * 64 + j].byte);
+			else ft_printf("%.2x ", memory[i * 64 + j].byte);
+			j++;
+		}
+		ft_printf("\n");
 		i++;
 	}
 }

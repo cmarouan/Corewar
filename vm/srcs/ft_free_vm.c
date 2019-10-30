@@ -3,7 +3,7 @@
 void ft_free_vm(t_vm *vm)
 {
 	int i = 0;
-	while (i < vm->pc_count)
+	while (i < vm->player_c)
 	{
 		free(vm->players[i].file_name);
 		free(vm->players[i].code);

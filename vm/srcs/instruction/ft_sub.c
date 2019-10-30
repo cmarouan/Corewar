@@ -26,7 +26,7 @@ void ft_sub(t_vm *vm, t_process *p)
     else
         p->carry = 0;
     if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | sub r%d r%d r%d\n",p->player->id, r[1], r[0], r[2]);
+        ft_printf("p %4d | sub r%d r%d r%d\n",p->player->id, r[0], r[1], r[2]);
     if (vm->f_log == PC_MOV && !vm->f_vus)
         ft_print_pc_inc(0x05, tmp + 1, p->pc - tmp);
     PC_INCR(vm, p, 1);

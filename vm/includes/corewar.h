@@ -86,6 +86,7 @@ typedef struct s_vm
 	int			f_show;
 	int			f_vus;
 	int			f_log;
+	int			pc_ids;
 	int			pause;
 	int			last_live_player;
 	int			nbr_live;
@@ -127,12 +128,11 @@ void	ft_read_null(int fd);
 
 t_process *ft_add_pc(t_vm *vm, int index, t_player *player);
 void ft_dup_process(t_vm *vm, t_process *p, int index);
-t_process    *ft_kill_process(t_process *p);
-
+t_process   *ft_kill_process(t_vm *vm);
 void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data);
 void ft_free_vm(t_vm *vm);
 
-void print_mem(t_memory *memory, t_memory *mem);
+void print_mem(t_memory *memory);
 //instruction
 
 void ft_exec(t_process *p, t_vm *vm);

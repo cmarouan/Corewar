@@ -15,6 +15,8 @@ void ft_st(t_vm *vm, t_process *p)
         PC_INCR(vm, p, jump_val);
         return ;
     }
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | st\n",p->pc_id);
     index++;
     argtype = vm->memory[MOD(index)].byte ^ (REG_CODE << SHIFT_ARG1);
     index++;

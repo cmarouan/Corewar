@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/29 19:51:23 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:48:06 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,18 @@ int main(int argc, char **argv)
 		vm->pause = !vm->pause;
 		nodelay(vm->w_info, true);	
 	}
+
+	ft_printf("Introducing contestants...\n");
+	int i = 0;
+	while (i < vm->player_c)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+						vm->players[i].id,vm->players[i].prog_size, vm->players[i].prog_name,vm->players[i].comment);
+		i++;
+	}
+	
+
+
 	ft_start(vm);
 
 	if (vm->f_vus)
@@ -81,7 +93,7 @@ int main(int argc, char **argv)
 		delwin(vm->w_info);
 		endwin();
 	}
-	//ft_free_vm(vm);
+	ft_free_vm(vm);
 	return (0);
 }
 

@@ -1,7 +1,7 @@
 
 #include "corewar.h"
 
-t_vm	*ft_init_vm()
+t_vm	*ft_init_vm(void)
 {
 	t_vm *vm;
 	
@@ -23,6 +23,7 @@ t_vm	*ft_init_vm()
 	vm->nbr_of_check = 0;
 	vm->speed = 1;
 	vm->pause = 1;
+	vm->pc_ids = 0;
 	vm->pc_count = 0;
 	int i =0;
 	vm->w_memory = NULL;
@@ -31,6 +32,7 @@ t_vm	*ft_init_vm()
 	//vm->players = (t_player *)malloc(sizeof(t_player) * MAX_PLAYERS);
 	while (i < MAX_PLAYERS)
 	{
+		
 		vm->players[i].id_set = 0;
 		vm->players[i].id = -1;
 		vm->players[i].file_name = NULL;

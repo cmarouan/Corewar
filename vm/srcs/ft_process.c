@@ -19,8 +19,7 @@ t_process *ft_add_pc(t_vm *vm,int index, t_player *player)
     new->player = player;
     new->carry = 0;
     new->opcode = -1;
-    vm->pc_count++;
-    new->pc_id = vm->pc_count;
+    new->pc_id = ++vm->pc_ids;
     new->next = NULL;;
     new->live_declare = 0;
     new->cycle_to_wait = -1;
@@ -43,13 +42,7 @@ void ft_dup_process(t_vm *vm, t_process *p, int index)
         return ;
     new = (t_process *)malloc(sizeof(t_process));
     new->reg = (int *)malloc(REG_SIZE * REG_NUMBER);
-    //ft_memcpy(new->reg, p->reg, REG_SIZE * REG_NUMBER);
-    int i = 0;
-    while (i < REG_NUMBER)
-    {
-        new->reg[i] = p->reg[i];
-        i++;
-    }
+    ft_memcpy(new->reg, p->reg, REG_SIZE * REG_NUMBER);
     new->pc = vm->memory + index;
     new->oldindex = -1;
     new->player = p->player;
@@ -60,30 +53,41 @@ void ft_dup_process(t_vm *vm, t_process *p, int index)
     new->live_declare = 0;
     new->next = vm->process;
     vm->process = new;
-    vm->pc_count++;
-    new->pc_id = vm->pc_count;
+    new->pc_id = ++vm->pc_ids;
 }
 
-t_process   *ft_kill_process(t_process *p)
+
+void    ft_free_process(t_process *p)
+{
+    free(p->reg);
+    free(p);
+}
+
+t_process   *ft_kill_process(t_vm *vm)
 {
     t_process *head;
     t_process *tmp;
     t_process *prev;
 
     head = NULL;
-    tmp = p;
+    tmp = vm->process;
     prev = NULL;
     while (tmp)
     {
         if (!tmp->live_declare)
         {
+            ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
+            vm->pc_count--;
             if (prev == NULL)
             {
+                prev = tmp;
                 tmp = tmp->next;
+                ft_free_process(prev);
+                prev = NULL;
                 continue;
             }
             prev->next = tmp->next;
-            //del tmp;
+            ft_free_process(tmp);
             tmp = prev->next;
         }else
         {

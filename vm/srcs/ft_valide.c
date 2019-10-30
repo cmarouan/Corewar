@@ -25,8 +25,7 @@ int     ft_valide(/* t_process *p, t_vm *vm*/t_memory *mem, int index)
     uint8_t argtype;
     uint8_t opcode;
 
-    
-    opcode = mem[index].byte;
+    opcode = mem[MOD(index)].byte;
     argtype = mem[(index + 1)%MEM_SIZE].byte;
     index += 2;
     i = 0;
@@ -39,7 +38,7 @@ int     ft_valide(/* t_process *p, t_vm *vm*/t_memory *mem, int index)
     while (i < op_tab[opcode - 1].argc)
     {
         arg = argtype >> (6 - i*2);
-        arg = (arg == 0b11 ? 4 : arg); 
+        arg = (arg == 0b11 ? 4 : arg);
         if (arg == 0b01)
             if (mem[(index + size)%MEM_SIZE].byte <= 0 || mem[(index + size)%MEM_SIZE].byte > 16)
                 wrong++;

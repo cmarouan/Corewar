@@ -82,10 +82,16 @@ void	ft_sti(t_vm *vm, t_process *p)
         p->cycle_to_wait = -1;
         return;
     }
+  //  ft_printf("||||||||||||index %d , %d\n", index, vm->cycle_from_start);
+    index++;
+    // if (vm->cycle_from_start == 8302)
+    // {
+    //     ft_printf("%.8b\n", vm->memory[MOD(index)].byte);
 
+    // }
    // tmp = p->pc;
     //PC_INCR(vm, p, 1);
-    index++;
+    
     
     //tmp2 = p->pc;
     argtype = vm->memory[MOD(index)].byte ^ (REG_CODE << SHIFT_ARG1);
@@ -107,6 +113,13 @@ void	ft_sti(t_vm *vm, t_process *p)
     val[1] = ft_arg_three(vm, &argtype, p, &index);
    
    // ft_printf("%d %d\n", val[0], val[1]);
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+    {
+       // printf("cycle = %d   arg2 = %d | arg3 = %d\n", vm->cycle_from_start, val[0],val[1]);
+        ft_printf("p %4d | sti r%d %d %d\n %7s -> store %.8X to %d (%d)\n",
+        p->pc_id, val[2], val[0], val[1], "|", p->reg[val[2] - 1],
+        (val[0] + val[1])%IDX_MOD, vm->cycle_from_start);
+    }
    
     
     val[1] = (val[0] + val[1]) % IDX_MOD;
@@ -118,13 +131,7 @@ void	ft_sti(t_vm *vm, t_process *p)
     if (val[1] < 0)
         val[1] = MEM_SIZE + val[1];
     val[0] = p->reg[val[2] - 1];
-    // if (vm->cycle_from_start >= 2814 && vm->cycle_from_start <= 2850)
-    // {
-    //     printf("cycle = %d   arg2 = %d | arg3 = %d\n", vm->cycle_from_start, val[0],val[1]);
-    //     ft_printf("p %4d | sti r%d %d %d\n %7s -> store %d to %d\n",
-    //     p->player->id, val[2], val[0], val[1], "|", p->reg[val[2] - 1] * -1,
-    //     (val[0] + val[1])%IDX_MOD);
-    // }
+   
    // ft_printf("cycle %d write to %d\n",vm->cycle_from_start, MOD(val[1]));
     ft_write_mem(vm, (char *)&val[0], 4, vm->memory + MOD(val[1]), p->player);
     p->cycle_to_wait = -1;

@@ -22,5 +22,9 @@ void ft_check(t_vm *vm)
 		vm->players[i].live_in_current_period = 0;
 		i++;
 	}
-	vm->process = ft_kill_process(vm->process);
+	
+	vm->process = ft_kill_process(vm);
+	
+	if (vm->f_vus)
+        wrefresh(vm->w_info);
 }

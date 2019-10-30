@@ -15,6 +15,8 @@ void ft_ld(t_vm *vm, t_process *p)
         PC_INCR(vm, p, jump_val);
         return ;
     }
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | ld\n",p->pc_id);
     tmp = p->pc;
   //  PC_INCR(vm, p, 1);
     index++;

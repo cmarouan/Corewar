@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/27 19:33:13 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:26:45 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void ft_put_players(int start, t_player *players, int nb_p, WINDOW *info)
 		sprintf(res, "Player -%d : %s", players[i].id, players[i].prog_name);
 		wattron(info, COLOR_PAIR(5));
 		mvwaddstr(info, x, y, res);
-		sprintf(res, "Last live %d",  players[i].last_live);
+		sprintf(res, "Last live %-8d",  players[i].last_live);
 		wattron(info, COLOR_PAIR(2));
 		mvwaddstr(info, x + 2, y + 5, res);
 		x = x + 2;
-		sprintf(res, "lives in current period %d",  players[i].live_in_current_period);
+		sprintf(res, "lives in current period %-8d",  players[i].live_in_current_period);
 		wattron(info, COLOR_PAIR(2));
 		mvwaddstr(info, x + 2, y + 5, res);
 		x = x + 4;
@@ -81,15 +81,15 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	wattron(w_info, A_BOLD);
 	mvwprintw(w_info, ++start, 5, !vm->pause ? "Running" : "Paused ");
 	mvwprintw(w_info, ++start , 5, "Speed : %.4d cycle/second", vm->speed);
-	mvwprintw(w_info, ++start , 5, "Cycle to die %.4d", vm->cycle_to_die);
+	mvwprintw(w_info, ++start , 5, "Cycle to die %-10d", vm->cycle_to_die);
 	wattron(w_info, COLOR_PAIR(2));
-	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d/%d", vm->nbr_of_check, MAX_CHECKS);
-	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %.6d", vm->current_cycle);
-	sprintf(res, "Cycle : %d", vm->cycle_from_start);
+	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d/%-20d", vm->nbr_of_check, MAX_CHECKS);
+	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %-7d",vm->cycle_to_die - vm->current_cycle);
+	sprintf(res, "Cycle : %-8d", vm->cycle_from_start);
 	mvwaddstr(w_info, ++start + 1, 5, res);
-	sprintf(res, "Process : %d", vm->pc_count);
+	sprintf(res, "Process : %-20d", vm->pc_count);
 	mvwaddstr(w_info, ++start + 1, 5, res);
-	mvwprintw(w_info, ++start + 1, 5, "Nbr of lives : %.10d/%d", vm->nbr_live, NBR_LIVE);
+	mvwprintw(w_info, ++start + 1, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
 	ft_put_players(++start + 1, vm->players, vm->player_c, w_info);
 
 	wrefresh(w_info);
@@ -211,7 +211,7 @@ void ft_move_pc(t_process *p, t_vm *vm)
 	wattron(vm->w_memory, COLOR_PAIR(7));
 	mvwaddstr(vm->w_memory, x, y, byte);
 	wrefresh(vm->w_memory);
-
+	wrefresh(vm->w_info);
 	index = p->oldindex;
 	if (index == -1)
 		return;
@@ -221,6 +221,7 @@ void ft_move_pc(t_process *p, t_vm *vm)
 	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == -1 ? 5 : vm->memory[index].p_id));
 	mvwaddstr(vm->w_memory, x, y, byte);
 	wrefresh(vm->w_memory);
+	wrefresh(vm->w_info);
 }
 
 

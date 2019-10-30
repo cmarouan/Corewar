@@ -85,6 +85,8 @@ void	ft_or(t_vm *vm, t_process *p)
         p->cycle_to_wait = -1;
         return;
     }
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | or\n",p->pc_id);
     index++;
     argtype = vm->memory[MOD(index)].byte;
     index++;
