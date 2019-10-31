@@ -12,12 +12,15 @@ void ft_start(t_vm *vm)
 		t_process *tmp = vm->process;
 		while (tmp)
 		{
-			if (tmp->cycle_to_wait <= 0)
+			if (tmp->kill)
+			{
+				if (tmp->cycle_to_wait <= 0)
 				ft_exec(tmp, vm);
 			if (tmp->cycle_to_wait > -1)
 				tmp->cycle_to_wait--;
 			if (vm->f_vus)
 				window_right(vm->w_info, vm);
+			}
 			tmp = tmp->next;
 		}
 		if ( vm->current_cycle == vm->cycle_to_die)

@@ -63,6 +63,7 @@ typedef struct s_process
 	t_player	*player;
 	int			cycle_to_wait;
 	int			live_declare;
+	int kill;
 	struct s_process *next;
 }	t_process;
 

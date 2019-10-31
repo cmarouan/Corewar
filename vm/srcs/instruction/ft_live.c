@@ -9,9 +9,6 @@ void	ft_live(t_vm *vm, t_process *p)
 	t_memory *tmp;
 
 	vm->nbr_live++;
-	//mvwprintw(vm->w_info, 9, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
-	//wrefresh(vm->w_info);
-	//printf("%d\n", vm->nbr_live);
 	p->live_declare++;
 	p->cycle_to_wait = -1;
 	PC_INCR(vm, p, 1);

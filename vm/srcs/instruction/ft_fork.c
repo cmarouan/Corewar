@@ -10,6 +10,7 @@ void ft_fork(t_vm *vm, t_process *p)
     if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
         ft_printf("p %4d | fork\n",p->pc_id);
     index = p->pc - vm->memory + 1;
+    p->cycle_to_wait = -1;
     ft_getbytes(vm->memory, vm->memory + MOD(index), 2, data);
     jump_val = (big_endian_to_int(data, 2) % IDX_MOD);
     jump_val = index - 1 + jump_val;

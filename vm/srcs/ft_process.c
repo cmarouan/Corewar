@@ -17,6 +17,9 @@ t_process *ft_add_pc(t_vm *vm,int index, t_player *player)
     new->oldindex = -1;
     new->next = NULL;
     new->player = player;
+
+    new->kill = 1;
+vm->pc_count++;
     new->carry = 0;
     new->opcode = -1;
     new->pc_id = ++vm->pc_ids;
@@ -47,10 +50,14 @@ void ft_dup_process(t_vm *vm, t_process *p, int index)
     new->oldindex = -1;
     new->player = p->player;
     new->carry = p->carry;
-    new->cycle_to_wait = -1;
+
+    new->kill = 1;
+    vm->pc_count++;
     //new->opcode = -1;
+    new->cycle_to_wait = p->cycle_to_wait;
+    new->opcode = -1;
     new->oldindex = p->oldindex;
-    new->live_declare = 0;
+    new->live_declare = p->live_declare;
     new->next = vm->process;
     vm->process = new;
     new->pc_id = ++vm->pc_ids;
@@ -63,6 +70,30 @@ void    ft_free_process(t_process *p)
     free(p);
 }
 
+
+t_process   *ft_kill_process(t_vm *vm)
+{
+    t_process *head;
+    t_process *tmp;
+
+    head = vm->process;
+    tmp = vm->process;
+    while (tmp)
+    {
+        //printf("|%d|\n", tmp->live_declare);
+        if (tmp->live_declare == 0 && tmp->kill)
+        {
+            tmp->kill = 0;
+            vm->pc_count--;
+            //ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
+        }else
+            tmp->live_declare = 0;
+        tmp = tmp->next;
+    }
+    return head;
+}
+
+/*
 t_process   *ft_kill_process(t_vm *vm)
 {
     t_process *head;
@@ -76,6 +107,7 @@ t_process   *ft_kill_process(t_vm *vm)
     {
         if (!tmp->live_declare)
         {
+
             ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
             vm->pc_count--;
             if (prev == NULL)
@@ -101,3 +133,4 @@ t_process   *ft_kill_process(t_vm *vm)
    return (head);
 
 }
+*/

@@ -68,7 +68,7 @@ void	ft_ldi(t_vm *vm, t_process *p)
         return;
     }
     if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | ldi\n",p->pc_id);
+        ft_printf("p %4d | ldi\n | load from \n",p->pc_id);
     index++;
     argtype = vm->memory[MOD(index)].byte;
     index++;
