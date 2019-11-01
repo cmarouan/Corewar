@@ -83,13 +83,13 @@ typedef struct s_op
 
 typedef struct s_vm
 {
+	int			winner;
 	int			f_dump;
 	int			f_show;
 	int			f_vus;
 	int			f_log;
 	int			pc_ids;
 	int			pause;
-	int			last_live_player;
 	int			nbr_live;
 	int			current_cycle;
 	int			cycle_from_start;
@@ -116,7 +116,7 @@ typedef struct s_vm
 t_op op_tab[17];
 
 
-t_vm    *ft_parse_args(int argc, char **argv);
+t_vm    *ft_parse_args(int argc, char **argv, t_vm *vm);
 t_vm	*ft_init_vm();
 void 	ft_usage(void);
 
@@ -163,7 +163,7 @@ void ft_write_mem(t_vm *vm, const char *data, int size,
                     t_memory *mem, t_player *p);
 
 void ft_init_memory(t_vm *vm);
-int     ft_valide(t_memory *mem, int index);
+int     ft_valide(uint8_t opcode, t_memory *mem, int index);
 
 
 

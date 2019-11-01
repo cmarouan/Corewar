@@ -16,16 +16,16 @@ pc need to be in opcode position before calling a valid function.
 mem : adress memory in the vm;
 index of opcode in memory (0 .. MEM_SIZE - 1)
 */
-int     ft_valide(/* t_process *p, t_vm *vm*/t_memory *mem, int index)
+int     ft_valide(uint8_t opcode, t_memory *mem, int index)
 {
     int size;
     int i;
     int wrong;
     int arg;
     uint8_t argtype;
-    uint8_t opcode;
+    //uint8_t opcode;
 
-    opcode = mem[MOD(index)].byte;
+    //opcode = mem[MOD(index)].byte;
     argtype = mem[(index + 1)%MEM_SIZE].byte;
     index += 2;
     i = 0;
@@ -34,7 +34,7 @@ int     ft_valide(/* t_process *p, t_vm *vm*/t_memory *mem, int index)
     
     //ft_printf("%b\n", argtype);
     if (opcode < 1 || opcode > 16)
-        return (1);
+        return (2);
     while (i < op_tab[opcode - 1].argc)
     {
         arg = argtype >> (6 - i*2);

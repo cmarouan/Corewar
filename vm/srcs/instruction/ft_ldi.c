@@ -61,7 +61,7 @@ void	ft_ldi(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((val[2] = ft_valide(vm->memory, index)) > 0)
+    if ((val[2] = ft_valide(p->opcode,vm->memory, index)) > 0)
     {
         PC_INCR(vm, p, val[2]);
         p->cycle_to_wait = -1;

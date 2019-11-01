@@ -18,13 +18,13 @@ t_vm	*ft_init_vm(void)
 	vm->current_cycle = 0;
 	vm->cycle_to_die = CYCLE_TO_DIE;
 	vm->cycle_from_start = 0;
-	vm->last_live_player = 0;
 	vm->memory = NULL;
 	vm->nbr_of_check = 0;
 	vm->speed = 1;
 	vm->pause = 1;
 	vm->pc_ids = 0;
 	vm->pc_count = 0;
+	vm->winner = 0;
 	int i =0;
 	vm->w_memory = NULL;
 	vm->w_info = NULL;

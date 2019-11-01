@@ -71,29 +71,29 @@ void    ft_free_process(t_process *p)
 }
 
 
-t_process   *ft_kill_process(t_vm *vm)
-{
-    t_process *head;
-    t_process *tmp;
+// t_process   *ft_kill_process(t_vm *vm)
+// {
+//     t_process *head;
+//     t_process *tmp;
 
-    head = vm->process;
-    tmp = vm->process;
-    while (tmp)
-    {
-        //printf("|%d|\n", tmp->live_declare);
-        if (tmp->live_declare == 0 && tmp->kill)
-        {
-            tmp->kill = 0;
-            vm->pc_count--;
-            //ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
-        }else
-            tmp->live_declare = 0;
-        tmp = tmp->next;
-    }
-    return head;
-}
+//     head = vm->process;
+//     tmp = vm->process;
+//     while (tmp)
+//     {
+//         //printf("|%d|\n", tmp->live_declare);
+//         if (tmp->live_declare == 0 && tmp->kill)
+//         {
+//             tmp->kill = 0;
+//             vm->pc_count--;
+//             //ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
+//         }else
+//             tmp->live_declare = 0;
+//         tmp = tmp->next;
+//     }
+//     return head;
+// }
 
-/*
+
 t_process   *ft_kill_process(t_vm *vm)
 {
     t_process *head;
@@ -108,7 +108,7 @@ t_process   *ft_kill_process(t_vm *vm)
         if (!tmp->live_declare)
         {
 
-            ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
+            //ft_printf("cycle : %d, kill pc %d \n",vm->cycle_from_start, tmp->pc_id);
             vm->pc_count--;
             if (prev == NULL)
             {
@@ -133,4 +133,3 @@ t_process   *ft_kill_process(t_vm *vm)
    return (head);
 
 }
-*/

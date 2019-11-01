@@ -73,9 +73,10 @@ void	ft_parse_player_files(t_vm *vm)
 	i = 0;
 	while (i < vm->player_c)
 	{
+		//ft_printf("%p\n", vm->players[i].file_name);
 		if ((fd = open(vm->players[i].file_name, O_RDONLY)) <= 0)
-			//ft_outerr("file not open");
-			ft_outerr(vm->players[i].file_name);
+			ft_outerr("file not open");
+			//ft_outerr(vm->players[i].file_name);
 		ft_check_magic(fd, vm->players[i].file_name);
 		vm->players[i].live_in_current_period = 0;
 		ft_read_player_name(fd, i, vm);

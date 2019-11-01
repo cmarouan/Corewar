@@ -9,7 +9,6 @@ void ft_free_vm(t_vm *vm)
 		free(vm->players[i].code);
 		i++;
 	}
-	
 	free(vm->memory);
 	free(vm);
 }

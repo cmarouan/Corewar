@@ -7,17 +7,20 @@ void	ft_live(t_vm *vm, t_process *p)
 	int		ind;
 	int		i;
 	t_memory *tmp;
+	int index;
 
+
+	index = p->pc - vm->memory + 1;
 	vm->nbr_live++;
 	p->live_declare++;
 	p->cycle_to_wait = -1;
-	PC_INCR(vm, p, 1);
+	//PC_INCR(vm, p, 1);
 	tmp = p->pc;
-	ft_getbytes(vm->memory, p->pc, 4, data);
-	PC_INCR(vm, p, 4);
+	ft_getbytes(vm->memory, vm->memory + MOD(index), 4, data);
+	
+	PC_INCR(vm, p, 5);
 	ind = -1 * big_endian_to_int(data, 4);
 	i = 0;
-	
 	if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
 		ft_printf("P %4d | live %d\n",
                  p->pc_id, -1 * ind);
@@ -33,9 +36,7 @@ void	ft_live(t_vm *vm, t_process *p)
                  vm->players[i].id, vm->players[i].prog_name, vm->cycle_from_start);
 	vm->players[i].last_live = vm->cycle_from_start;
     vm->players[i].live_in_current_period++;
-    
+    vm->winner = i;
 	if (vm->f_log == PC_MOV)
 		ft_print_pc_inc(1, tmp, p->pc - tmp);
-	
-
 }

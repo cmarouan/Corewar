@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/30 17:26:45 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/10/31 19:40:20 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	mvwprintw(w_info, ++start , 5, "Cycle to die %-10d", vm->cycle_to_die);
 	wattron(w_info, COLOR_PAIR(2));
 	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d/%-20d", vm->nbr_of_check, MAX_CHECKS);
-	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %-7d",vm->cycle_to_die - vm->current_cycle);
+	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %-7d", vm->current_cycle - 1);
 	sprintf(res, "Cycle : %-8d", vm->cycle_from_start);
 	mvwaddstr(w_info, ++start + 1, 5, res);
 	sprintf(res, "Process : %-20d", vm->pc_count);

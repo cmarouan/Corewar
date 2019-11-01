@@ -9,7 +9,7 @@ void ft_ld(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((jump_val = ft_valide(vm->memory, index)) > 0)
+    if ((jump_val = ft_valide(p->opcode,vm->memory, index)) > 0)
     {
         p->cycle_to_wait = -1;
         PC_INCR(vm, p, jump_val);
@@ -47,6 +47,7 @@ void ft_ld(t_vm *vm, t_process *p)
         p->carry = 0;
    // ft_write_mem(vm, (char *)&p->reg[5], 4, p->pc + 59, p->player);
     p->cycle_to_wait = -1;
+    index++;
     index = index - (p->pc - vm->memory);
-    PC_INCR(vm, p, (index + 1));
+    PC_INCR(vm, p, index);
 }

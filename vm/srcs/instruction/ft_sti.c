@@ -76,7 +76,7 @@ void	ft_sti(t_vm *vm, t_process *p)
     int index;
     
     index = p->pc - vm->memory;
-    if ((val[2] = ft_valide(vm->memory, index)) > 0)
+    if ((val[2] = ft_valide(p->opcode,vm->memory, index)) > 0)
     {
         PC_INCR(vm, p, val[2]);
         p->cycle_to_wait = -1;
@@ -135,8 +135,6 @@ void	ft_sti(t_vm *vm, t_process *p)
    // ft_printf("cycle %d write to %d\n",vm->cycle_from_start, MOD(val[1]));
     ft_write_mem(vm, (char *)&val[0], 4, vm->memory + MOD(val[1]), p->player);
     p->cycle_to_wait = -1;
-    index = (p->pc - vm->memory) - index;
-    if (index < 0)
-        index *= -1;
+    index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);
 }

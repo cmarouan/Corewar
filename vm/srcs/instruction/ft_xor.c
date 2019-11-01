@@ -9,7 +9,7 @@ static int    ft_arg_one(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
     if (*argtype >> SHIFT_ARG1 == DIR_CODE)
     {
         ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 4, data);
-        *index += 4;
+        *index = *index + 4;
         
     }else if (*argtype >> SHIFT_ARG1 == IND_CODE)
     {
@@ -18,7 +18,7 @@ static int    ft_arg_one(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
         if (jump_val < 0)
             jump_val = MEM_SIZE + jump_val;
         ft_getbytes(vm->memory, vm->memory + MOD(jump_val), 4, data);
-        *index += 2;
+        *index = *index + 2;
         *argtype ^= (IND_CODE << SHIFT_ARG1);
         return (big_endian_to_int(data, 4));
     }else
@@ -40,7 +40,7 @@ static int    ft_arg_two(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
     if (*argtype >> SHIFT_ARG2 == DIR_CODE)
     {
         ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 4, data);
-        *index += 4;
+        *index = *index + 4;
     }else if (*argtype >> SHIFT_ARG2 == IND_CODE)
     {
         ft_getbytes(vm->memory, vm->memory + (*MOD(index)), 2, data);
@@ -48,7 +48,7 @@ static int    ft_arg_two(t_vm *vm, uint8_t *argtype, t_process *p, int *index)
         if (jump_val < 0)
             jump_val = MEM_SIZE + jump_val;
         ft_getbytes(vm->memory, vm->memory + MOD(jump_val), 4, data);
-        *index += 2;
+        *index = *index + 2;
         *argtype ^= (IND_CODE << SHIFT_ARG2);
         return (big_endian_to_int(data, 4));
     }else
@@ -79,7 +79,7 @@ void	ft_xor(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((val[2] = ft_valide(vm->memory, index++)) > 0)
+    if ((val[2] = ft_valide(p->opcode, vm->memory, index)) > 0)
     {
         PC_INCR(vm, p, val[2]);
         p->cycle_to_wait = -1;
@@ -97,10 +97,8 @@ void	ft_xor(t_vm *vm, t_process *p)
         p->carry = 1;
     else
         p->carry = 0;
-    index++;
     p->cycle_to_wait = -1;
-    index = (p->pc - vm->memory) - index;
-    if (index < 0)
-        index *= -1;
+    index++;
+    index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);
 }

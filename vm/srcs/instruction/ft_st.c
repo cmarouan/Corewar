@@ -9,7 +9,7 @@ void ft_st(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((jump_val = ft_valide(vm->memory, index)) > 0)
+    if ((jump_val = ft_valide(p->opcode,vm->memory, index)) > 0)
     {
         p->cycle_to_wait = -1;
         PC_INCR(vm, p, jump_val);
@@ -38,9 +38,7 @@ void ft_st(t_vm *vm, t_process *p)
         ft_write_mem(vm, (char *)&result, 4, vm->memory + MOD(jump_val), p->player);
         index += 2;
     }
-    index = (p->pc - vm->memory) - index;
-    if (index < 0)
-        index *= -1;
+    index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);
     p->cycle_to_wait = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/31 13:10:14 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/01 10:54:36 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,22 @@ int main(int argc, char **argv)
 {
 	t_vm *vm;
 
-	if (argc == 1 && argv[0])
+	if (argc == 1)
         ft_usage();
-	vm = ft_parse_args(argc - 1, argv);
+	
+	int i = 1;
+	// char **dupargs = (char **)malloc((argc - 1) * sizeof(char *));
+	// while (i < argc)
+	// {
+	// 	dupargs[i - 1] = ft_strdup(argv[i]);
+	// 	//ft_printf("arg %d |%s|\n", i - 1, dupargs[i - 1]);
+	// 	i++;
+	// }
+
+
+	vm = ft_init_vm();
+	ft_parse_args(argc - 1, argv, vm);
 	ft_parse_player_files(vm);
-	vm->last_live_player = vm->player_c;
 	ft_init_memory(vm);
 	vm->instruction[0] = &ft_live;
 	vm->instruction[1] = &ft_ld;
@@ -65,6 +76,15 @@ int main(int argc, char **argv)
 	vm->instruction[13] = &ft_lldi;
 	vm->instruction[14] = &ft_lfork;
 		vm->instruction[15] = &ft_sti;
+	ft_printf("Introducing contestants...\n");
+	i = 0;
+	while (i < vm->player_c)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+						vm->players[i].id,vm->players[i].prog_size, vm->players[i].prog_name,vm->players[i].comment);
+		vm->winner = (vm->players[vm->winner].id > vm->players[i].id ? vm->winner : i);
+		i++;
+	}
 	if (vm->f_vus)
 	{
 		vs_main(vm);
@@ -73,18 +93,13 @@ int main(int argc, char **argv)
 		nodelay(vm->w_info, true);	
 	}
 
-	/*ft_printf("Introducing contestants...\n");
-	int i = 0;
-	while (i < vm->player_c)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-						vm->players[i].id,vm->players[i].prog_size, vm->players[i].prog_name,vm->players[i].comment);
-		i++;
-	}*/
+	
 	
 
 
 	ft_start(vm);
+	
+	
 
 	if (vm->f_vus)
 	{
@@ -93,6 +108,9 @@ int main(int argc, char **argv)
 		delwin(vm->w_info);
 		endwin();
 	}
+	//lunch winner;
+	ft_printf("Contestant %d, \"%s\", has won !\n",
+					vm->players[vm->winner].id, vm->players[vm->winner].prog_name);
 	ft_free_vm(vm);
 	return (0);
 }

@@ -16,6 +16,7 @@ void ft_check(t_vm *vm)
 		vm->nbr_of_check = 0;
 	}
 	vm->nbr_live = 0;
+	//ft_printf("start %d\n",vm->cycle_from_start);
 	int i = 0;
 	while (i < vm->player_c)
 	{

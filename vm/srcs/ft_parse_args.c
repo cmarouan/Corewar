@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:44:26 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/10/30 19:40:12 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/01 10:31:42 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,25 +86,27 @@ static int		ft_check_flag(t_vm *vm, int i, char **argv)
 	else if (argv[i] && ft_check_ext(argv[i]))
 	{
 		//ft_printf("solo arg : %s at %d\n", argv[i], i);
-		vm->players[vm->player_c].file_name = ft_strdup(argv[i]);
-		vm->player_c++;
+		vm->players[vm->player_c++].file_name = ft_strdup(argv[i]);
+		//vm->player_c++;
 	}else
 		ft_usage();
 	return (i);
 }
 
-t_vm			*ft_parse_args(int argc, char **argv)
+t_vm			*ft_parse_args(int argc, char **argv, t_vm *vm)
 {
 	int		i;
-	t_vm	*vm;
 
 	i = 1;
-	vm = ft_init_vm();
 	while (i <= argc)
+	{
+		//ft_printf("Player i %d\n", i);
 		i = ft_check_flag(vm, i, argv) + 1;
-	if (vm->player_c > MAX_PLAYERS)
+	}
+//	ft_printf("Player count %d\n", vm->player_c);
+	if (vm->player_c > MAX_PLAYERS || vm->player_c <= 0)
 		ft_usage();
 	ft_check_ids(vm);
-	//ft_printf("Player count %d\n", vm->player_c);
+	
 	return (vm);
 }

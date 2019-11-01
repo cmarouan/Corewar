@@ -61,7 +61,7 @@ void	ft_lldi(t_vm *vm, t_process *p)
     int index;
 
     index = p->pc - vm->memory;
-    if ((val[2] = ft_valide(vm->memory, index)) > 0)
+    if ((val[2] = ft_valide(p->opcode,vm->memory, index)) > 0)
     {
         PC_INCR(vm, p, val[2]);
         p->cycle_to_wait = -1;
@@ -83,10 +83,7 @@ void	ft_lldi(t_vm *vm, t_process *p)
         p->carry = 1;
     else
         p->carry = 0;
-    index++;
     p->cycle_to_wait = -1;
-    index = (p->pc - vm->memory) - index;
-    if (index < 0)
-        index *= -1;
+    index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);
 }
