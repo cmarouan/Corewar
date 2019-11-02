@@ -84,6 +84,9 @@ typedef struct s_op
 typedef struct s_vm
 {
 	int			winner;
+	int			win;
+	int			aff;
+	int			aff_value;
 	int			f_dump;
 	int			f_show;
 	int			f_vus;
@@ -97,8 +100,8 @@ typedef struct s_vm
 	int			cycle_to_die;
 	int			player_c;
 	int			speed;
-	int			ids[MAX_PLAYERS + 1];
-	t_player	players[MAX_PLAYERS];
+	int			*ids;//[MAX_PLAYERS + 1];
+	t_player	*players;//[MAX_PLAYERS];
 	t_memory	*memory;
 	void		(*instruction[16])(struct s_vm *, t_process *);
 	int			pc_count;
@@ -116,7 +119,7 @@ typedef struct s_vm
 t_op op_tab[17];
 
 
-t_vm    *ft_parse_args(int argc, char **argv, t_vm *vm);
+void	ft_parse_args(int argc, char **argv, t_vm *vm);
 t_vm	*ft_init_vm();
 void 	ft_usage(void);
 
@@ -155,6 +158,7 @@ void ft_fork(t_vm *vm, t_process *p);
 void ft_lfork(t_vm *vm, t_process *p);
 void ft_lld(t_vm *vm, t_process *p);
 void	ft_lldi(t_vm *vm, t_process *p);
+void 	ft_aff(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 

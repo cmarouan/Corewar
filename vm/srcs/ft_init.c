@@ -7,6 +7,9 @@ t_vm	*ft_init_vm(void)
 	
 	
 	vm = (t_vm *)malloc(sizeof(t_vm));
+	ft_memset(vm, 0, sizeof(vm));
+	vm->win = 0;
+	vm->aff = 0;
 	vm->f_dump = -1;
 	vm->f_show = -1;
 	vm->f_vus = 0;
@@ -25,11 +28,12 @@ t_vm	*ft_init_vm(void)
 	vm->pc_ids = 0;
 	vm->pc_count = 0;
 	vm->winner = 0;
-	int i =0;
+	int i = 0;
 	vm->w_memory = NULL;
 	vm->w_info = NULL;
+	vm->ids = (int *)malloc(sizeof(int) * (MAX_PLAYERS + 1));
 	ft_bzero(vm->ids, sizeof(int) * (MAX_PLAYERS + 1));
-	//vm->players = (t_player *)malloc(sizeof(t_player) * MAX_PLAYERS);
+	vm->players = (t_player *)malloc(sizeof(t_player) * MAX_PLAYERS);
 	while (i < MAX_PLAYERS)
 	{
 		

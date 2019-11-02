@@ -22,8 +22,6 @@ void ft_write_mem(t_vm *vm, const char *data, int size,
 void ft_change_pc(t_vm *vm, t_process *p, int value)
 {
     int diff;
-   // if (!vm->f_vus)
-     //   ft_printf("pc %p , memory %p\n", p->pc, vm->memory);
     p->oldindex = p->pc - vm->memory;
     diff = (p->pc - vm->memory) + value;
     if (diff >= 0 && diff < MEM_SIZE)

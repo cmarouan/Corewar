@@ -31,7 +31,7 @@ void ft_exec(t_process *p, t_vm *vm)
 		//if (p->opcode == 0x0b) p->opcode = 2;
 		// Temp instruction : ????/
 		
-		if (p->opcode >= 1 && p->opcode <= 15)
+		if (p->opcode >= 1 && p->opcode <= 16)
 		{
 			//ft_printf("cycle %d Oper  %s\n",vm->cycle_from_start, op_tab[p->opcode - 1].name);
 			// if (vm->cycle_from_start >= 5440 && vm->cycle_from_start <= 5450)

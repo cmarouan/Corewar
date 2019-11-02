@@ -85,14 +85,16 @@ void	ft_and(t_vm *vm, t_process *p)
         p->cycle_to_wait = -1;
         return;
     }
-    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | Xor\n",p->pc_id);
+    
     index++;
     argtype = vm->memory[MOD(index)].byte;
     index++;
     val[0] = ft_arg_one(vm, &argtype, p, &index);
     val[1] = ft_arg_two(vm, &argtype, p, &index);
     p->reg[vm->memory[MOD(index)].byte - 1] = val[0] & val[1];
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | And %d %d r%d\n",p->pc_id,
+            val[0], val[1], vm->memory[MOD(index)].byte);
     if (p->reg[vm->memory[MOD(index)].byte - 1] == 0)
         p->carry = 1;
     else

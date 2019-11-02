@@ -9,20 +9,22 @@ void ft_zjmp(t_vm *vm, t_process *p)
     int index;
 
 
-   if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | zjmp  %s\n",p->pc_id, p->carry ? "OK" : "NO");
-    if (p->carry == 0)
-    {
-        p->cycle_to_wait = -1;
-        PC_INCR(vm, p, 3);
-        return ;
-    }
+    
+   
     index = p->pc - vm->memory;
     tmp = p->pc;
     //PC_INCR(vm, p, 1);
     index++;
     ft_getbytes(vm->memory, vm->memory + MOD(index), 2, data);
     dir = big_endian_to_int(data, 2) % IDX_MOD;
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | zjmp %d %s\n",p->pc_id, dir, p->carry ? "OK" : "FAILED");
+     if (p->carry == 0)
+    {
+        p->cycle_to_wait = -1;
+        PC_INCR(vm, p, 3);
+        return ;
+    }
    // printf("cycle %d, zjmp to %d\n", vm->cycle_from_start, dir);
     // if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
     //     ft_printf("p %4d | zjmp %d OK\n", p->player->id, big_endian_to_int(data, 2));

@@ -15,8 +15,6 @@ void ft_lld(t_vm *vm, t_process *p)
         PC_INCR(vm, p, jump_val);
         return ;
     }
-    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | lld\n",p->pc_id);
     tmp = p->pc;
   //  PC_INCR(vm, p, 1);
     index++;
@@ -39,12 +37,16 @@ void ft_lld(t_vm *vm, t_process *p)
         index += 2;
         //PC_INCR(vm, p, 2);
     }
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | lld %d r%d\n",p->pc_id,
+            big_endian_to_int(data, 4), vm->memory[MOD(index)].byte);
     p->reg[vm->memory[MOD(index)].byte - 1] = big_endian_to_int(data, 4);
     if (p->reg[vm->memory[MOD(index)].byte - 1] == 0)
         p->carry = 1;
     else
         p->carry = 0;
    // ft_write_mem(vm, (char *)&p->reg[5], 4, p->pc + 59, p->player);
+    index++;
     p->cycle_to_wait = -1;
     index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);

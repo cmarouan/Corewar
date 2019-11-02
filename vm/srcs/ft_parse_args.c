@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:44:26 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/01 10:31:42 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/02 13:27:47 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void		ft_check_ids(t_vm *vm)
 
 static int		ft_check_flag(t_vm *vm, int i, char **argv)
 {
-	vm->players[vm->player_c].id_set = 0;
+	//vm->players[vm->player_c].id_set = 0;
 	if ((!ft_strcmp(argv[i], "-dump") || !ft_strcmp(argv[i], "-d"))
 			&& argv[i + 1])
 		vm->f_dump = ft_atoi_me(argv[++i]);
@@ -79,26 +79,26 @@ static int		ft_check_flag(t_vm *vm, int i, char **argv)
 		vm->players[vm->player_c].id = ft_atoi_me(argv[++i]);
 		vm->players[vm->player_c].id_set = 1;
 		if (argv[i + 1] && ft_check_ext(argv[i + 1]))
-			vm->players[vm->player_c++].file_name = ft_strdup(argv[++i]);
+			vm->players[vm->player_c++].file_name = argv[++i];
 		else
 			ft_usage();
 	}
 	else if (argv[i] && ft_check_ext(argv[i]))
 	{
 		//ft_printf("solo arg : %s at %d\n", argv[i], i);
-		vm->players[vm->player_c++].file_name = ft_strdup(argv[i]);
+		vm->players[vm->player_c++].file_name = argv[i];
 		//vm->player_c++;
 	}else
 		ft_usage();
 	return (i);
 }
 
-t_vm			*ft_parse_args(int argc, char **argv, t_vm *vm)
+void	ft_parse_args(int argc, char **argv, t_vm *vm)
 {
 	int		i;
 
 	i = 1;
-	while (i <= argc)
+	while (i < argc)
 	{
 		//ft_printf("Player i %d\n", i);
 		i = ft_check_flag(vm, i, argv) + 1;
@@ -107,6 +107,5 @@ t_vm			*ft_parse_args(int argc, char **argv, t_vm *vm)
 	if (vm->player_c > MAX_PLAYERS || vm->player_c <= 0)
 		ft_usage();
 	ft_check_ids(vm);
-	
-	return (vm);
+
 }

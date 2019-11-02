@@ -3,12 +3,21 @@
 
 void ft_start(t_vm *vm)
 {
-	//int i = 0;
+	//int ret;
 	
 	vm->cycle_from_start = 0;
 	vm->current_cycle = vm->cycle_to_die;
 	while (vm->current_cycle > 0)
 	{
+		if (vm->f_vus)
+		{
+			//wgetch(vm->w_info);
+			if (ft_event_handler(vm, wgetch(vm->w_info)) == -1)
+			 	break;
+			window_right(vm->w_info, vm);
+			wrefresh(vm->w_memory);
+			usleep(SECOND / vm->speed);
+		}
 		t_process *tmp = vm->process;
 		vm->cycle_from_start++;
 		while (tmp)
@@ -42,13 +51,6 @@ void ft_start(t_vm *vm)
 			exit(0);
 		}
 		
-		if (vm->f_vus)
-		{
-			if (ft_event_handler(vm, wgetch(vm->w_info)))
-				break;
-			window_right(vm->w_info, vm);
-			wrefresh(vm->w_memory);
-			usleep(SECOND / vm->speed);
-		}
+		
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/01 10:54:36 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/02 15:12:47 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void ft_usage(void)
 
 void	ft_outerr(char *msg)
 {
-	
 	ft_printf("ERROR : %s\n", msg);
 	exit(0);
 }
@@ -43,21 +42,22 @@ int main(int argc, char **argv)
 {
 	t_vm *vm;
 
-	if (argc == 1)
+	if (argc <= 1)
         ft_usage();
 	
 	int i = 1;
-	// char **dupargs = (char **)malloc((argc - 1) * sizeof(char *));
-	// while (i < argc)
+	//  char **dupargs = (char **)malloc((argc - 1) * sizeof(char *));
+	//  while (i < argc)
 	// {
 	// 	dupargs[i - 1] = ft_strdup(argv[i]);
 	// 	//ft_printf("arg %d |%s|\n", i - 1, dupargs[i - 1]);
 	// 	i++;
 	// }
-
-
+	// for (int i = 0; i < argc - 1; ++i) ft_printf("%s\n", dupargs[i]);
+	
+	// //return 0;
 	vm = ft_init_vm();
-	ft_parse_args(argc - 1, argv, vm);
+	ft_parse_args(argc, argv, vm);
 	ft_parse_player_files(vm);
 	ft_init_memory(vm);
 	vm->instruction[0] = &ft_live;
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	vm->instruction[12] = &ft_lld;
 	vm->instruction[13] = &ft_lldi;
 	vm->instruction[14] = &ft_lfork;
-		vm->instruction[15] = &ft_sti;
+	vm->instruction[15] = &ft_aff;
 	ft_printf("Introducing contestants...\n");
 	i = 0;
 	while (i < vm->player_c)
@@ -86,23 +86,14 @@ int main(int argc, char **argv)
 		i++;
 	}
 	if (vm->f_vus)
-	{
 		vs_main(vm);
-		while (wgetch(vm->w_info) != ' ');
-		vm->pause = !vm->pause;
-		nodelay(vm->w_info, true);	
-	}
-
-	
-	
-
-
+		// while (wgetch(vm->w_info) != ' ');
+		// vm->pause = !vm->pause;	
 	ft_start(vm);
-	
-	
-
+	vm->win = 1;
 	if (vm->f_vus)
 	{
+		window_right(vm->w_info, vm);
 		wgetch(vm->w_memory);
 		delwin(vm->w_memory);
 		delwin(vm->w_info);

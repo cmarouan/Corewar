@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/02 12:31:23 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:22:04 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	wbkgd(w_info, COLOR_PAIR(2));
 	wattron(w_info, COLOR_PAIR(6));
 	wattron(w_info, A_BOLD);
-	mvwprintw(w_info, ++start + 1, 5, !vm->pause ? "Running" : "Paused ");
+	mvwprintw(w_info, ++start + 1, 5, vm->pause ? "Paused " : "Running");
 	mvwprintw(w_info, ++start + 2, 5, "Speed : %.4d cycle/second", vm->speed);
 	mvwprintw(w_info, ++start + 3, 5, "Cycle to die %-10d", vm->cycle_to_die);
 	wattron(w_info, COLOR_PAIR(6));
@@ -100,10 +100,10 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	mvwprintw(w_info, ++start + 2, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
 	ft_put_players(++start + 2, vm->players, vm->player_c, w_info);
 	if (vm->aff)
-		mvwprintw(w_info, 32, 5, "AFF : %.10d", vm->aff_value);i
+		mvwprintw(w_info, 32, 5, "AFF : %.10d", vm->aff_value);
 	wattron(w_info, COLOR_PAIR(vm->players[vm->winner].id));
 	if (vm->win)
-		mvwprintw(w_info, 34, 5, "The winner is : %s", vm->players[vm->winner].prog_name);
+	 	mvwprintw(w_info, 34, 5, "The winner is : %s", vm->players[vm->winner].prog_name);
 
 	wrefresh(w_info);
 }
@@ -164,6 +164,7 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 	initscr();
 	cbreak();
 	noecho();
+	nodelay(*w_info, true);
 	keypad(stdscr, TRUE);
 	start_color();
 	initialize_colors();
@@ -179,26 +180,34 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 
 int		ft_event_handler(t_vm *vm, int cmd)
 {
-	//wattron(vm->w_info, COLOR_PAIR(4));
-	//mvwprintw(vm->w_info, 0, 0, "M");
-	//wrefresh(vm->w_info);
-	if (cmd == 27)
-		return (1);
-	if (cmd == 's' || cmd == 'S')
-		vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 10);
-	else if (cmd == 'd' || cmd == 'D')
-		vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 50);
-	else if (cmd == 'f' || cmd == 'F')
-		vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 100);
-	else if (cmd == 'g' || cmd == 'g')
-		vm->speed = 1;
-	else if (cmd == 'p' || cmd == 'P')
+
+	while (1)
 	{
-		nodelay(vm->w_info, !vm->pause);
-		vm->pause = !vm->pause;	
+		if (cmd == 27)
+			return (-1);
+		else if (cmd == ' ')
+		{
+			nodelay(vm->w_info, vm->pause);
+			vm->pause = !vm->pause;
+			return (0);
+		}else if (cmd == 'a')
+			return (0);
+		else if (cmd == 's' || cmd == 'S')
+			vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 10);
+		else if (cmd == 'd' || cmd == 'D')
+			vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 50);
+		else if (cmd == 'f' || cmd == 'F')
+			vm->speed = (vm->speed >= 1000 ? vm->speed : vm->speed + 100);
+		else if (cmd == 'g' || cmd == 'g')
+			vm->speed = 1;
+		if (vm->pause)
+		{
+			window_right(vm->w_info, vm);
+			cmd = wgetch(vm->w_info);
+			continue;
+		}
+		return (0);
 	}
-		//vm->speed -= 100000;
-	return (0);
 }
 
 void ft_move_pc(t_process *p, t_vm *vm)
@@ -233,6 +242,7 @@ void vs_main(t_vm *vm)
 	{
 		curs_set(0);
 		wrefresh(vm->w_memory);
+		nodelay(vm->w_info, false);
 		left_window(vm->w_memory, vm->memory);
 		window_right(vm->w_info, vm);
 	}

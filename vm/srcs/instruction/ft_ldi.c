@@ -67,13 +67,14 @@ void	ft_ldi(t_vm *vm, t_process *p)
         p->cycle_to_wait = -1;
         return;
     }
-    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
-        ft_printf("p %4d | ldi\n | load from \n",p->pc_id);
     index++;
     argtype = vm->memory[MOD(index)].byte;
     index++;
     val[0] = ft_arg_one(vm, &argtype, p, &index);
     val[1] = ft_arg_two(vm, &argtype, p, &index);
+    if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
+        ft_printf("p %4d | ldi %d %d r%d\n",
+            p->pc_id, val[0], val[1], vm->memory[MOD(index)].byte);
     val[2] = p->pc - vm->memory +  ((val[0] + val[1]) % IDX_MOD);
     if (val[2] < 0)
         val[2] = MEM_SIZE + val[2];
@@ -81,8 +82,6 @@ void	ft_ldi(t_vm *vm, t_process *p)
     p->reg[vm->memory[MOD(index)].byte - 1] = big_endian_to_int(data, 4);
     index++;
     p->cycle_to_wait = -1;
-    index = (p->pc - vm->memory) - index;
-    if (index < 0)
-        index *= -1;
+    index = index - (p->pc - vm->memory);
     PC_INCR(vm, p, index);
 }
