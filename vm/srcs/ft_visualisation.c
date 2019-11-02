@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/02 10:51:39 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/02 12:31:23 by cmarouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,12 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	start++;
 	mvwprintw(w_info, ++start + 2, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
 	ft_put_players(++start + 2, vm->players, vm->player_c, w_info);
-	if (vm->player_c)
-		mvwprintw(w_info, 64, 5, "AFF : %.10d", vm->player_c);
+	if (vm->aff)
+		mvwprintw(w_info, 32, 5, "AFF : %.10d", vm->aff_value);i
+	wattron(w_info, COLOR_PAIR(vm->players[vm->winner].id));
+	if (vm->win)
+		mvwprintw(w_info, 34, 5, "The winner is : %s", vm->players[vm->winner].prog_name);
+
 	wrefresh(w_info);
 }
 
@@ -116,7 +120,6 @@ void left_window(WINDOW *w_memory, t_memory *mem)
 	box(w_memory, 0, 0); 
 	wbkgd(w_memory, COLOR_PAIR(1));
 	wmove(w_memory, 1, 3);
-	//wattron(w_memory, A_BOLD);
 	wrefresh(w_memory);
 	while (j < 64)
 	{
@@ -162,8 +165,6 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 	cbreak();
 	noecho();
 	keypad(stdscr, TRUE);
-	//delay(stdscr, true);
-	//timeout();
 	start_color();
 	initialize_colors();
 	getmaxyx(stdscr, maxy, maxx);
@@ -172,12 +173,6 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
 		allocation_error();
 	if ((*w_info = newwin(maxy - 5, halfx, 0, 202)) == NULL)
 		allocation_error();
-	/*if ( maxy < 72 || maxx <  264)
-	{
-		wattron(*w_memory, COLOR_PAIR(1));
-		wprintw(*w_memory, "Small window");
-		exit(0);
-	}*/
 	return (1);
 }
 
@@ -206,7 +201,6 @@ int		ft_event_handler(t_vm *vm, int cmd)
 	return (0);
 }
 
-
 void ft_move_pc(t_process *p, t_vm *vm)
 {
 	int x;
@@ -232,7 +226,6 @@ void ft_move_pc(t_process *p, t_vm *vm)
 	wrefresh(vm->w_memory);
 	wrefresh(vm->w_info);
 }
-
 
 void vs_main(t_vm *vm)
 {
