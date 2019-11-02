@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/10/31 19:40:20 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:34:06 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ void left_window(WINDOW *w_memory, t_memory *mem)
 		i = 0;
 		while (i < 64)
 		{
-			wattron(w_memory, COLOR_PAIR((mem[j*64 + i].p_id == -1 ? 5 : mem[j*64 + i].p_id)));
-			sprintf((char *)data, "%.2X", mem[j*64 + i].byte);
+			wattron(w_memory, COLOR_PAIR((mem[j*64 + i].p_id == 0 ? 5 : mem[j*64 + i].p_id)));
+			sprintf((char *)data, "%.2x", mem[j*64 + i].byte);
 			mvwaddstr(w_memory, y, x, (char *)data);
 			wattron(w_memory, COLOR_PAIR(5));
 			mvwaddstr(w_memory, y, x + 2, " ");
@@ -137,7 +137,7 @@ void ft_change_memory(int index, t_memory *mem, WINDOW *window)
 
 	x = (index / 64) + 1;
 	y = ((index % 64) * 3) + 3;
-	sprintf(byte, "%.2X", mem->byte);
+	sprintf(byte, "%.2x", mem->byte);
 	wattron(window, COLOR_PAIR(mem->p_id));
 	mvwaddstr(window, x, y, byte);
 	wrefresh(window);
@@ -207,7 +207,7 @@ void ft_move_pc(t_process *p, t_vm *vm)
 
 	x = (index / 64) + 1;
 	y = ((index % 64) * 3) + 3;
-	sprintf(byte, "%.2X", p->pc->byte);
+	sprintf(byte, "%.2x", p->pc->byte);
 	wattron(vm->w_memory, COLOR_PAIR(7));
 	mvwaddstr(vm->w_memory, x, y, byte);
 	wrefresh(vm->w_memory);
@@ -217,8 +217,8 @@ void ft_move_pc(t_process *p, t_vm *vm)
 		return;
 	x = (index / 64) + 1;
 	y = ((index % 64) * 3) + 3;
-	sprintf(byte, "%.2X", vm->memory[index].byte);
-	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == -1 ? 5 : vm->memory[index].p_id));
+	sprintf(byte, "%.2x", vm->memory[index].byte);
+	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == 0 ? 5 : vm->memory[index].p_id));
 	mvwaddstr(vm->w_memory, x, y, byte);
 	wrefresh(vm->w_memory);
 	wrefresh(vm->w_info);

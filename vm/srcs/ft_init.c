@@ -51,11 +51,12 @@ void ft_init_memory(t_vm *vm)
 {
 	int i = -1;
 	vm->memory = (t_memory *)malloc(sizeof(t_memory) * MEM_SIZE);
-	while (++i < MEM_SIZE)
-	{
-		vm->memory[i].byte = 0;
-		vm->memory[i].p_id = -1;
-	}
+	ft_bzero(vm->memory, sizeof(t_memory) * MEM_SIZE);
+	// while (++i < MEM_SIZE)
+	// {
+	// 	vm->memory[i].byte = 0;
+	// 	vm->memory[i].p_id = -1;
+	// }
 	
 	int j;
 	i = 0;
