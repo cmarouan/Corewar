@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/01 21:34:06 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/02 10:51:39 by cmarouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void allocation_error(void)
 
 void initialize_colors()
 {
-	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_pair(4, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(3, COLOR_BLUE, COLOR_BLACK);
-	init_pair(4, COLOR_GREEN, COLOR_BLACK);
+	init_pair(1, COLOR_GREEN, COLOR_BLACK);
 	init_pair(5, COLOR_WHITE, COLOR_BLACK);
-	init_pair(6, COLOR_WHITE, COLOR_CYAN);
+	init_pair(6, COLOR_CYAN, COLOR_BLACK);
 	init_pair(7, COLOR_BLACK, COLOR_WHITE);
 	init_pair(8, COLOR_BLACK, COLOR_BLACK);
 }
@@ -44,27 +44,30 @@ void ft_put_players(int start, t_player *players, int nb_p, WINDOW *info)
 	char res[100];
 	int x;
 	int y;
+	int id;
 
 	i = 0;
 	x = start + 2;
 	y = 8;
 	wattron(info, A_BOLD);
 	sprintf(res, "Players : %d", nb_p);
-	wattron(info, COLOR_PAIR(3));
-	mvwaddstr(info, start, 5, res);
+	wattron(info, COLOR_PAIR(6));
+	mvwaddstr(info, start + 2, 5, res);
+	x++;
 	while (i < nb_p)
 	{
+		id = players[i].id;
 		sprintf(res, "Player -%d : %s", players[i].id, players[i].prog_name);
-		wattron(info, COLOR_PAIR(5));
-		mvwaddstr(info, x, y, res);
+		wattron(info, COLOR_PAIR(id));
+		mvwaddstr(info, x + 1, y, res);
 		sprintf(res, "Last live %-8d",  players[i].last_live);
-		wattron(info, COLOR_PAIR(2));
+		wattron(info, COLOR_PAIR(5));
 		mvwaddstr(info, x + 2, y + 5, res);
 		x = x + 2;
 		sprintf(res, "lives in current period %-8d",  players[i].live_in_current_period);
-		wattron(info, COLOR_PAIR(2));
-		mvwaddstr(info, x + 2, y + 5, res);
-		x = x + 4;
+		wattron(info, COLOR_PAIR(5));
+		mvwaddstr(info, x + 1, y + 5, res);
+		x = x + 2;
 		i++;
 	}
 	wmove(info, 0, 0);
@@ -77,21 +80,27 @@ void window_right(WINDOW *w_info, t_vm *vm)
 	int start = 0;
 
 	wbkgd(w_info, COLOR_PAIR(2));
-	wattron(w_info, COLOR_PAIR(4));
+	wattron(w_info, COLOR_PAIR(6));
 	wattron(w_info, A_BOLD);
-	mvwprintw(w_info, ++start, 5, !vm->pause ? "Running" : "Paused ");
-	mvwprintw(w_info, ++start , 5, "Speed : %.4d cycle/second", vm->speed);
-	mvwprintw(w_info, ++start , 5, "Cycle to die %-10d", vm->cycle_to_die);
-	wattron(w_info, COLOR_PAIR(2));
-	mvwprintw(w_info, ++start + 1, 5, "Nbr of check : %.4d/%-20d", vm->nbr_of_check, MAX_CHECKS);
-	mvwprintw(w_info, ++start + 1, 5, "Cycle to check : %-7d", vm->current_cycle - 1);
+	mvwprintw(w_info, ++start + 1, 5, !vm->pause ? "Running" : "Paused ");
+	mvwprintw(w_info, ++start + 2, 5, "Speed : %.4d cycle/second", vm->speed);
+	mvwprintw(w_info, ++start + 3, 5, "Cycle to die %-10d", vm->cycle_to_die);
+	wattron(w_info, COLOR_PAIR(6));
+	start += 2;
+	mvwprintw(w_info, ++start + 2, 5, "Nbr of check : %.4d/%-20d", vm->nbr_of_check, MAX_CHECKS);
+	start++;
+	mvwprintw(w_info, ++start + 2, 5, "Cycle to check : %-7d", vm->current_cycle - 1);
 	sprintf(res, "Cycle : %-8d", vm->cycle_from_start);
-	mvwaddstr(w_info, ++start + 1, 5, res);
+	start++;
+	mvwaddstr(w_info, ++start + 2, 5, res);
 	sprintf(res, "Process : %-20d", vm->pc_count);
-	mvwaddstr(w_info, ++start + 1, 5, res);
-	mvwprintw(w_info, ++start + 1, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
-	ft_put_players(++start + 1, vm->players, vm->player_c, w_info);
-
+	start++;
+	mvwaddstr(w_info, ++start + 2, 5, res);
+	start++;
+	mvwprintw(w_info, ++start + 2, 5, "Nbr of lives : %.10d/%-20d", vm->nbr_live, NBR_LIVE);
+	ft_put_players(++start + 2, vm->players, vm->player_c, w_info);
+	if (vm->player_c)
+		mvwprintw(w_info, 64, 5, "AFF : %.10d", vm->player_c);
 	wrefresh(w_info);
 }
 
@@ -107,7 +116,7 @@ void left_window(WINDOW *w_memory, t_memory *mem)
 	box(w_memory, 0, 0); 
 	wbkgd(w_memory, COLOR_PAIR(1));
 	wmove(w_memory, 1, 3);
-	wattron(w_memory, A_BOLD);
+	//wattron(w_memory, A_BOLD);
 	wrefresh(w_memory);
 	while (j < 64)
 	{
