@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 14:12:20 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:38:25 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	allocation_error(void)
 	addstr("Unable to allocate memory for new window.\n");
 	refresh();
 	endwin();
-	exit(1);
+	perror("ERROR ");
+	exit(EXIT_FAILURE);
 }
 
 void	initialize_colors(void)

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 15:23:40 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:38:56 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void ft_usage(void)
 	ft_printf("%20d : %s", 4, "Show Operations\n");
 	ft_printf("%20d : %s", 8, "Show Deaths\n");
 	ft_printf("%-13s : Run visualizer\n", "-v");
-	exit(0);
+	exit(EXIT_SUCCESS);
 }    
 
 
