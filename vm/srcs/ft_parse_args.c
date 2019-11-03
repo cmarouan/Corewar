@@ -6,15 +6,15 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:44:26 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 14:16:10 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 17:01:26 by cmarouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static int ft_atoi_me(const char *str)
+static int		ft_atoi_me(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -26,12 +26,10 @@ static int ft_atoi_me(const char *str)
 	return (ft_atoi(str));
 }
 
-
 static int		ft_check_ext(char *str)
 {
 	int index;
 
-	//ft_printf("arg to check : %s\n", str);
 	index = ft_strlen(str) - 4;
 	return (index && str && !ft_strcmp(".cor", str + index));
 }
@@ -83,28 +81,20 @@ static int		ft_check_flag(t_vm *vm, int i, char **argv)
 			ft_usage();
 	}
 	else if (argv[i] && ft_check_ext(argv[i]))
-	{
-		//ft_printf("solo arg : %s at %d\n", argv[i], i);
 		vm->players[vm->player_c++].file_name = argv[i];
-		//vm->player_c++;
-	}else
+	else
 		ft_usage();
 	return (i);
 }
 
-void	ft_parse_args(int argc, char **argv, t_vm *vm)
+void			ft_parse_args(int argc, char **argv, t_vm *vm)
 {
 	int		i;
 
 	i = 1;
 	while (i < argc)
-	{
-		//ft_printf("Player i %d\n", i);
 		i = ft_check_flag(vm, i, argv) + 1;
-	}
-//	ft_printf("Player count %d\n", vm->player_c);
 	if (vm->player_c > MAX_PLAYERS || vm->player_c <= 0)
 		ft_usage();
 	ft_check_ids(vm);
-
 }
