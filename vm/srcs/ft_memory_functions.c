@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memory_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 15:05:34 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 15:05:35 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/03 18:55:41 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_move_pc(t_process *p, t_vm *vm)
 	y = ((index % 64) * 3) + 3;
 	wattron(vm->w_memory, COLOR_PAIR(7));
 	mvwprintw(vm->w_memory, x, y, "%.2x", p->pc->byte);
+	wrefresh(vm->w_memory);
 	index = p->oldindex;
 	if (index == -1)
 		return ;
@@ -82,6 +83,7 @@ void	ft_move_pc(t_process *p, t_vm *vm)
 	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == 0 ? 5 :
 	vm->memory[index].p_id));
 	mvwprintw(vm->w_memory, x, y, "%.2x", vm->memory[index].byte);
+		wrefresh(vm->w_memory);
 }
 
 void	left_window(WINDOW *w_memory, t_memory *mem)
