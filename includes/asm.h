@@ -8,6 +8,29 @@
 # include "ft_vdprintf.h"
 # define DBG(x) (ft_putendl(x));
 #include <stdio.h>
+
+typedef struct  	s_header
+{
+	unsigned int  	magic;
+	char          	prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	prog_size;
+	char          	comment[COMMENT_LENGTH + 1];
+	char			champion_exec_code[CHAMP_MAX_SIZE + 1];
+	unsigned int	null;
+}               	t_header;
+
+typedef struct  	s_op
+{
+	char          	instruction[6];
+	int           	number_registries;
+	int           	type_argument[3];
+	unsigned int	opcode;
+	int           	cycles_before_execution;
+	char          	*description;
+	int				argument_type_code;
+	int           	changes_carry;
+}               	t_op;
+
 typedef struct  s_args
 {
 	char        *arg;
@@ -50,6 +73,7 @@ typedef struct	s_byte
 	int 		nb_byte;
 }				t_byte;
 
+t_op    g_op_tab[16];
 
 void		read_files(t_list **files, int argc, char **argv);
 void        ft_errors_management(t_list *files, t_file *file, char *str, int index);
@@ -70,6 +94,6 @@ char		*check_comment(char *str);
 int			check_name_file(char *str, int set);
 int			create_file(char *file_name, int set);
 
-int create_header(t_header header, int fd_read, int fd_write);
-int create_assembly_code(int fd_read, int fd_write);
+int 		read_header(t_header header, int fd_read, int fd_write);
+int 		read_assembly_code(int fd_read, int fd_write);
 #endif
