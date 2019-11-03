@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 23:10:48 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 15:16:40 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 19:45:47 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_byte	arg_dir_ind(t_file *file, int index, int index2, int index3)
 {
 	t_byte byte;
 
-	byte.nb_byte = (op_tab[index2].changes_carry ||
+	byte.nb_byte = (g_op_tab[index2].changes_carry ||
 			(file->code[index].args[index3].type_arg & T_IND)) ? 2 : 4;
 	if (file->code[index].args[index3].label_index != -1)
 		byte.number = get_label_address(file, index,
@@ -101,8 +101,8 @@ int				champion_exec_code(t_file *file, int fd)
 		if (file->code[index].number_byte)
 		{
 			index2 = check_instruction(file->code[index].instruction);
-			ft_putbits_fd((char *)&op_tab[index2].opcode, 1, fd);
-			if (op_tab[index2].argument_type_code)
+			ft_putbits_fd((char *)&g_op_tab[index2].opcode, 1, fd);
+			if (g_op_tab[index2].argument_type_code)
 			{
 				number = get_argument_type(&file->code[index]);
 				ft_putbits_fd((char *)&number, 1, fd);

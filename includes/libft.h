@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 18:26:33 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/11 15:40:32 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 17:55:19 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ void				free_queue(t_queue *queue);
 void				ft_delete_content(void *content, size_t content_size);
 void				ft_delete_node(void *content, size_t content_size);
 int					ft_ceil(float score);
-
+int16_t				ft_swap_int16(int16_t value);
+int32_t				ft_swap_int32(int32_t value);
 #endif

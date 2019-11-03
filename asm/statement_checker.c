@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:35:14 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 18:36:13 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 19:14:19 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ static int	calcul_number_byte(t_token *token)
 
 	result = 1;
 	index = check_instruction(token->instruction);
-	result += (op_tab[index].argument_type_code) ? 1 : 0;
+	result += (g_op_tab[index].argument_type_code) ? 1 : 0;
 	index2 = -1;
 	while (++index2 < token->nb_arg)
 	{
 		if (token->args[index2].type_arg & T_REG)
 			result++;
 		if (token->args[index2].type_arg & T_DIR)
-			result += (op_tab[index].changes_carry) ? 2 : 4;
+			result += (g_op_tab[index].changes_carry) ? 2 : 4;
 		if (token->args[index2].type_arg & T_IND)
 			result += 2;
 	}

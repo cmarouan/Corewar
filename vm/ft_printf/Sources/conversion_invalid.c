@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_invalid.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 18:00:34 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/11 18:00:37 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-int	conversion_invalid(t_printf store, char conversion_character)
+int	conversion_invalid(t_vdprintf store, char conversion_character)
 {
 	if (!store.flag_minus && !store.flag_zero)
 		ft_print_character(store.field_width - 1, ' ');

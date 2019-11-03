@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_character.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 18:48:38 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/06 11:48:00 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-int		conversion_character(t_printf store, char c)
+int		conversion_character(t_vdprintf store, char c)
 {
 	if (!store.flag_minus)
 		ft_print_character(store.field_width - 1, ' ');

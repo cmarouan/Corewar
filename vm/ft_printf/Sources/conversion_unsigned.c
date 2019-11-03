@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_unsigned.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 14:14:45 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/01 08:14:12 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:14:17 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static int	length_number(t_printf store, uintmax_t number)
+static int	length_number(t_vdprintf store, uintmax_t number)
 {
 	int counter;
 
@@ -25,7 +25,7 @@ static int	length_number(t_printf store, uintmax_t number)
 	return (counter);
 }
 
-static int	calcul_spaces_zeros(t_printf *store, uintmax_t number)
+static int	calcul_spaces_zeros(t_vdprintf *store, uintmax_t number)
 {
 	int length;
 
@@ -44,7 +44,7 @@ static void	ft_putnbr_intmaxt(uintmax_t number)
 	ft_putchar(number % 10 + '0');
 }
 
-int			conversion_unsigned(t_printf store, uintmax_t number)
+int			conversion_unsigned(t_vdprintf store, uintmax_t number)
 {
 	int counter;
 

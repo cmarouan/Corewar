@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calcul_float.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:45:09 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/08 17:37:38 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
 static void	multiple_ten(char **number)
 {
@@ -34,7 +34,7 @@ static void	multiple_ten(char **number)
 	}
 }
 
-static char	*calcul_mantissa(t_printf store, t_float *float_data)
+static char	*calcul_mantissa(t_vdprintf store, t_float *float_data)
 {
 	char	*power_five;
 	char	*tmp;
@@ -85,7 +85,7 @@ static char	*calcul_exponent(t_float *float_data)
 	return (exponent);
 }
 
-static char	*calcul_mantissa_binary(t_printf store, t_float float_data)
+static char	*calcul_mantissa_binary(t_vdprintf store, t_float float_data)
 {
 	char *result;
 
@@ -96,7 +96,7 @@ static char	*calcul_mantissa_binary(t_printf store, t_float float_data)
 	return (result);
 }
 
-char		*calcul_float(t_printf *store, t_float *float_data)
+char		*calcul_float(t_vdprintf *store, t_float *float_data)
 {
 	char	*data;
 	char	*tmp;

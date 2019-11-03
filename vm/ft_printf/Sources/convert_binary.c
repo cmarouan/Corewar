@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   convert_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 08:16:03 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/01 08:16:08 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:14:18 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
 char		*convert_binary(unsigned long mantissa_number, int length)
 {

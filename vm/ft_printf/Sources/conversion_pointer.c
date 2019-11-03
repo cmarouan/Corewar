@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_pointer.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 09:47:28 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/01 08:07:19 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static int	ft_strlen_uintmaxt(t_printf store, const char *number)
+static int	ft_strlen_uintmaxt(t_vdprintf store, const char *number)
 {
 	int counter;
 
@@ -22,7 +22,7 @@ static int	ft_strlen_uintmaxt(t_printf store, const char *number)
 	return (counter);
 }
 
-static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
+static int	calcul_spaces_zeros_uintmaxt(t_vdprintf *store, const char *number)
 {
 	int length;
 
@@ -34,7 +34,7 @@ static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
 	return (length + store->spaces + store->zeros + 2);
 }
 
-int			conversion_pointer(t_printf store, void *ptr)
+int			conversion_pointer(t_vdprintf store, void *ptr)
 {
 	char	*number_string;
 	int		counter;

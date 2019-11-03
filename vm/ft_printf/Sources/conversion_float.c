@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_float.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 15:04:06 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/08 14:38:29 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static void	init_float(t_printf store, t_float *float_data, long double number)
+static void	init_float(t_vdprintf store, t_float *float_data, long double number)
 {
 	if (store.longdouble)
 	{
@@ -45,7 +45,7 @@ static void	free_float_data(t_float *float_data)
 	free(float_data->exponent);
 }
 
-static int	calcul_spaces(t_printf *store, t_float float_data)
+static int	calcul_spaces(t_vdprintf *store, t_float float_data)
 {
 	int counter;
 
@@ -72,7 +72,7 @@ static int	calcul_spaces(t_printf *store, t_float float_data)
 	return (store->spaces + counter);
 }
 
-static int	special_case(t_printf store, t_float *float_data)
+static int	special_case(t_vdprintf store, t_float *float_data)
 {
 	int counter;
 
@@ -98,7 +98,7 @@ static int	special_case(t_printf store, t_float *float_data)
 	return (counter);
 }
 
-int			conversion_float(t_printf store, long double number)
+int			conversion_float(t_vdprintf store, long double number)
 {
 	t_float float_data;
 	int		counter;

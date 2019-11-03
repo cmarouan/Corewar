@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:57:08 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 14:14:39 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 19:13:48 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_instruction(char *instruction)
 	index = -1;
 	while (++index < 16)
 	{
-		if (!ft_strcmp(instruction, op_tab[index].instruction))
+		if (!ft_strcmp(instruction, g_op_tab[index].instruction))
 			return (index);
 	}
 	return (-1);

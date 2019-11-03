@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:56:32 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 19:04:10 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 19:14:33 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	check_args(t_file *file, t_token *token, char *arg, int num_arg)
 		type_arg = type_direct(file, token, arg, num_arg);
 	else
 		type_arg = type_indirect(file, token, arg, num_arg);
-	if (!(type_arg & op_tab[op_index].type_argument[num_arg]))
+	if (!(type_arg & g_op_tab[op_index].type_argument[num_arg]))
 		return (0);
 	return (type_arg);
 }
@@ -104,7 +104,7 @@ int			get_args(t_file *file, t_token *token, char *str, int *index)
 		return (0);
 	token->nb_arg = ft_tablen(args);
 	if ((index2 = check_instruction(token->instruction)) < 0
-			|| token->nb_arg != op_tab[index2].number_registries ||
+			|| token->nb_arg != g_op_tab[index2].number_registries ||
 			!(token->args = (t_args *)ft_memalloc(sizeof(t_args) * token->nb_arg)))
 	{
 		free_tab(&args);

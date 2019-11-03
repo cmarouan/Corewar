@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/14 20:27:47 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 19:12:56 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ typedef struct  	s_op
 	int           	changes_carry;
 }               	t_op;
 
-t_op    op_tab[16];
+t_op    g_op_tab[16];
 
 #endif

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calcul_final_data.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 11:41:21 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/06 11:42:33 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
 static int	is_even(char *number)
 {
@@ -71,7 +71,7 @@ static char	*put_comma(char *number, int comma)
 	return (result);
 }
 
-char		*calcul_final_data(t_printf store, t_float *float_data)
+char		*calcul_final_data(t_vdprintf store, t_float *float_data)
 {
 	char	*result;
 	char	*tmp;

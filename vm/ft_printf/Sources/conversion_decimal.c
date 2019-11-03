@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_decimal.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 10:05:43 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/01 08:06:08 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static int	length_number(t_printf store, intmax_t number)
+static int	length_number(t_vdprintf store, intmax_t number)
 {
 	int counter;
 
@@ -25,7 +25,7 @@ static int	length_number(t_printf store, intmax_t number)
 	return (counter);
 }
 
-static int	calcul_spaces_zeros(t_printf *store, intmax_t number)
+static int	calcul_spaces_zeros(t_vdprintf *store, intmax_t number)
 {
 	int length;
 	int counter;
@@ -54,7 +54,7 @@ static void	ft_putnbr_intmaxt(intmax_t number)
 	ft_putchar(n % 10 + '0');
 }
 
-int			conversion_decimal(t_printf store, intmax_t number)
+int			conversion_decimal(t_vdprintf store, intmax_t number)
 {
 	int counter;
 

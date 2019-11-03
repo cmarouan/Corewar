@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_tab.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 15:58:41 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/11 18:22:20 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 18:18:35 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		free_tab(char ***tab)
+void	free_tab(char ***tab)
 {
 	int index;
 
@@ -23,5 +23,4 @@ int		free_tab(char ***tab)
 			ft_strdel(&(*tab)[index]);
 		ft_memdel((void **)tab);
 	}
-	return (1);
 }

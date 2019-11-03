@@ -5,10 +5,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include "libft.h"
-# include "ft_printf.h"
-# include <stdio.h>
+# include "ft_vdprintf.h"
 # define DBG(x) (ft_putendl(x));
-
+#include <stdio.h>
 typedef struct  s_args
 {
 	char        *arg;
@@ -70,4 +69,7 @@ int			champion_exec_code(t_file *file, int fd);
 char		*check_comment(char *str);
 int			check_name_file(char *str, int set);
 int			create_file(char *file_name, int set);
+
+int create_header(t_header header, int fd_read, int fd_write);
+int create_assembly_code(int fd_read, int fd_write);
 #endif

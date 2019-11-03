@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 21:34:54 by hmney             #+#    #+#             */
-/*   Updated: 2019/09/24 11:50:42 by kdaou            ###   ########.fr       */
+/*   Updated: 2019/10/28 15:00:57 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int		get_line(t_stock *fds, t_stock *stock, char **line, t_gnl env)
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_stock	*fds = NULL;
+	static t_stock	*fds;
 	t_stock			*stock;
 	t_gnl			env;
 

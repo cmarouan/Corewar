@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:17:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/07 21:32:49 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:10:43 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,26 @@ typedef struct			s_printf
 }						t_printf;
 
 int						ft_printf(const char *format, ...);
-int						management_format(t_printf *store, char *format,
+int						management_format(t_vdprintf *store, char *format,
 		va_list ap);
-void					management_display_u(va_list ap, t_printf *store);
-void					management_display_o(va_list ap, t_printf *store);
-void					management_display_d(va_list ap, t_printf *store);
-void					management_display_x(va_list ap, t_printf *store);
-void					management_display_f(va_list ap, t_printf *store);
-int						conversion_character(t_printf store, char c);
-int						conversion_string(t_printf store, char *str);
-int						conversion_pointer(t_printf store, void *ptr);
-int						conversion_decimal(t_printf store, intmax_t number);
-int						conversion_octal(t_printf store, uintmax_t number);
-int						conversion_unsigned(t_printf store, uintmax_t number);
-int						conversion_hexadecimal(t_printf store, uintmax_t number,
+void					management_display_u(va_list ap, t_vdprintf *store);
+void					management_display_o(va_list ap, t_vdprintf *store);
+void					management_display_d(va_list ap, t_vdprintf *store);
+void					management_display_x(va_list ap, t_vdprintf *store);
+void					management_display_f(va_list ap, t_vdprintf *store);
+int						conversion_character(t_vdprintf store, char c);
+int						conversion_string(t_vdprintf store, char *str);
+int						conversion_pointer(t_vdprintf store, void *ptr);
+int						conversion_decimal(t_vdprintf store, intmax_t number);
+int						conversion_octal(t_vdprintf store, uintmax_t number);
+int						conversion_unsigned(t_vdprintf store, uintmax_t number);
+int						conversion_hexadecimal(t_vdprintf store, uintmax_t number,
 		char c);
-int						conversion_percent(t_printf store);
-int						conversion_invalid(t_printf store,
+int						conversion_percent(t_vdprintf store);
+int						conversion_invalid(t_vdprintf store,
 char conversion_character);
-int						conversion_float(t_printf store, long double number);
-int						conversion_binary(t_printf store, int number,
+int						conversion_float(t_vdprintf store, long double number);
+int						conversion_binary(t_vdprintf store, int number,
 		char c);
 char					*ft_itoa_base_uintmaxt(uintmax_t number, int base,
 		char c);
@@ -114,8 +114,8 @@ int						is_a_conversion_character(char c);
 int						is_a_flag(char c);
 int						is_a_lengthmodifier(char c);
 int						get_number(char *format, int *counter);
-char					*calcul_float(t_printf *store, t_float *float_data);
-char					*calcul_final_data(t_printf store, t_float *float_data);
+char					*calcul_float(t_vdprintf *store, t_float *float_data);
+char					*calcul_final_data(t_vdprintf store, t_float *float_data);
 char					*ft_addition(char *number1, char *number2);
 char					*ft_multiple(char *number1, char *number2);
 char					*ft_exponent(int base, unsigned int exponent);
@@ -123,11 +123,11 @@ char					*convert_binary(unsigned long mantissa_number,
 		int length);
 int						calcul_empty_space(char *number);
 void					delete_empty_space(char **number);
-char					*calcul_fd_specialcase(t_printf store,
+char					*calcul_fd_specialcase(t_vdprintf store,
 		t_float float_data);
 char					*add_zeros(t_float float_data, char *data, int l_data,
 		int l_final);
-int						length_float(t_printf *store, t_float *float_data,
+int						length_float(t_vdprintf *store, t_float *float_data,
 		int length_data);
 
 #endif

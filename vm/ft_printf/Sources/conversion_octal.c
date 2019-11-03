@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_octal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 18:45:31 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/06 12:09:44 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static int	ft_strlen_uintmaxt(t_printf store, const char *number)
+static int	ft_strlen_uintmaxt(t_vdprintf store, const char *number)
 {
 	int counter;
 
@@ -22,7 +22,7 @@ static int	ft_strlen_uintmaxt(t_printf store, const char *number)
 	return (counter);
 }
 
-static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
+static int	calcul_spaces_zeros_uintmaxt(t_vdprintf *store, const char *number)
 {
 	int length;
 
@@ -41,7 +41,7 @@ static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
 				(ft_strcmp(number, "0") != 0 || store->precision == 0)));
 }
 
-int			conversion_octal(t_printf store, uintmax_t number)
+int			conversion_octal(t_vdprintf store, uintmax_t number)
 {
 	char	*number_string;
 	int		counter;

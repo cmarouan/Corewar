@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:25:34 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/08 14:37:54 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static void	management_display_cap(va_list ap, t_printf *store)
+static void	management_display_cap(va_list ap, t_vdprintf *store)
 {
 	if (store->conversion_character == 'C')
 		store->length_result += conversion_character(*store, va_arg(ap, int));
@@ -34,7 +34,7 @@ static void	management_display_cap(va_list ap, t_printf *store)
 		store->conversion_character);
 }
 
-static void	management_display(va_list ap, t_printf *store)
+static void	management_display(va_list ap, t_vdprintf *store)
 {
 	if (store->conversion_character == 'c')
 		store->length_result += conversion_character(*store, va_arg(ap, int));
@@ -63,7 +63,7 @@ static void	management_display(va_list ap, t_printf *store)
 		management_display_cap(ap, store);
 }
 
-static void	init_struct(t_printf *new)
+static void	init_struct(t_vdprintf *new)
 {
 	new->flag_plus = 0;
 	new->flag_minus = 0;

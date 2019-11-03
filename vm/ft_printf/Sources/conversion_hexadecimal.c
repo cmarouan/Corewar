@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_hexadecimal.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/13 00:11:17 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/06 11:59:03 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-static int	ft_strlen_uintmaxt(t_printf store, const char *number)
+static int	ft_strlen_uintmaxt(t_vdprintf store, const char *number)
 {
 	int counter;
 
@@ -22,7 +22,7 @@ static int	ft_strlen_uintmaxt(t_printf store, const char *number)
 	return (counter);
 }
 
-static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
+static int	calcul_spaces_zeros_uintmaxt(t_vdprintf *store, const char *number)
 {
 	int length;
 
@@ -37,7 +37,7 @@ static int	calcul_spaces_zeros_uintmaxt(t_printf *store, const char *number)
 			((store->flag_hashtag && ft_strcmp(number, "0") != 0) ? 2 : 0));
 }
 
-int			conversion_hexadecimal(t_printf store, uintmax_t number, char c)
+int			conversion_hexadecimal(t_vdprintf store, uintmax_t number, char c)
 {
 	char	*number_string;
 	int		counter;

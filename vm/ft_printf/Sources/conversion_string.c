@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   conversion_string.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 19:33:19 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/01 08:04:51 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
-int		conversion_string(t_printf store, char *str)
+int		conversion_string(t_vdprintf store, char *str)
 {
 	char	*new_string;
 	int		spaces;

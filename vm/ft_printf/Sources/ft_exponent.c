@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exponent.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 08:22:56 by hmney             #+#    #+#             */
-/*   Updated: 2019/07/06 11:54:18 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:12 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_vdprintf.h"
 
 char	*ft_exponent(int base, unsigned int exponent)
 {
