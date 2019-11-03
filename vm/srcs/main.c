@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 15:18:15 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:23:40 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	ft_outerr(int error, t_vm *vm)
 	{
 		"Invalid code size",
 		"Invalid magic header",
-		"Invalid norm file Null byte are not null",
-		"Null pointer"
+		"Invalid norm file Null byte are not null"
 	};
 	if (errno != 0)
 		perror("ERROR ");
