@@ -1,43 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_tools.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/03 17:09:19 by cmarouan          #+#    #+#             */
+/*   Updated: 2019/11/03 17:12:19 by cmarouan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
-void ft_write_mem(t_vm *vm, const char *data, int size,
-                    t_memory *mem, t_player *p)
+void	ft_write_mem(t_vm *vm, const char *data, int size,
+		t_memory *mem, t_player *p)
 {
-    int i;
+	int i;
 
-    i = size - 1;
-    while (i >= 0)
-    {
-        if ((mem - vm->memory) >= MEM_SIZE)
+	i = size - 1;
+	while (i >= 0)
+	{
+		if ((mem - vm->memory) >= MEM_SIZE)
 			mem = mem - MEM_SIZE;
-        mem->byte = data[i];
-        mem->p_id = p->id;
+		mem->byte = data[i];
+		mem->p_id = p->id;
 		if (vm->f_vus)
-        	ft_change_memory(mem - vm->memory, mem, vm->w_memory);
-        mem++;
-        i--;
-    }
+			ft_change_memory(mem - vm->memory, mem, vm->w_memory);
+		mem++;
+		i--;
+	}
 }
 
-void ft_change_pc(t_vm *vm, t_process *p, int value)
+void	ft_change_pc(t_vm *vm, t_process *p, int value)
 {
-    int diff;
-    p->oldindex = p->pc - vm->memory;
-    diff = (p->pc - vm->memory) + value;
-    if (diff >= 0 && diff < MEM_SIZE)
-        p->pc += value;
-    else if (diff >= MEM_SIZE)
-        p->pc = vm->memory + diff - MEM_SIZE;
-    else if (diff < 0)
-        p->pc = vm->memory + MEM_SIZE + diff;
-    if (vm->f_vus)
+	int diff;
+
+	p->oldindex = p->pc - vm->memory;
+	diff = (p->pc - vm->memory) + value;
+	if (diff >= 0 && diff < MEM_SIZE)
+		p->pc += value;
+	else if (diff >= MEM_SIZE)
+		p->pc = vm->memory + diff - MEM_SIZE;
+	else if (diff < 0)
+		p->pc = vm->memory + MEM_SIZE + diff;
+	if (vm->f_vus)
 		ft_move_pc(p, vm);
 }
 
-
-void ft_print_pc_inc(int op, t_memory *tmp, int step)
+void	ft_print_pc_inc(int op, t_memory *tmp, int step)
 {
-	ft_printf("INC_PC %d (%X > %X) : %.2X",step + 1, tmp, tmp + step, op);
+	ft_printf("INC_PC %d (%X > %X) : %.2X", step + 1, tmp, tmp + step, op);
 	while (step--)
 	{
 		ft_printf(" %02X", tmp->byte);
@@ -46,8 +58,7 @@ void ft_print_pc_inc(int op, t_memory *tmp, int step)
 	ft_printf("\n");
 }
 
-
-void ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
+void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
 {
 	int		i;
 
@@ -62,8 +73,7 @@ void ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
 	}
 }
 
-
-int big_endian_to_int(uint8_t *data, int size)
+int		big_endian_to_int(uint8_t *data, int size)
 {
 	int neg;
 	int result;
@@ -79,16 +89,13 @@ int big_endian_to_int(uint8_t *data, int size)
 	return (result);
 }
 
-
-void print_mem(t_memory *memory)
+void	print_mem(t_memory *memory)
 {
 	int i;
+	int j;
 
-	//system("clear");
-	
-//	char *color[] = {KGRN, KRED, KBLU, KCYN};
 	i = 0;
-	int j = 0;
+	j = 0;
 	while (i < 64)
 	{
 		j = 0;
@@ -100,7 +107,8 @@ void print_mem(t_memory *memory)
 		{
 			if ((i * 64 + j) == 1926)
 				ft_printf("%.2x ", memory[i * 64 + j].byte);
-			else ft_printf("%.2x ", memory[i * 64 + j].byte);
+			else
+				ft_printf("%.2x ", memory[i * 64 + j].byte);
 			j++;
 		}
 		ft_printf("\n");
