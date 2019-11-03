@@ -68,12 +68,11 @@ int big_endian_to_int(uint8_t *data, int size)
 	int neg;
 	int result;
 	int i;
-	//uint8_t *data;
 
 	i = -1;
 	result = 0;
 	if (!data)
-		ft_outerr("Null pointer");
+		ft_outerr(NULL_POINTER);
 	neg = *data & 0x80;
 	while (++i < size)
 		result |= ((0 + data[i]) << (size - 1 - i) * 8);

@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:44:26 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/02 13:27:47 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:16:10 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void		ft_check_ids(t_vm *vm)
 
 static int		ft_check_flag(t_vm *vm, int i, char **argv)
 {
-	//vm->players[vm->player_c].id_set = 0;
 	if ((!ft_strcmp(argv[i], "-dump") || !ft_strcmp(argv[i], "-d"))
 			&& argv[i + 1])
 		vm->f_dump = ft_atoi_me(argv[++i]);

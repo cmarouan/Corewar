@@ -21,6 +21,8 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/instruction/ft_lfork.c\
 		srcs/instruction/ft_aff.c\
 		srcs/ft_visualisation.c\
+		srcs/ft_memory_functions.c\
+		srcs/ft_infos_functions.c\
 		srcs/ft_check.c\
 		srcs/ft_exec.c \
 		srcs/ft_free_vm.c\

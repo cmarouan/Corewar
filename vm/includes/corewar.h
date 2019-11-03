@@ -8,6 +8,7 @@
 # include <limits.h>
 # include "op.h"
 # include "ft_printf.h"
+# include <errno.h>
 
 #include <ncurses.h>
 
@@ -21,6 +22,14 @@
 # define DEATHS_LOG 8
 # define PC_MOV  16
 # define SECOND 1000000
+
+
+
+
+# define INVALID_CODE_SIZE 0
+# define INVALID_MAGIC_CODE 1
+# define INVALID_NULL_BYTE 2
+# define NULL_POINTER 3
 
 #define MOD(index) index % MEM_SIZE
 
@@ -123,11 +132,11 @@ void	ft_parse_args(int argc, char **argv, t_vm *vm);
 t_vm	*ft_init_vm();
 void 	ft_usage(void);
 
-void	ft_outerr(char *msg);
+void	ft_outerr(int error, t_vm *vm);
 int 	big_endian_to_int(uint8_t *data, int size);
 void	ft_parse_player_files(t_vm *vm);
-void	ft_check_magic(int fd, char *filename);
-void	ft_read_null(int fd);
+void	ft_check_magic(int fd, t_vm *vm);
+void	ft_read_null(int fd,  t_vm *vm);
 
 
 t_process *ft_add_pc(t_vm *vm, int index, t_player *player);
@@ -141,7 +150,7 @@ void print_mem(t_memory *memory);
 
 void ft_exec(t_process *p, t_vm *vm);
 void ft_check(t_vm *vm);
-void ft_start(t_vm *vm);
+int ft_start(t_vm *vm);
 
 void	ft_live(t_vm *vm, t_process *p);
 void 	ft_ld(t_vm *vm, t_process *p);
@@ -178,6 +187,8 @@ int ft_int_vis(WINDOW **w_memory, WINDOW **w_info);
 void ft_change_memory(int index, t_memory *mem, WINDOW *w_memory);
 void left_window(WINDOW *w_memory, t_memory *mem);
 void window_right(WINDOW *w_info, t_vm *vm);
+
+void	write_help(WINDOW *w_info);
 //void ft_put_players(t_player *players, int nb_p, WINDOW *info);
 void ft_move_pc(t_process *p, t_vm *vm);
 int	ft_event_handler(t_vm *vm, int cmd);

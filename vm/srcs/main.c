@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/02 15:12:47 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:18:15 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,26 @@ void ft_usage(void)
 	ft_printf("%20d : %s", 2, "Show Cycles\n");
 	ft_printf("%20d : %s", 4, "Show Operations\n");
 	ft_printf("%20d : %s", 8, "Show Deaths\n");
-	ft_printf("%20d : %s", 16, "Show PC movements\n");
 	ft_printf("%-13s : Run visualizer\n", "-v");
 	exit(0);
 }    
 
-void	ft_outerr(char *msg)
+
+void	ft_outerr(int error, t_vm *vm)
 {
-	ft_printf("ERROR : %s\n", msg);
-	exit(0);
+	char	*terror[] =
+	{
+		"Invalid code size",
+		"Invalid magic header",
+		"Invalid norm file Null byte are not null",
+		"Null pointer"
+	};
+	if (errno != 0)
+		perror("ERROR ");
+	else
+		ft_printf("ERROR : %s\n", terror[error]);
+	ft_free_vm(vm);
+	exit(EXIT_FAILURE);
 }
 
 
@@ -46,16 +57,6 @@ int main(int argc, char **argv)
         ft_usage();
 	
 	int i = 1;
-	//  char **dupargs = (char **)malloc((argc - 1) * sizeof(char *));
-	//  while (i < argc)
-	// {
-	// 	dupargs[i - 1] = ft_strdup(argv[i]);
-	// 	//ft_printf("arg %d |%s|\n", i - 1, dupargs[i - 1]);
-	// 	i++;
-	// }
-	// for (int i = 0; i < argc - 1; ++i) ft_printf("%s\n", dupargs[i]);
-	
-	// //return 0;
 	vm = ft_init_vm();
 	ft_parse_args(argc, argv, vm);
 	ft_parse_player_files(vm);
@@ -87,9 +88,8 @@ int main(int argc, char **argv)
 	}
 	if (vm->f_vus)
 		vs_main(vm);
-		// while (wgetch(vm->w_info) != ' ');
-		// vm->pause = !vm->pause;	
-	ft_start(vm);
+	if (ft_start(vm) == -1)
+		return (0);
 	vm->win = 1;
 	if (vm->f_vus)
 	{

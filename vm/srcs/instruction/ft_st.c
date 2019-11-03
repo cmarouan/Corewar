@@ -23,7 +23,7 @@ void ft_st(t_vm *vm, t_process *p)
     index++;
     if (argtype == REG_CODE)
     {
-        p->reg[vm->memory[MOD(index)].byte - 1] = p->reg[result + 1];
+        p->reg[vm->memory[MOD(index)].byte - 1] = p->reg[result];
         index++;
     }
     else
@@ -32,7 +32,7 @@ void ft_st(t_vm *vm, t_process *p)
         jump_val = index - 3 + big_endian_to_int(data, 2) % IDX_MOD;
         if (jump_val < 0)
             jump_val = MEM_SIZE + jump_val;
-        ft_write_mem(vm, (char *)&p->reg[result + 1], 4, vm->memory + MOD(jump_val), p->player);
+        ft_write_mem(vm, (char *)&p->reg[result], 4, vm->memory + MOD(jump_val), p->player);
         index += 2;
     }
     if (vm->f_log == INSTRUCTION_LOG && !vm->f_vus)
