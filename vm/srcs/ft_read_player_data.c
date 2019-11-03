@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read_player_data.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:03:10 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 17:04:22 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:20:56 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,27 +77,4 @@ void		ft_parse_player_files(t_vm *vm)
 		close(fd);
 		i++;
 	}
-}
-
-void		ft_check_magic(int fd, t_vm *vm)
-{
-	uint8_t	data[4];
-
-	read(fd, data, 4);
-	if (big_endian_to_int(data, 4) != COREWAR_EXEC_MAGIC)
-	{
-		ft_outerr(INVALID_MAGIC_CODE, vm);
-	}
-}
-
-void		ft_read_null(int fd, t_vm *vm)
-{
-	int		i;
-	uint8_t	data[4];
-
-	read(fd, &data, 4);
-	i = 0;
-	while (i < 4)
-		if (data[i++] != 0x00)
-			ft_outerr(INVALID_NULL_BYTE, vm);
 }

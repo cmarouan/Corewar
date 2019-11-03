@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 16:43:06 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 16:43:52 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:23:48 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exec(t_process *p, t_vm *vm)
 		if (p->pc->byte > 0 && p->pc->byte <= 16)
 		{
 			p->opcode = p->pc->byte;
-			p->cycle_to_wait = op_tab[p->opcode - 1].cycle - 1;
+			p->cycle_to_wait = g_op_tab[p->opcode - 1].cycle - 1;
 		}
 		else
 			PC_INCR(vm, p, 1);

@@ -4,6 +4,7 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/ft_process.c\
 		srcs/ft_read_player_data.c\
 		srcs/ft_tools.c\
+		srcs/ft_tools_b.c\
 		srcs/instruction/ft_live.c\
 		srcs/instruction/ft_sti.c\
 		srcs/instruction/ft_add.c\
@@ -39,10 +40,10 @@ OBJ = $(SRC:.c=.o)
 all:$(NAME)
 
 $(NAME): $(OBJ)
-	@gcc -o $(NAME) $(OBJ) -L ../libft -lft -L ../ft_vdprintf/ -lftvdprintf -lncurses
+	gcc -o $(NAME) $(OBJ) -L ../libft -lft -L ../ft_vdprintf/ -lftvdprintf -lncurses
 
 $(OBJ) : %.o : %.c
-	@gcc $(CFLAG) -o $@ -c $< -I $(INC) 
+	gcc $(CFLAG) -o $@ -c $< -I $(INC) 
 
 clean:
 	rm -rf $(OBJ)

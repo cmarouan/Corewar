@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/11/03 22:15:08 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:22:30 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_operations	op_tab[17] =
+t_operations	g_op_tab[17] =
 {
 	{	.name = "live",
 		.argc = 1,

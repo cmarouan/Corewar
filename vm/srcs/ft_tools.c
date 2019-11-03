@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:09:19 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 17:12:19 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:21:48 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,6 @@ void	ft_write_mem(t_vm *vm, const char *data, int size,
 		mem++;
 		i--;
 	}
-}
-
-void	ft_change_pc(t_vm *vm, t_process *p, int value)
-{
-	int diff;
-
-	p->oldindex = p->pc - vm->memory;
-	diff = (p->pc - vm->memory) + value;
-	if (diff >= 0 && diff < MEM_SIZE)
-		p->pc += value;
-	else if (diff >= MEM_SIZE)
-		p->pc = vm->memory + diff - MEM_SIZE;
-	else if (diff < 0)
-		p->pc = vm->memory + MEM_SIZE + diff;
-	if (vm->f_vus)
-		ft_move_pc(p, vm);
 }
 
 void	ft_print_pc_inc(int op, t_memory *tmp, int step)
