@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:51:54 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 21:34:16 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:20:55 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int create_header(t_header header, int fd_read, int fd_write)
+int read_header(t_header header, int fd_read, int fd_write)
 {
 	int bytes;
 	
@@ -21,23 +21,24 @@ int create_header(t_header header, int fd_read, int fd_write)
 		return (0);
 	if (read(fd_read, header.prog_name, PROG_NAME_LENGTH) < 0)
 		return (0);
-	ft_dprintf(fd_write, "%s \"%s\"\n", NAME_CMD_STRING, header.prog_name);
 	bytes = 0;
-	if (read(fd_read, &bytes, 4) < 0)
+	if (read(fd_read, &bytes, 4) < 0 || bytes)
 		return (0);
 	bytes = 0;
 	if (read(fd_read, &bytes, 4) < 0)
 		return (0);
+	header.prog_size = bytes;
 	if (read(fd_read, header.comment, COMMENT_LENGTH) < 0)
 		return (0);
-	ft_dprintf(fd_write, "%s \"%s\"\n\n",COMMENT_CMD_STRING, header.comment);
 	bytes = 0;
-	if (read(fd_read, &bytes, 4) < 0)
+	if (read(fd_read, &bytes, 4) < 0 || bytes)
 		return (0);
+	ft_dprintf(fd_write, "%s \"%s\"\n", NAME_CMD_STRING, header.prog_name);
+	ft_dprintf(fd_write, "%s \"%s\"\n", COMMENT_CMD_STRING, header.comment);
 	return (1);
 }
 
-int create_assembly_code(int fd_read, int fd_write)
+int read_assembly_code(int fd_read, int fd_write)
 {
 	int op_code;
 	int arg_type;

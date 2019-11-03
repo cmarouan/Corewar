@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:13:11 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 19:43:29 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/03 23:27:59 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int read_bytes(char *file_name, int fd_read)
+int read_byte_code(char *file_name, int fd_read)
 {
 	t_header header;
 	int fd_write;
@@ -31,24 +31,30 @@ static void	disassembler(int argc, char **argv)
 	int index;
 	int fd;
 
-	index = 2;
-	if (index < argc)
+	index = 1;
+	if (index + 1 < argc)
 	{
-		while (index < argc)
+		while (++index < argc)
 		{
 			if (!check_name_file(argv[index], 0))
 			{
 				ft_printf("the format of the file is wrong: %s", argv[index]);
-				break ;
+				exit(1);
 			}
 			if (!(fd = open(argv[index], O_RDONLY)))
-				return ;
-			read_bytes(argv[index], fd);
-			index++;
+			{
+				ft_printf("We can't read the file: %s\n", argv[index]);
+				exit(1);
+			}
+			if (!read_byte_code(argv[index], fd))
+			{
+				ft_printf("We can't read the file: %s\n", argv[index]);
+				exit(1);
+			}
 		}
 	}
 	else
-		ft_printf("Error number of file\n");
+		ft_printf("     Usage: ./asm [-d] <sourcefile1.s> <sourcefile2.s> ...\n");
 }
 
 static void assembler(t_list *files, int argc, char **argv)
