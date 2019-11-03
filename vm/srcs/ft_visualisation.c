@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:58:09 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/02 22:55:44 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:12:20 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	window_right(WINDOW *w_info, t_vm *vm)
 	wattron(w_info, A_BOLD);
 	ft_put_players(++start + 2, vm->players, vm->player_c, w_info);
 	wmove(w_info, 0, 0);
-	wrefresh(w_info);
+	//wrefresh(w_info);
 	if (vm->aff)
 		mvwprintw(w_info, 44, 5, "AFF : %-10d", vm->aff_value);
 	wattron(w_info, COLOR_PAIR(vm->players[vm->winner].id));
@@ -132,7 +132,7 @@ void	initial_left_window(WINDOW *w_memory)
 	box(w_memory, 0, 0);
 	wbkgd(w_memory, COLOR_PAIR(1));
 	wmove(w_memory, 1, 3);
-	wrefresh(w_memory);
+	//wrefresh(w_memory);
 }
 
 void	left_window(WINDOW *w_memory, t_memory *mem)
@@ -161,7 +161,7 @@ void	left_window(WINDOW *w_memory, t_memory *mem)
 		x = 3;
 		y++;
 	}
-	wrefresh(w_memory);
+	//wrefresh(w_memory);
 }
 
 void	ft_change_memory(int index, t_memory *mem, WINDOW *window)
@@ -173,7 +173,7 @@ void	ft_change_memory(int index, t_memory *mem, WINDOW *window)
 	y = ((index % 64) * 3) + 3;
 	wattron(window, COLOR_PAIR(mem->p_id));
 	mvwprintw(window, x, y, "%.2x", mem->byte);
-	wrefresh(window);
+	//wrefresh(window);
 }
 
 int		ft_int_vis(WINDOW **w_memory, WINDOW **w_info)
@@ -247,8 +247,8 @@ void	ft_move_pc(t_process *p, t_vm *vm)
 	y = ((index % 64) * 3) + 3;
 	wattron(vm->w_memory, COLOR_PAIR(7));
 	mvwprintw(vm->w_memory, x, y, "%.2x", p->pc->byte);
-	wrefresh(vm->w_memory);
-	wrefresh(vm->w_info);
+	//wrefresh(vm->w_memory);
+	//wrefresh(vm->w_info);
 	index = p->oldindex;
 	if (index == -1)
 		return ;
@@ -257,8 +257,8 @@ void	ft_move_pc(t_process *p, t_vm *vm)
 	wattron(vm->w_memory, COLOR_PAIR(vm->memory[index].p_id == 0 ? 5 :
 	vm->memory[index].p_id));
 	mvwprintw(vm->w_memory, x, y, "%.2x", vm->memory[index].byte);
-	wrefresh(vm->w_memory);
-	wrefresh(vm->w_info);
+	//wrefresh(vm->w_memory);
+	//wrefresh(vm->w_info);
 }
 
 void	vs_main(t_vm *vm)
@@ -266,10 +266,11 @@ void	vs_main(t_vm *vm)
 	if (ft_int_vis(&vm->w_memory, &vm->w_info))
 	{
 		curs_set(0);
-		wrefresh(vm->w_memory);
 		nodelay(vm->w_info, false);
 		left_window(vm->w_memory, vm->memory);
+		wrefresh(vm->w_memory);
 		window_right(vm->w_info, vm);
+		//wrefresh(vm->w_info);
 		write_help(vm->w_info);
 	}
 }
