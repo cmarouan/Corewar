@@ -19,7 +19,7 @@ t_process *ft_add_pc(t_vm *vm,int index, t_player *player)
     new->player = player;
 
     new->kill = 1;
-vm->pc_count++;
+    vm->pc_count++;
     new->carry = 0;
     new->opcode = -1;
     new->pc_id = ++vm->pc_ids;

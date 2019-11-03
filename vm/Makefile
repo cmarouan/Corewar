@@ -30,7 +30,7 @@ SRC =	srcs/op.c srcs/main.c\
 		srcs/ft_start.c\
 		srcs/ft_valide.c\
 		
-CFLAG = -Wall -Wextra -Werror -g
+CFLAG = -Wall -Wextra -Werror
 INC = includes
 
 

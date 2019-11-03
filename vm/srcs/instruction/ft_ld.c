@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ld.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmoussai <kmoussai@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 16:48:49 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 16:50:53 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 20:10:42 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,6 @@ void			ft_ld(t_vm *vm, t_process *p)
 		ft_printf("p %4d | ld %d r%d\n", p->pc_id,
 				argval, vm->memory[MOD(index)].byte);
 	p->reg[vm->memory[MOD(index)].byte - 1] = argval;
-	if (p->reg[vm->memory[MOD(index++)].byte - 1] == 0)
-		p->carry = 1;
-	else
-		p->carry = 0;
+	p->carry = p->reg[vm->memory[MOD(index++)].byte - 1] == 0 ? 1 : 0;
 	PC_INCR(vm, p, index - (p->pc - vm->memory));
 }
