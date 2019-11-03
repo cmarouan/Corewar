@@ -6,15 +6,15 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 15:37:45 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 15:38:56 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 20:19:18 by cmarouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void ft_usage(void)
+void	ft_usage(void)
 {
-    ft_printf("usage : ./corewar [(-dump | -d) <N>] [-log] [-s <N>]");
+	ft_printf("usage : ./corewar [(-dump | -d) <N>] [-log] [-s <N>]");
 	ft_printf(" [-v] [-n <N> <champion.cor>]");
 	ft_printf(" [<champion.cor> <champion.cor> <...>]\n");
 	ft_printf("-(d/dump) <N> : Dumps memory after N cycles then exits\n");
@@ -27,17 +27,15 @@ void ft_usage(void)
 	ft_printf("%20d : %s", 8, "Show Deaths\n");
 	ft_printf("%-13s : Run visualizer\n", "-v");
 	exit(EXIT_SUCCESS);
-}    
-
+}
 
 void	ft_outerr(int error, t_vm *vm)
 {
-	char	*terror[] =
-	{
-		"Invalid code size",
-		"Invalid magic header",
-		"Invalid norm file Null byte are not null"
-	};
+	char	*terror[3];
+
+	terror[0] = "Invalid code size";
+	terror[1] = "Invalid magic header";
+	terror[2] = "Invalid norm file Null byte are not null";
 	if (errno != 0)
 		perror("ERROR ");
 	else
@@ -46,17 +44,8 @@ void	ft_outerr(int error, t_vm *vm)
 	exit(EXIT_FAILURE);
 }
 
-
-
-int main(int argc, char **argv)
+void	ft_init_main(int argc, char **argv, t_vm *vm)
 {
-	t_vm *vm;
-
-	if (argc <= 1)
-        ft_usage();
-	
-	int i = 1;
-	vm = ft_init_vm();
 	ft_parse_args(argc, argv, vm);
 	ft_parse_player_files(vm);
 	ft_init_memory(vm);
@@ -76,19 +65,10 @@ int main(int argc, char **argv)
 	vm->instruction[13] = &ft_lldi;
 	vm->instruction[14] = &ft_lfork;
 	vm->instruction[15] = &ft_aff;
-	ft_printf("Introducing contestants...\n");
-	i = 0;
-	while (i < vm->player_c)
-	{
-		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-						vm->players[i].id,vm->players[i].prog_size, vm->players[i].prog_name,vm->players[i].comment);
-		vm->winner = (vm->players[vm->winner].id > vm->players[i].id ? vm->winner : i);
-		i++;
-	}
-	if (vm->f_vus)
-		vs_main(vm);
-	if (ft_start(vm) == -1)
-		return (0);
+}
+
+void	end_main(t_vm *vm)
+{
 	vm->win = 1;
 	if (vm->f_vus)
 	{
@@ -98,10 +78,36 @@ int main(int argc, char **argv)
 		delwin(vm->w_info);
 		endwin();
 	}
-	//lunch winner;
 	ft_printf("Contestant %d, \"%s\", has won !\n",
-					vm->players[vm->winner].id, vm->players[vm->winner].prog_name);
+			vm->players[vm->winner].id,
+			vm->players[vm->winner].prog_name);
 	ft_free_vm(vm);
-	return (0);
 }
 
+int		main(int argc, char **argv)
+{
+	t_vm	*vm;
+	int		i;
+
+	if (argc <= 1)
+		ft_usage();
+	vm = ft_init_vm();
+	ft_init_main(argc, argv, vm);
+	ft_printf("Introducing contestants...\n");
+	i = 0;
+	while (i < vm->player_c)
+	{
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+				vm->players[i].id, vm->players[i].prog_size,
+				vm->players[i].prog_name, vm->players[i].comment);
+		vm->winner =
+			(vm->players[vm->winner].id > vm->players[i].id ? vm->winner : i);
+		i++;
+	}
+	if (vm->f_vus)
+		vs_main(vm);
+	if (ft_start(vm) == -1)
+		return (0);
+	end_main(vm);
+	return (0);
+}
