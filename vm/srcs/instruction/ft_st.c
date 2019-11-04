@@ -6,16 +6,16 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 20:56:12 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 23:51:53 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static int	ft_arg_two(t_vm *vm, t_process *p, int index, uint8_t argtype)
+static int	ft_arg_two(t_vm *vm, t_process *p, int index, t_uint8 argtype)
 {
 	int		result;
-	uint8_t	data[4];
+	t_uint8	data[4];
 	int		jump_val;
 
 	result = vm->memory[MOD(index++)].byte - 1;
@@ -41,7 +41,7 @@ static int	ft_arg_two(t_vm *vm, t_process *p, int index, uint8_t argtype)
 void		ft_st(t_vm *vm, t_process *p)
 {
 	int		jump_val;
-	uint8_t argtype;
+	t_uint8 argtype;
 	int		index;
 
 	index = p->pc - vm->memory;

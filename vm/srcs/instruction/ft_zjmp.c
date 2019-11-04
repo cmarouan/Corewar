@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 16:31:11 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/04 12:53:44 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_zjmp(t_vm *vm, t_process *p)
 {
 	int			dir;
-	uint8_t		data[2];
+	t_uint8		data[2];
 	t_memory	*tmp;
 	int			index;
 

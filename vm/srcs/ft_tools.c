@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:09:19 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/04 13:54:47 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_write_mem(t_vm *vm, const char *data,
 	}
 }
 
-void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
+void	ft_getbytes(t_memory *mem, t_memory *pc, int size, t_uint8 *data)
 {
 	int		i;
 
@@ -46,7 +46,7 @@ void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
 	}
 }
 
-int		big_endian_to_int(uint8_t *data, int size)
+int		big_endian_to_int(t_uint8 *data, int size)
 {
 	int neg;
 	int result;

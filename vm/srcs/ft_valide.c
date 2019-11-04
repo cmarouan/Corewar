@@ -6,13 +6,13 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:13:23 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:49:02 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:29 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		ft_argsize(uint8_t opcode, uint8_t arg)
+int		ft_argsize(t_uint8 opcode, t_uint8 arg)
 {
 	if (arg == REG_CODE)
 		return (1);
@@ -23,13 +23,13 @@ int		ft_argsize(uint8_t opcode, uint8_t arg)
 	return (0);
 }
 
-int		ft_valide(uint8_t opcode, t_memory *mem, int index)
+int		ft_valide(t_uint8 opcode, t_memory *mem, int index)
 {
 	int		size;
 	int		i;
 	int		wrong;
 	int		arg;
-	uint8_t	argtype;
+	t_uint8	argtype;
 
 	argtype = mem[(index + 1) % MEM_SIZE].byte;
 	index += 2;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lfork.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmoussai <kmoussai@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:04:10 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 17:05:06 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lfork(t_vm *vm, t_process *p)
 {
-	uint8_t	data[2];
+	t_uint8	data[2];
 	int		index;
 	int		jump_val;
 
