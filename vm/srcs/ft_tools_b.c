@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 23:21:09 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 23:21:52 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:40:34 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		ft_read_null(int fd, t_vm *vm)
 			ft_outerr(INVALID_NULL_BYTE, vm);
 }
 
-void	ft_change_pc(t_vm *vm, t_process *p, int value)
+void		ft_change_pc(t_vm *vm, t_process *p, int value)
 {
 	int diff;
 

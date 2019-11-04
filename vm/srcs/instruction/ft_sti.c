@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 21:46:49 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 21:53:20 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:51:48 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ void		ft_sti(t_vm *vm, t_process *p)
 	val[1] = (p->pc - vm->memory) + val[1];
 	val[1] = val[1] < 0 ? MEM_SIZE + val[1] : val[1];
 	val[0] = p->reg[val[2] - 1];
-	ft_write_mem(vm, (char *)&val[0], 4, vm->memory + MOD(val[1]), p->player);
+	ft_write_mem(vm, (char *)&val[0], vm->memory + MOD(val[1]), p->player);
 	PC_INCR(vm, p, index - (p->pc - vm->memory));
 }

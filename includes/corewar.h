@@ -125,7 +125,7 @@ typedef struct s_vm
 } t_vm;
 
 
-t_operations op_tab[17];
+t_operations g_op_tab[17];
 
 
 void	ft_parse_args(int argc, char **argv, t_vm *vm);
@@ -172,7 +172,7 @@ void 	ft_aff(t_vm *vm, t_process *p);
 void ft_change_pc(t_vm *vm, t_process *p, int value);
 
 void ft_print_pc_inc(int op, t_memory *tmp, int step);
-void ft_write_mem(t_vm *vm, const char *data, int size,
+void ft_write_mem(t_vm *vm, const char *data,
                     t_memory *mem, t_player *p);
 
 void ft_init_memory(t_vm *vm);

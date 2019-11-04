@@ -6,18 +6,18 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:09:19 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:21:48 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:52:45 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	ft_write_mem(t_vm *vm, const char *data, int size,
+void	ft_write_mem(t_vm *vm, const char *data,
 		t_memory *mem, t_player *p)
 {
 	int i;
 
-	i = size - 1;
+	i = 3;
 	while (i >= 0)
 	{
 		if ((mem - vm->memory) >= MEM_SIZE)

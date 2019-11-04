@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2019/11/03 23:22:30 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/03 23:40:59 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_operations	g_op_tab[17] =
 		.argc = 1,
 		.args = {T_DIR},
 		.opcode = 9,
-		.cycle =  20,
+		.cycle = 20,
 		.comment = "jump if zero",
 		.argtype = 0,
 		.dir_size = 2,
