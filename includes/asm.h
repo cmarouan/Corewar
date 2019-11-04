@@ -6,7 +6,7 @@
 /*   By: hmney <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:16:12 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 22:21:37 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:57:37 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int					check_args(t_file *file, t_token *token, char *arg,
 int					check_args2(t_token *token, char **args, char *str);
 int					read_header(t_header header, int fd_read, int fd_write);
 int					read_assembly_code(int fd_read, int fd_write);
-int					read_arg_reg(int op_code, int fd_read, int fd_write);
+int					read_arg_reg(int fd_read, int fd_write);
 int					read_arg_dir(int op_code, int fd_read, int fd_write);
 int					read_arg_ind(int fd_read, int fd_write);
 #endif

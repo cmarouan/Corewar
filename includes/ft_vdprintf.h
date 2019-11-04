@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:17:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 22:22:17 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:47:45 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ int						conversion_hexadecimal(t_vdprintf store,
 int						conversion_percent(t_vdprintf store);
 int						conversion_invalid(t_vdprintf store,
 char conversion_character);
-int						conversion_float(t_vdprintf store, long double number);
+int						conversion_float(t_vdprintf store, long double number,
+		int fd);
 int						conversion_binary(t_vdprintf store, int number,
 		char c);
 char					*ft_itoa_base_uintmaxt(uintmax_t number, int base,

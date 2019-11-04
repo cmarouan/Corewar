@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:13:11 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 20:21:37 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:54:52 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	read_byte_code(char *file_name, int fd_read)
 	t_header	header;
 	int			fd_write;
 
+	ft_bzero((void *)&header, sizeof(t_header));
 	if (!(fd_write = create_file(file_name, ft_strlen(file_name), 0)))
 		return (0);
 	if (!read_header(header, fd_read, fd_write))

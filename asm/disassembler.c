@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:51:54 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 21:18:01 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:56:52 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int	read_arg_type(int args[], int op_code, int fd_read, int fd_write)
+static int	read_arg_type(int args[], int op_code, int fd_read)
 {
 	int index;
 	int shift;
@@ -41,7 +41,7 @@ static int	read_args(int args[], int op_code, int fd_read, int fd_write)
 	{
 		if (args[index] & REG_CODE)
 		{
-			if (!read_arg_reg(op_code, fd_read, fd_write))
+			if (!read_arg_reg(fd_read, fd_write))
 				return (0);
 		}
 		else if (args[index] & DIR_CODE)
@@ -104,7 +104,7 @@ int			read_assembly_code(int fd_read, int fd_write)
 		if (!g_op_tab[op_code - 1].argument_type_code)
 			while (++index < 3)
 				args[index] = g_op_tab[op_code - 1].type_argument[index];
-		else if (!read_arg_type(args, op_code, fd_read, fd_write))
+		else if (!read_arg_type(args, op_code, fd_read))
 			return (0);
 		if (!read_args(args, op_code, fd_read, fd_write))
 			return (0);

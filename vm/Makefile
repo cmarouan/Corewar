@@ -40,15 +40,15 @@ OBJ = $(SRC:.c=.o)
 all:$(NAME)
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ) -L ../libft -lft -L ../ft_vdprintf/ -lftvdprintf -lncurses
+	@gcc -o $(NAME) $(OBJ) -L ../libft -lft -L ../ft_vdprintf/ -lftvdprintf -lncurses
 
 $(OBJ) : %.o : %.c
-	gcc $(CFLAG) -o $@ -c $< -I $(INC) 
+	@gcc $(CFLAG) -o $@ -c $< -I $(INC) 
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean:clean
-	rm -rf $(NAME) 
+	@rm -rf $(NAME) 
 
 re: fclean all

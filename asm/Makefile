@@ -6,7 +6,7 @@
 #    By: hmney <hmney@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 18:32:28 by hmney             #+#    #+#              #
-#    Updated: 2019/11/04 20:51:06 by hmney            ###   ########.fr        #
+#    Updated: 2019/11/04 22:52:17 by hmney            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,11 @@ _vdprintf:
 	@make -C ../ft_vdprintf
 
 $(NAME): $(LIBFT) $(OBJ_ASM) $(VDPRINTF)
-	@gcc -g $(OBJ_ASM) $(LIBFT) $(VDPRINTF) -o $(NAME)
+	@gcc -g $(OBJ_ASM) $(LIBFT) $(VDPRINTF) -o $(NAME) $(FLAG)
 
 
 $(OBJ_ASM): $(OBJS_DIR)/%.o : %.c $(INCLUDES_FILES) | $(OBJS_DIR)
-	@gcc -o $@ -c $<  -I $(INCLUDES)
+	@gcc -o $@ -c $< $(FLAG) -I $(INCLUDES)
 
 clean:
 	@make -C ../libft clean

@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/01 07:59:33 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 21:14:08 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:41:55 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void	management_display_f(va_list ap, t_vdprintf *store)
 {
 	if (store->longdouble)
 		store->length_result += conversion_float(*store,
-				va_arg(ap, long double));
+				va_arg(ap, long double), store->fd);
 	else
 		store->length_result += conversion_float(*store,
-				(double)va_arg(ap, double));
+				(double)va_arg(ap, double), store->fd);
 }

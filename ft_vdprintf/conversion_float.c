@@ -6,13 +6,14 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 15:04:06 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 21:14:08 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:40:22 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_vdprintf.h"
 
-static void	init_float(t_vdprintf store, t_float *float_data, long double number)
+static void	init_float(t_vdprintf store, t_float *float_data,
+		long double number)
 {
 	if (store.longdouble)
 	{
@@ -82,7 +83,7 @@ static int	special_case(t_vdprintf store, t_float *float_data)
 	if (!store.flag_minus)
 		ft_print_character(store, store.spaces, ' ');
 	if ((store.flag_space || store.flag_plus || float_data->sign)
-	&& !float_data->mantissa_number)
+			&& !float_data->mantissa_number)
 	{
 		if (store.flag_plus)
 			(!float_data->sign) ? ft_putchar_fd('+', store.fd) :
@@ -100,7 +101,7 @@ static int	special_case(t_vdprintf store, t_float *float_data)
 	return (counter);
 }
 
-int			conversion_float(t_vdprintf store, long double number)
+int			conversion_float(t_vdprintf store, long double number, int fd)
 {
 	t_float float_data;
 	int		counter;
@@ -113,16 +114,16 @@ int			conversion_float(t_vdprintf store, long double number)
 	if (!store.flag_minus && !store.flag_zero)
 		ft_print_character(store, store.spaces, ' ');
 	if (store.flag_plus)
-		(!float_data.sign) ? ft_putchar_fd('+', store.fd) : ft_putchar_fd('-', store.fd);
+		(!float_data.sign) ? ft_putchar_fd('+', fd) : ft_putchar_fd('-', fd);
 	if (store.flag_space && !store.flag_plus)
-		(!float_data.sign) ? ft_putchar_fd(' ', store.fd) : ft_putchar_fd('-', store.fd);
+		(!float_data.sign) ? ft_putchar_fd(' ', fd) : ft_putchar_fd('-', fd);
 	if (float_data.sign && !store.flag_plus && !store.flag_space)
-		ft_putchar_fd('-', store.fd);
+		ft_putchar_fd('-', fd);
 	if (!store.flag_minus && store.flag_zero)
 		ft_print_character(store, store.spaces, '0');
-	ft_putstr_fd(float_data.final_data, store.fd);
+	ft_putstr_fd(float_data.final_data, fd);
 	if (store.flag_hashtag && store.precision == 0)
-		ft_putchar_fd('.', store.fd);
+		ft_putchar_fd('.', fd);
 	if (store.flag_minus)
 		ft_print_character(store, store.spaces, ' ');
 	free_float_data(&float_data);

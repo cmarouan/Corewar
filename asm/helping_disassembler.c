@@ -6,13 +6,13 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 20:48:29 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 20:53:59 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:57:08 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int	read_arg_reg(int op_code, int fd_read, int fd_write)
+int	read_arg_reg(int fd_read, int fd_write)
 {
 	int bytes;
 
