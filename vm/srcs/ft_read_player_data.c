@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:03:10 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:20:56 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:27 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_check_code_size(int fd, int index, t_vm *vm)
 {
-	uint8_t data[4];
+	t_uint8 data[4];
 
 	read(fd, data, 4);
 	vm->players[index].prog_size = big_endian_to_int(data, 4);
@@ -25,7 +25,7 @@ static void	ft_check_code_size(int fd, int index, t_vm *vm)
 static void	ft_read_player_name(int fd, int index, t_vm *vm)
 {
 	int		j;
-	uint8_t	data;
+	t_uint8	data;
 
 	j = 0;
 	while (j < PROG_NAME_LENGTH)
@@ -39,7 +39,7 @@ static void	ft_read_player_name(int fd, int index, t_vm *vm)
 static void	ft_read_player_cmt(int fd, int index, t_vm *vm)
 {
 	int		j;
-	uint8_t	data;
+	t_uint8	data;
 
 	j = 0;
 	while (j < COMMENT_LENGTH)
@@ -52,7 +52,10 @@ static void	ft_read_player_cmt(int fd, int index, t_vm *vm)
 
 static void	ft_read_player_code(int fd, int index, t_vm *vm)
 {
-	vm->players[index].code = (uint8_t *)malloc(vm->players[index].prog_size);
+	vm->players[index].code =
+				(t_uint8 *)ft_memalloc(vm->players[index].prog_size);
+	if (!(vm->players[index].code))
+		ft_outerr(errno, vm);
 	read(fd, vm->players[index].code, vm->players[index].prog_size);
 }
 

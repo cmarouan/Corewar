@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_live.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmoussai <kmoussai@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:09:25 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 17:16:16 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_live(t_vm *vm, t_process *p)
 {
-	uint8_t data[4];
+	t_uint8 data[4];
 	int		ind;
 	int		i;
 

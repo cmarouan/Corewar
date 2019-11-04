@@ -6,17 +6,17 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 16:48:49 by kmoussai          #+#    #+#             */
-/*   Updated: 2019/11/03 20:10:42 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:00:57 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static int		ft_args_value(t_vm *vm, int *ind, uint8_t argtype)
+static int		ft_args_value(t_vm *vm, int *ind, t_uint8 argtype)
 {
 	int		index;
 	int		jump_val;
-	uint8_t	data[4];
+	t_uint8	data[4];
 
 	index = *ind;
 	argtype = vm->memory[MOD(index++)].byte >> SHIFT_ARG1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_process.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 23:02:28 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:05:50 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:46:11 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,16 @@
 t_process		*ft_add_pc(t_vm *vm, int index, t_player *player)
 {
 	t_process	*new;
-	t_process	*tmp;
-	t_process	*p;
 
-	p = vm->process;
-	new = (t_process *)malloc(sizeof(t_process));
-	new->reg = (int *)malloc(REG_SIZE * REG_NUMBER);
-	ft_memset(new->reg, 0, REG_SIZE * REG_NUMBER);
+	if (!(new = (t_process *)ft_memalloc(sizeof(t_process))))
+		ft_outerr(errno, vm);
+	if (!(new->reg = (int *)ft_memalloc(REG_SIZE * REG_NUMBER)))
+		ft_outerr(errno, vm);
 	new->reg[0] = player->id * -1;
 	new->pc = vm->memory + index;
 	new->oldindex = -1;
 	new->next = NULL;
 	new->player = player;
-	new->kill = 1;
 	vm->pc_count++;
 	new->carry = 0;
 	new->opcode = -1;
@@ -35,13 +32,10 @@ t_process		*ft_add_pc(t_vm *vm, int index, t_player *player)
 	new->next = NULL;
 	new->live_declare = 0;
 	new->cycle_to_wait = -1;
-	if (!p)
+	if (!vm->process)
 		return (new);
-	tmp = p;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-	return (p);
+	new->next = vm->process;
+	return (new);
 }
 
 void			ft_dup_process(t_vm *vm, t_process *p, int index)
@@ -50,14 +44,15 @@ void			ft_dup_process(t_vm *vm, t_process *p, int index)
 
 	if (!p)
 		return ;
-	new = (t_process *)malloc(sizeof(t_process));
-	new->reg = (int *)malloc(REG_SIZE * REG_NUMBER);
+	if (!(new = (t_process *)ft_memalloc(sizeof(t_process))))
+		ft_outerr(errno, vm);
+	if (!(new->reg = (int *)ft_memalloc(REG_SIZE * REG_NUMBER)))
+		ft_outerr(errno, vm);
 	ft_memcpy(new->reg, p->reg, REG_SIZE * REG_NUMBER);
 	new->pc = vm->memory + index;
 	new->oldindex = -1;
 	new->player = p->player;
 	new->carry = p->carry;
-	new->kill = 1;
 	vm->pc_count++;
 	new->cycle_to_wait = p->cycle_to_wait;
 	new->opcode = -1;
@@ -74,19 +69,20 @@ void			ft_free_process(t_process *p)
 	free(p);
 }
 
-t_process		*ft_kill_process(t_vm *vm)
+static void		ft_death_log(t_vm *vm, t_process *tmp)
 {
-	t_process	*head;
-	t_process	*tmp;
-	t_process	*prev;
+	if (!vm->f_vus && vm->f_log == DEATHS_LOG)
+		ft_printf("Process %d killed on cycle %d\n",
+				tmp->pc_id, vm->cycle_from_start);
+}
 
-	head = NULL;
-	tmp = vm->process;
-	prev = NULL;
+t_process		*ft_kill_process(t_vm *vm, t_process *head, t_process *tmp,
+				t_process *prev)
+{
 	while (tmp)
-	{
 		if (!tmp->live_declare)
 		{
+			ft_death_log(vm, tmp);
 			vm->pc_count--;
 			if (prev == NULL)
 			{
@@ -102,12 +98,10 @@ t_process		*ft_kill_process(t_vm *vm)
 		}
 		else
 		{
-			if (!head)
-				head = tmp;
+			head = !head ? tmp : head;
 			tmp->live_declare = 0;
 			prev = tmp;
 			tmp = tmp->next;
 		}
-	}
 	return (head);
 }

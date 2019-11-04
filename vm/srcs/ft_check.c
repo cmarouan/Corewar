@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmarouan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 16:37:02 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 16:38:03 by cmarouan         ###   ########.fr       */
+/*   Updated: 2019/11/04 12:34:23 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_check(t_vm *vm)
 		vm->players[i].live_in_current_period = 0;
 		i++;
 	}
-	vm->process = ft_kill_process(vm);
+	vm->process = ft_kill_process(vm, NULL, vm->process, NULL);
 	if (vm->f_vus)
 		wrefresh(vm->w_info);
 }
