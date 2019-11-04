@@ -20,7 +20,6 @@
 # define CYCLES_LOG 2
 # define INSTRUCTION_LOG 4
 # define DEATHS_LOG 8
-# define PC_MOV  16
 # define SECOND 1000000
 
 
@@ -72,7 +71,6 @@ typedef struct s_process
 	t_player	*player;
 	int			cycle_to_wait;
 	int			live_declare;
-	int kill;
 	struct s_process *next;
 }	t_process;
 
@@ -141,7 +139,8 @@ void	ft_read_null(int fd,  t_vm *vm);
 
 t_process *ft_add_pc(t_vm *vm, int index, t_player *player);
 void ft_dup_process(t_vm *vm, t_process *p, int index);
-t_process   *ft_kill_process(t_vm *vm);
+t_process   *ft_kill_process(t_vm *vm, t_process *head, t_process *tmp,
+						t_process *prev);
 void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data);
 void ft_free_vm(t_vm *vm);
 
@@ -170,8 +169,6 @@ void	ft_lldi(t_vm *vm, t_process *p);
 void 	ft_aff(t_vm *vm, t_process *p);
 
 void ft_change_pc(t_vm *vm, t_process *p, int value);
-
-void ft_print_pc_inc(int op, t_memory *tmp, int step);
 void ft_write_mem(t_vm *vm, const char *data,
                     t_memory *mem, t_player *p);
 

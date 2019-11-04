@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:03:10 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:20:56 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:48:14 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static void	ft_read_player_cmt(int fd, int index, t_vm *vm)
 
 static void	ft_read_player_code(int fd, int index, t_vm *vm)
 {
-	vm->players[index].code = (uint8_t *)malloc(vm->players[index].prog_size);
+	vm->players[index].code =
+				(uint8_t *)ft_memalloc(vm->players[index].prog_size);
+	if (!(vm->players[index].code))
+		ft_outerr(errno, vm);
 	read(fd, vm->players[index].code, vm->players[index].prog_size);
 }
 

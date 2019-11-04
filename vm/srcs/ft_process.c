@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 23:02:28 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/04 00:02:58 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:46:11 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ t_process		*ft_add_pc(t_vm *vm, int index, t_player *player)
 {
 	t_process	*new;
 
-	new = (t_process *)malloc(sizeof(t_process));
-	new->reg = (int *)malloc(REG_SIZE * REG_NUMBER);
-	ft_memset(new->reg, 0, REG_SIZE * REG_NUMBER);
+	if (!(new = (t_process *)ft_memalloc(sizeof(t_process))))
+		ft_outerr(errno, vm);
+	if (!(new->reg = (int *)ft_memalloc(REG_SIZE * REG_NUMBER)))
+		ft_outerr(errno, vm);
 	new->reg[0] = player->id * -1;
 	new->pc = vm->memory + index;
 	new->oldindex = -1;
 	new->next = NULL;
 	new->player = player;
-	new->kill = 1;
 	vm->pc_count++;
 	new->carry = 0;
 	new->opcode = -1;
@@ -44,14 +44,15 @@ void			ft_dup_process(t_vm *vm, t_process *p, int index)
 
 	if (!p)
 		return ;
-	new = (t_process *)malloc(sizeof(t_process));
-	new->reg = (int *)malloc(REG_SIZE * REG_NUMBER);
+	if (!(new = (t_process *)ft_memalloc(sizeof(t_process))))
+		ft_outerr(errno, vm);
+	if (!(new->reg = (int *)ft_memalloc(REG_SIZE * REG_NUMBER)))
+		ft_outerr(errno, vm);
 	ft_memcpy(new->reg, p->reg, REG_SIZE * REG_NUMBER);
 	new->pc = vm->memory + index;
 	new->oldindex = -1;
 	new->player = p->player;
 	new->carry = p->carry;
-	new->kill = 1;
 	vm->pc_count++;
 	new->cycle_to_wait = p->cycle_to_wait;
 	new->opcode = -1;
@@ -68,18 +69,20 @@ void			ft_free_process(t_process *p)
 	free(p);
 }
 
-t_process		*ft_kill_process(t_vm *vm)
+static void		ft_death_log(t_vm *vm, t_process *tmp)
 {
-	t_process	*head;
-	t_process	*tmp;
-	t_process	*prev;
+	if (!vm->f_vus && vm->f_log == DEATHS_LOG)
+		ft_printf("Process %d killed on cycle %d\n",
+				tmp->pc_id, vm->cycle_from_start);
+}
 
-	head = NULL;
-	tmp = vm->process;
-	prev = NULL;
+t_process		*ft_kill_process(t_vm *vm, t_process *head, t_process *tmp,
+				t_process *prev)
+{
 	while (tmp)
 		if (!tmp->live_declare)
 		{
+			ft_death_log(vm, tmp);
 			vm->pc_count--;
 			if (prev == NULL)
 			{

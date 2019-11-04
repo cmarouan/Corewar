@@ -6,7 +6,7 @@
 /*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 17:09:19 by cmarouan          #+#    #+#             */
-/*   Updated: 2019/11/03 23:52:45 by kmoussai         ###   ########.fr       */
+/*   Updated: 2019/11/04 13:54:47 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,6 @@ void	ft_write_mem(t_vm *vm, const char *data,
 		mem++;
 		i--;
 	}
-}
-
-void	ft_print_pc_inc(int op, t_memory *tmp, int step)
-{
-	ft_printf("INC_PC %d (%X > %X) : %.2X", step + 1, tmp, tmp + step, op);
-	while (step--)
-	{
-		ft_printf(" %02X", tmp->byte);
-		tmp++;
-	}
-	ft_printf("\n");
 }
 
 void	ft_getbytes(t_memory *mem, t_memory *pc, int size, uint8_t *data)
@@ -80,19 +69,16 @@ void	print_mem(t_memory *memory)
 
 	i = 0;
 	j = 0;
-	while (i < 64)
+	while (i < 128)
 	{
 		j = 0;
 		if (i == 0)
 			ft_printf("0x0000 : ");
 		else
-			ft_printf("%#.4x : ", i * 64);
-		while (j < 64)
+			ft_printf("%#.4x : ", i * 32);
+		while (j < 32)
 		{
-			if ((i * 64 + j) == 1926)
-				ft_printf("%.2x ", memory[i * 64 + j].byte);
-			else
-				ft_printf("%.2x ", memory[i * 64 + j].byte);
+			ft_printf("%.2x ", memory[i * 32 + j].byte);
 			j++;
 		}
 		ft_printf("\n");
