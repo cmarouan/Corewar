@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:17:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 22:17:41 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 22:22:17 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct			s_float
 
 typedef struct			s_vdprintf
 {
-	int 				fd;
+	int					fd;
 	int					flag_plus;
 	int					flag_minus;
 	int					flag_zero;
@@ -102,8 +102,8 @@ int						conversion_pointer(t_vdprintf store, void *ptr);
 int						conversion_decimal(t_vdprintf store, intmax_t number);
 int						conversion_octal(t_vdprintf store, uintmax_t number);
 int						conversion_unsigned(t_vdprintf store, uintmax_t number);
-int						conversion_hexadecimal(t_vdprintf store, uintmax_t number,
-		char c);
+int						conversion_hexadecimal(t_vdprintf store,
+		uintmax_t number, char c);
 int						conversion_percent(t_vdprintf store);
 int						conversion_invalid(t_vdprintf store,
 char conversion_character);
@@ -118,7 +118,8 @@ int						is_a_flag(char c);
 int						is_a_lengthmodifier(char c);
 int						get_number(char *format, int *counter);
 char					*calcul_float(t_vdprintf *store, t_float *float_data);
-char					*calcul_final_data(t_vdprintf store, t_float *float_data);
+char					*calcul_final_data(t_vdprintf store,
+		t_float *float_data);
 char					*ft_addition(char *number1, char *number2);
 char					*ft_multiple(char *number1, char *number2);
 char					*ft_exponent(int base, unsigned int exponent);

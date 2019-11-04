@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 23:10:48 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 19:45:47 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 16:11:07 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,8 @@ static int		get_label_address(t_file *file, int src, int dst)
 	result = 0;
 	sign = 1;
 	if (src < dst)
-	{
 		while (src < dst)
-		{
-			result += file->code[src].number_byte;
-			src++;
-		}
-	}
+			result += file->code[src++].number_byte;
 	else
 	{
 		sign = -1;

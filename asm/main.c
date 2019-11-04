@@ -6,22 +6,22 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 23:13:11 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 23:27:59 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 20:21:37 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-int read_byte_code(char *file_name, int fd_read)
+static int	read_byte_code(char *file_name, int fd_read)
 {
-	t_header header;
-	int fd_write;
+	t_header	header;
+	int			fd_write;
 
-	if (!(fd_write = create_file(file_name, 0)))
+	if (!(fd_write = create_file(file_name, ft_strlen(file_name), 0)))
 		return (0);
-	if (!create_header(header, fd_read, fd_write))
+	if (!read_header(header, fd_read, fd_write))
 		return (0);
-	if (!create_assembly_code(fd_read, fd_write))
+	if (!read_assembly_code(fd_read, fd_write))
 		return (0);
 	return (1);
 }
@@ -37,27 +37,18 @@ static void	disassembler(int argc, char **argv)
 		while (++index < argc)
 		{
 			if (!check_name_file(argv[index], 0))
-			{
-				ft_printf("the format of the file is wrong: %s", argv[index]);
-				exit(1);
-			}
-			if (!(fd = open(argv[index], O_RDONLY)))
-			{
-				ft_printf("We can't read the file: %s\n", argv[index]);
-				exit(1);
-			}
+				ft_errors_management2(argv[index], 0);
+			if ((fd = open(argv[index], O_RDONLY)) < 0)
+				ft_errors_management2(argv[index], 1);
 			if (!read_byte_code(argv[index], fd))
-			{
-				ft_printf("We can't read the file: %s\n", argv[index]);
-				exit(1);
-			}
+				ft_errors_management2(argv[index], 2);
 		}
 	}
 	else
-		ft_printf("     Usage: ./asm [-d] <sourcefile1.s> <sourcefile2.s> ...\n");
+		ft_errors_management2(NULL, 3);
 }
 
-static void assembler(t_list *files, int argc, char **argv)
+static void	assembler(t_list *files, int argc, char **argv)
 {
 	t_list *head;
 	t_file *file;
@@ -75,7 +66,7 @@ static void assembler(t_list *files, int argc, char **argv)
 	free_data(files);
 }
 
-int	main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	t_list *files;
 

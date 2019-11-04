@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:34:05 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 15:34:49 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 14:14:34 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 static int	check_name_comment_cmd(t_file *file, char *cmd, char *content)
 {
-	if (!ft_strcmp(cmd, NAME_CMD_STRING) && ft_strlen(content) <= PROG_NAME_LENGTH)
+	if (!ft_strcmp(cmd, NAME_CMD_STRING) &&
+			ft_strlen(content) <= PROG_NAME_LENGTH)
 	{
 		ft_strcpy(file->header.prog_name, content);
 		ft_strdel(&content);
 		ft_strdel(&cmd);
 		return (NAME_CMD_FLAG);
 	}
-	if (!ft_strcmp(cmd, COMMENT_CMD_STRING) && ft_strlen(content) <= COMMENT_LENGTH)
+	if (!ft_strcmp(cmd, COMMENT_CMD_STRING) &&
+			ft_strlen(content) <= COMMENT_LENGTH)
 	{
 		ft_strcpy(file->header.comment, content);
 		ft_strdel(&content);

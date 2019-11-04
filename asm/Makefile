@@ -6,7 +6,7 @@
 #    By: hmney <hmney@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/15 18:32:28 by hmney             #+#    #+#              #
-#    Updated: 2019/11/03 21:28:43 by hmney            ###   ########.fr        #
+#    Updated: 2019/11/04 20:51:06 by hmney            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = asm
 
 FLAG = -Wall -Wextra -Werror
 
-SRCS = op.c champion_exec_code.c check_comment.c convert_bytecode.c free_data.c ft_errors_management.c get_args.c get_instructions.c get_label.c header_checker.c lexer.c main.c read_files.c split_data.c statement_checker.c disassembler.c
+SRCS = op.c champion_exec_code.c check_comment.c convert_bytecode.c free_data.c ft_errors_management.c get_args.c get_instructions.c get_label.c header_checker.c lexer.c main.c read_files.c split_data.c statement_checker.c disassembler.c helping_get_args.c helping_disassembler.c
 
 LIBFT = ../libft/libft.a
 

@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 14:03:07 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/15 12:04:24 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 12:06:35 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ static void	free_content_file(t_file *file)
 		ft_strdel(&file->code[index].label->name);
 		ft_memdel((void **)&file->code[index].label);
 		ft_strdel(&file->code[index].instruction);
-		index2 = -1;
-		while (++index2 < file->code[index].nb_arg)
-			ft_strdel(&file->code[index].args[index2].arg);
-		ft_memdel((void **)&file->code[index].args);
+		if (file->code[index].args)
+		{
+			index2 = -1;
+			while (++index2 < file->code[index].nb_arg)
+				ft_strdel(&file->code[index].args[index2].arg);
+			ft_memdel((void **)&file->code[index].args);
+		}
 	}
 	ft_memdel((void **)&file->code);
 	ft_lstdel(&file->labels_call, &ft_delete_node);

@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 14:18:35 by hmney             #+#    #+#             */
-/*   Updated: 2019/10/16 11:58:30 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 14:16:51 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,21 @@ static t_file	*get_content_file(char *name, char *buf, int fd)
 	return (file);
 }
 
-int		check_name_file(char *str, int set)
+int				check_name_file(char *str, int set)
 {
 	int	index;
 
 	index = ft_strlen(str);
 	if (set)
 	{
-		if (index < 3 || str[index - 1] != 's' || str[index - 2] != '.' || str[index - 3] == '/')
+		if (index < 3 || str[index - 1] != 's' || str[index - 2] != '.' ||
+				str[index - 3] == '/')
 			return (0);
 	}
 	else
 	{
-		if (index < 5 || ft_strcmp(str + (index - 4), ".cor") || str[index - 5] == '/')
+		if (index < 5 || ft_strcmp(str + (index - 4), ".cor") ||
+				str[index - 5] == '/')
 			return (0);
 	}
 	return (1);

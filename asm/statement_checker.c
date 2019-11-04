@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 13:35:14 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/03 19:14:19 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/04 15:29:58 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,25 @@ static int	calcul_number_byte(t_token *token)
 	return (result);
 }
 
+static void	noname(t_file *file, int index)
+{
+	if (file->code[index].label)
+		file->code[index].label->index = index;
+	if (file->code[index].instruction)
+		file->header.prog_size += calcul_number_byte(&file->code[index]);
+}
+
 int			statement_checker(t_file *file, int *index)
 {
 	char	*str;
 
-	if (!file->code[*index].line)
-		return (0);
 	(*index)--;
 	while (file->code[++(*index)].line)
 	{
 		if (!(str = check_comment(file->code[*index].line)))
 			return (0);
-		if (file->code[*index + 1].line == NULL && file->content[ft_strlen(file->content) - 1] != '\n' && *str)
+		if (file->code[*index + 1].line == NULL &&
+				file->content[ft_strlen(file->content) - 1] != '\n' && *str)
 			return (0);
 		if (!*str || str[0] == COMMENT_CHAR || str[0] == ALT_COMMENT_CHAR)
 		{
@@ -76,10 +83,7 @@ int			statement_checker(t_file *file, int *index)
 			ft_strdel(&str);
 			return (0);
 		}
-		if (file->code[*index].label)
-			file->code[*index].label->index = *index;
-		if (file->code[*index].instruction)
-			file->header.prog_size += calcul_number_byte(&file->code[*index]);
+		noname(file, *index);
 		ft_strdel(&str);
 	}
 	return (1);
