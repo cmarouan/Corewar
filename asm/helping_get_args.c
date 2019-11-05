@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helping_functions_get_args.c                       :+:      :+:    :+:   */
+/*   helping_get_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmoussai <kmoussai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:10:21 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 20:51:16 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/05 12:41:44 by kmoussai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	type_register(t_token *token, char *arg, int num_arg)
 	int number;
 
 	if (ft_strlen(arg) > 3 || !ft_isnumber(arg + 1) ||
-			(number = ft_atoi(arg + 1)) < 0 || number > REG_NUMBER)
+			(number = ft_atoi(arg + 1)) <= 0 || number > REG_NUMBER)
 		return (0);
 	token->args[num_arg].type_arg = T_REG;
 	token->args[num_arg].code_arg = REG_CODE;
