@@ -6,7 +6,7 @@
 /*   By: hmney <hmney@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 12:56:32 by hmney             #+#    #+#             */
-/*   Updated: 2019/11/04 22:53:27 by hmney            ###   ########.fr       */
+/*   Updated: 2019/11/05 11:08:01 by hmney            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int			get_args(t_file *file, t_token *token, char *str, int *index)
 		if (!(arg = ft_strtrim(args[index2])) ||
 				!check_args(file, token, arg, index2))
 		{
+			ft_strdel(&arg);
 			free_tab(&args);
 			return (0);
 		}
