@@ -6,7 +6,7 @@
 #    By: hmney <hmney@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/03 22:30:07 by hmney             #+#    #+#              #
-#    Updated: 2019/11/04 22:45:42 by hmney            ###   ########.fr        #
+#    Updated: 2019/11/05 10:47:05 by kmoussai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,4 +27,4 @@ fclean:
 	@make fclean -C ft_vdprintf
 	@make fclean -C asm
 	@make fclean -C vm
-re: fclean re
+re: fclean all
